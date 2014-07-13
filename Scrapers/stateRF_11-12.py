@@ -17,8 +17,8 @@ base = 'http://www.state.gov/j/drl/rls/irf/'
 yrURLs = [base+x+'religiousfreedom' for x in ['2011','']]
 
 # Run through years
+year=2011
 for addressYr in yrURLs:
-	year=2011
 	print 'Collecting data from ' + addressYr +'\n'	
 
 	# Pull out links for countries
@@ -37,9 +37,9 @@ for addressYr in yrURLs:
 		print '   ...data for ' + ctry['name'] + ' collected'		
 
 	# Save to json
-	year+=1
 	print '\n Data for ' + ctry['year'] + ' collected \n'	
 	filename=ctry['source'] + '_' + ctry['year'] + '.json'
 	f=open(filename, 'wb')
 	json.dump(ctryYrData, f, sort_keys=True)
 	f.close()
+	year+=1	

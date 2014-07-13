@@ -12,9 +12,9 @@ from helpers import *
 # Data storage
 os.chdir('/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Data')
 
-# Yearly web addresses
+# Yearly web addresses (no data for 2000)
 base='http://freedomhouse.org/report/freedom-world/freedom-world-'
-yrURLs=[base+str(x) for x in range(1998,2015,1)]
+yrURLs=[base+str(x) for x in flatten([1998,1999,range(2001,2015,1)])]
 
 # Run through years
 for addressYr in yrURLs:
@@ -24,6 +24,7 @@ for addressYr in yrURLs:
 	ctryYrData=subLinks(addressYr, 'span', 'class', 'field-content', 
 		'<span class="field-content">', '<a href="', '">',
 		True, '">', '</a></span>')
+	ctryYrData=dedupeLoD(ctryYrData, 'name')
 
 	# Set first country link to Afghanistan
 	# (leads to exclusion of Abkhazia in 1998 and 2002-2013)

@@ -24,11 +24,17 @@ for addressYr in yrURLs:
 	ctryYrData=subLinks(addressYr, 'span', 'class', 'field-content', 
 		'<span class="field-content">', '<a href="', '">',
 		True, '">', '</a></span>')
+	ctryYrData=dedupeLoD(ctryYrData, 'name')
 
 	# Set first country link to Afghanistan
 	# (leads to exclusion of Abkhazia in 1998 and 2002-2013)
 	names=[x['name'] for x in ctryYrData]
 	ctryYrData = ctryYrData[names.index('Afghanistan'):len(ctryYrData)]
+
+	# No data for Sao Tome and Principe (or link just broken)
+	names=[x['name'] for x in ctryYrData]
+	toDel=names.index('S\xc3\xa3o Tom\xc3\xa9 and Pr\xc3\xadncipe')-len(names)
+	del ctryYrData[toDel]
 
 	# Scrape info
 	for ctry in ctryYrData:

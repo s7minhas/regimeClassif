@@ -46,3 +46,12 @@ def getText(link, s1, s2, s3):
 	data=dirt(s1, {s2:s3})
 	text=cleanHTML( str(data) )
 	return text
+
+def dedupeLoD(x, dictID):
+	y=[]
+	seen=[]
+	for i in x:
+		if i[dictID] not in seen:
+			y.append(i)
+			seen.append(i[dictID])
+	return y	

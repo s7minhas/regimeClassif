@@ -52,8 +52,3 @@ for address in yrURLs:
 	f=open(filename, 'wb')
 	json.dump(ctryYrData, f, sort_keys=True)
 	f.close()
-
-# f=open('StateHR_99-09.json', 'rb')
-# test=json.load(f)
-# f.close()
-# test[0]['data'].encode('utf-8')

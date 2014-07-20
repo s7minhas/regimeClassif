@@ -7,7 +7,7 @@ import json
 
 # My helper functions
 os.chdir('/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Scrapers')
-from helpers import *
+from scrapeCrew import *
 
 # Data storage
 os.chdir('/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Data')

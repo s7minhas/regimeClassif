@@ -1,4 +1,6 @@
 import nltk
+import nltk.data, nltk.tag
+tagger = nltk.data.load(nltk.tag._POS_TAGGER)
 import os
 import re
 import json
@@ -78,21 +80,22 @@ def removePunct(stories):
 		'&ldquo;', '&rdquo;']
 	for slash in otherPunct:
 		storiesNoPunct=[story.replace(slash, " ") for story in storiesNoPunct]
-	print('		Punctuation removed...')
+	print('\tPunctuation removed...')
 	return storiesNoPunct
 
 def tokenize(stories):
 	storiesToken = [[word for word in story.split()] for story in stories]
-	print('		Tokenized...')
+	print('\tTokenized...')
 	return storiesToken
 
 def remNouns(stories):
-	for ii in range(0,len(stories)):
-		lTokens = nltk.pos_tag(stories[ii])
-		pnouns=[tok[0] for tok in lTokens if tok[1]=='NNP']
-		stories[ii]=[word.lower() for word in stories[ii] if word not in pnouns]
-	print('		Proper Nouns removed...')
-	return stories
+	allStories=list(set(flatten([x for x in stories])))
+	lTokens=tagger.tag(allStories)
+	pnouns=[tok[0] for tok in lTokens if tok[1]=='NNP']
+	storiesNoNoun = [[word for word in story if word not in pnouns]
+		for story in stories]	
+	print('\tProper Nouns removed...')
+	return storiesNoNoun
 
 def remWords(stories, cntryNames):
 	remove=nltk.corpus.stopwords.words('english')
@@ -108,20 +111,20 @@ def remWords(stories, cntryNames):
 	remove=flatten(remove)
 	storiesNoStop = [[word for word in story if word not in remove]
 		for story in stories]
-	print('		Stop words removed...')	
+	print('\tStop words removed...')	
 	return storiesNoStop
 
 def remNum(stories):
 	storiesNoNum = [[word for word in story if not word.isdigit()]
 		for story in stories]
-	print('		Numbers removed...')
+	print('\tNumbers removed...')
 	return storiesNoNum	
 
 def lemmatize(stories):
 	wnl = nltk.stem.WordNetLemmatizer()
 	storiesLemm = [[wnl.lemmatize(word) for word in story]
 		for story in stories]
-	print('		Lemmatized...')
+	print('\tLemmatized...')
 	return storiesLemm
 
 def infqWrdStry(stories):
@@ -137,7 +140,7 @@ def infqWrdStry(stories):
 	freqWords=flatten(freqWords)
 	storiesFin = [[word for word in story if word in freqWords]
 		for story in stories]
-	print('		Removed words occurring infrequently within a story...')
+	print('\tRemoved words occurring infrequently within a story...')
 	return storiesFin
 
 def infqWrdStries(stories):
@@ -149,7 +152,7 @@ def infqWrdStries(stories):
 	freqWords=[key for key,value in wordStory.items() if value>1]
 	storiesFin = [[word for word in story if word in freqWords]
 		for story in stories]
-	print('		Removed words occurring infrequently across stories...')
+	print('\tRemoved words occurring infrequently across stories...')
 	return storiesFin
 
 def updateDict(jsonListDict, storiesClean):

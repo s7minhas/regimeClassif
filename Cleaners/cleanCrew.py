@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 import nltk
 import nltk.data, nltk.tag
 tagger = nltk.data.load(nltk.tag._POS_TAGGER)
@@ -14,6 +16,7 @@ def prepForLDA(filename, inPath, outPath):
 	data=dictPull(jsonData, 'data')
 	data=removeSctnHdr(filename, data)
 	data=removeURL(data)
+	data=removeHTML(data)
 	cntries=dictPull(jsonData, 'name')
 
 	stClean=removePunct(data)
@@ -76,6 +79,9 @@ def noURL(string):
 def removeURL(data):
 	return [noURL(dat) for dat in data]
 
+def removeHTML(data):
+	return [nltk.clean_html(dat) for dat in data]
+
 def removePunct(stories):
 	puncts=string.punctuation
 	repPunct = string.maketrans(string.punctuation, ' '*len(string.punctuation))
@@ -83,7 +89,7 @@ def removePunct(stories):
 	storiesNoPunct = [ re.sub(
 				r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\xff]', ' ', story)
 				for story in storiesNoPunct  ]
-	otherPunct=['nbsp', 'rsquo', 'quot', 'ldquo;', 'rdquo']
+	otherPunct=['nbsp','lsquo','rsquo','ldquo', 'rdquo','quot']
 	for slash in otherPunct:
 		storiesNoPunct=[story.replace(slash, " ") for story in storiesNoPunct]
 	print('\tPunctuation removed...')

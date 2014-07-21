@@ -1,6 +1,3 @@
-# FH (98-14), FHpress (02-13), StateHR (99-13), StateRF (01-12)
-
-# My helper functions
 import os
 baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/'
@@ -8,7 +5,7 @@ baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/'
 os.chdir(baseGit+'Cleaners')
 from cleanCrew import *
 
-
+# FH (98-14), FHpress (02-13), StateHR (99-13), StateRF (01-12)
 files=[{'name':'FH','years':range(1998,2000)},
 		{'name':'FH','years':range(2001,2015)},
 		{'name':'FHpress','years':range(2002,2014)},

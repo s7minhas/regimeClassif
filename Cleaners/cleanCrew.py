@@ -18,6 +18,7 @@ def prepForLDA(filename, inPath, outPath):
 	stClean=removePunct(data)
 	stClean=tokenize(stClean)
 	stClean=remNouns(stClean)
+	stClean=remACR(stClean)
 	stClean=remWords(stClean, cntries)
 	stClean=remNum(stClean)
 	stClean=lemmatize(stClean)
@@ -75,9 +76,7 @@ def removePunct(stories):
 	storiesNoPunct = [ re.sub(
 				r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\xff]', ' ', story)
 				for story in storiesNoPunct  ]
-	otherPunct=["\n", "\t", 'nbsp', 'Ratings Change', 'Overview',
-		'&rsquo;s', '&#8209;', '&quot;', '&#39;', '&rsquo;s',
-		'&ldquo;', '&rdquo;']
+	otherPunct=['nbsp', 'rsquo', 'quot', 'ldquo;', 'rdquo']
 	for slash in otherPunct:
 		storiesNoPunct=[story.replace(slash, " ") for story in storiesNoPunct]
 	print('\tPunctuation removed...')
@@ -96,6 +95,17 @@ def remNouns(stories):
 		for story in stories]	
 	print('\tProper Nouns removed...')
 	return storiesNoNoun
+
+def propUpper(string):
+	return sum(1. for l in string if l.isupper() )/len(string)
+
+def remACR(stories):
+	storiesNoACR=[[word for word in story if propUpper(word)<0.5]
+		for story in stories]
+	storiesLower=[[word.lower() for word in story] 
+		for story in storiesNoACR]
+	print('\tAcronyms removed & tokens now lower cased...')
+	return storiesLower
 
 def remWords(stories, cntryNames):
 	remove=nltk.corpus.stopwords.words('english')

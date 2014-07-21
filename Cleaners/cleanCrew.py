@@ -91,6 +91,7 @@ def remNouns(stories):
 		lTokens = nltk.pos_tag(stories[ii])
 		pnouns=[tok[0] for tok in lTokens if tok[1]=='NNP']
 		stories[ii]=[word.lower() for word in stories[ii] if word not in pnouns]
+	print('		Proper Nouns removed...')
 	return stories
 
 def remWords(stories, cntryNames):

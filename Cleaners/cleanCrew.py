@@ -30,6 +30,7 @@ def prepForLDA(filename, inPath, outPath):
 	stClean=infqWrdStries(stClean)
 
 	jsonDataFin=updateDict(jsonData, stClean)
+	jsonDataFin=cleanDict(jsonDataFin)
 	os.chdir(outPath)
 	saveJSON(jsonDataFin, filename)
 
@@ -129,8 +130,15 @@ def remWords(stories, cntryNames):
 			'june','july','august','september','october',
 			'november','december',
 			'one','two','three','four','five','six','seven',
-			'eight','nine','ten',
-			'department','see','findings',
+			'eight','nine','ten', 'day', 'days', 'month',
+			'department','see','findings', 'months',
+			'do', 'new', 'old', 'men', 'man', 'sun',
+			'eye','ear','cut','although',
+			'el', 'en', 'co', 'ad', 'ed', 'al', 'au', 
+			'ex', 'in', 'go', 'et', 'id', 'ni', 'le',
+			'la', 'na', 're', 'do', 'wa', 'de', 'da', 
+			'dy', 'du', 'e', 'ut', 'us', 'un', 'u', 'il',
+			'country','territory','received','report','edition',
 			list(string.ascii_lowercase) ) )
 	remove=flatten(remove)
 	storiesNoStop = [[word for word in story if word not in remove]
@@ -183,6 +191,9 @@ def updateDict(jsonListDict, storiesClean):
 	for ii in range(0,len(jsonListDict)):
 		jsonListDict[ii]['dataClean'] = storiesClean[ii]
 	return jsonListDict
+
+def cleanDict(jsonListDict):
+	return [x for x in jsonListDict if len(x['dataClean'])!=0]
 
 def saveJSON(data, filename):
 	print '\n Data for ' + filename + ' cleaned \n'	

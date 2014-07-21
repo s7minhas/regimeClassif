@@ -13,6 +13,7 @@ def prepForLDA(filename, inPath, outPath):
 	jsonData=loadJSON(filename)
 	data=dictPull(jsonData, 'data')
 	data=removeSctnHdr(filename, data)
+	data=removeURL(data)
 	cntries=dictPull(jsonData, 'name')
 
 	stClean=removePunct(data)
@@ -69,6 +70,12 @@ def removeSctnHdr(filename, data):
 	else:
 		return data
 
+def noURL(string):
+	return re.sub(r'(?i)\b((?:https?://|www\d{0,3}[.]|[a-z0-9.\-]+[.][a-z]{2,4}     /)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))+(?:\(([^\s()<>]+|(\([^\s()<>]+\)))*\)|[^\s`!()\[\]{};:\'".,<>?«»“”‘’]))', '', string)
+
+def removeURL(data):
+	return [noURL(dat) for dat in data]
+
 def removePunct(stories):
 	puncts=string.punctuation
 	repPunct = string.maketrans(string.punctuation, ' '*len(string.punctuation))
@@ -117,6 +124,7 @@ def remWords(stories, cntryNames):
 			'november','december',
 			'one','two','three','four','five','six','seven',
 			'eight','nine','ten',
+			'department','see','findings',
 			list(string.ascii_lowercase) ) )
 	remove=flatten(remove)
 	storiesNoStop = [[word for word in story if word not in remove]

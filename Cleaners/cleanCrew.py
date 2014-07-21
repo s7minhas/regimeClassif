@@ -10,10 +10,12 @@ def prepForLDA(filename, inPath, outPath):
 	os.chdir(inPath)
 	jsonData=loadJSON(filename)
 	data=dictPull(jsonData, 'data')
+	data=removeSctnHdr(filename, data)
 	cntries=dictPull(jsonData, 'name')
 
 	stClean=removePunct(data)
 	stClean=tokenize(stClean)
+	stClean=remNouns(stClean)
 	stClean=remWords(stClean, cntries)
 	stClean=remNum(stClean)
 	stClean=lemmatize(stClean)
@@ -41,6 +43,29 @@ def dictPull(dataDict, key):
 		info.append(dat[key].encode('utf-8'))
 	return info
 
+def removeSctnHdr(filename, data):
+	if filename.split('_')[0]=='FH':
+		return [re.sub('\n.*?:&nbsp;',' ',dat)
+			for dat in data]
+	elif filename.split('_')[0]=='StateHR':
+		data=[re.sub('\nPDF.*?SUMMARYShare',' ',dat,flags=re.DOTALL)
+			for dat in data]
+		data=[re.sub('\n\n\t\t.*?\n\n',' ',dat,flags=re.DOTALL)
+			for dat in data]
+		for ii in range(0,len(data)):
+			for letter in string.ascii_lowercase:
+				data[ii]=re.sub('\n'+letter+'..*?\n',' ', 
+					data[ii], flags=re.DOTALL)
+		return data
+	elif filename.split('_')[0]=='StateRF':
+		data=[re.sub('\nPDF.*?SummaryShare',' ',dat,flags=re.DOTALL)
+			for dat in data]
+		data=[re.sub('\n\n\nSection.*?&nbsp;\n',' ',dat,flags=re.DOTALL)
+			for dat in data]	
+		return data
+	else:
+		return data
+
 def removePunct(stories):
 	puncts=string.punctuation
 	repPunct = string.maketrans(string.punctuation, ' '*len(string.punctuation))
@@ -48,24 +73,31 @@ def removePunct(stories):
 	storiesNoPunct = [ re.sub(
 				r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\xff]', ' ', story)
 				for story in storiesNoPunct  ]
-	otherPunct=["\n", "\t", 'nbsp', 'Ratings Change', 'Overview']
+	otherPunct=["\n", "\t", 'nbsp', 'Ratings Change', 'Overview',
+		'&rsquo;s', '&#8209;', '&quot;', '&#39;', '&rsquo;s',
+		'&ldquo;', '&rdquo;']
 	for slash in otherPunct:
 		storiesNoPunct=[story.replace(slash, " ") for story in storiesNoPunct]
 	print('		Punctuation removed...')
 	return storiesNoPunct
 
 def tokenize(stories):
-	storiesToken = [[word for word in story.lower().split()] 
-		for story in stories]
+	storiesToken = [[word for word in story.split()] for story in stories]
 	print('		Tokenized...')
 	return storiesToken
+
+def remNouns(stories):
+	for ii in range(0,len(stories)):
+		lTokens = nltk.pos_tag(stories[ii])
+		pnouns=[tok[0] for tok in lTokens if tok[1]=='NNP']
+		stories[ii]=[word.lower() for word in stories[ii] if word not in pnouns]
+	return stories
 
 def remWords(stories, cntryNames):
 	remove=nltk.corpus.stopwords.words('english')
 	remove.extend(
 		( [x.lower() for x in cntryNames],
 			'document', 'end', 'year', 'years',
-			'sri', 'lanka', 'Ivoire', 
 			'january','february','march','april','may',
 			'june','july','august','september','october',
 			'november','december',

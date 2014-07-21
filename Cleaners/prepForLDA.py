@@ -2,8 +2,12 @@
 
 # My helper functions
 import os
-os.chdir('/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Cleaners')
+baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/'
+baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/'
+
+os.chdir(baseGit+'Cleaners')
 from cleanCrew import *
+
 
 files=[{'name':'FH','years':range(1998,2000)},
 		{'name':'FH','years':range(2001,2015)},
@@ -17,5 +21,5 @@ toClean.append('StateRF_2010_5.json')
 # Clean each file
 for file in toClean:
 	prepForLDA(file, 
-		'/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Data/Raw',
-		'/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Data/forLDA')
+		baseDrop+'Data/Raw',
+		baseDrop+'Data/forLDA')

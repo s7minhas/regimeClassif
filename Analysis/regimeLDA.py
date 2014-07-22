@@ -114,7 +114,7 @@ corpus_tfidf = tfidf[corpus]
 
 # Running LDA
 print('Running LDA...')
-nTopics = 10
+nTopics = 20
 ldaOUT = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=nTopics)
 # ldaOUT.save('ldaOUT_12Topics')
 

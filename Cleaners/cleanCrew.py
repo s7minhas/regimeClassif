@@ -139,6 +139,15 @@ def remWords(stories, cntryNames):
 			'la', 'na', 're', 'do', 'wa', 'de', 'da', 
 			'dy', 'du', 'e', 'ut', 'us', 'un', 'u', 'il',
 			'country','territory','received','report','edition',
+			'ombudsman','province','provincial','aire',
+			'franc','euro','ethiopian','shilling','dirham',
+			'antilles','canton','cantonal','indigenous',
+			'federal','island','macedonian','south','rial',
+			'grand','neo','colombian','mainland',
+			'russian','lira','ath','aire','riyal',
+			'county','lei','japanese',
+			'ruble','dust','principality','north','east',
+			'african','birr',
 			list(string.ascii_lowercase) ) )
 	remove=flatten(remove)
 	storiesNoStop = [[word for word in story if word not in remove]

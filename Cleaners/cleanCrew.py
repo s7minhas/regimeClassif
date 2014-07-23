@@ -28,6 +28,7 @@ def prepForLDA(filename, inPath, outPath):
 	stClean=lemmatize(stClean)
 	stClean=infqWrdStry(stClean)
 	stClean=infqWrdStries(stClean)
+	stClean=remWords(stClean, cntries)	
 
 	jsonDataFin=updateDict(jsonData, stClean)
 	jsonDataFin=cleanDict(jsonDataFin)
@@ -125,32 +126,33 @@ def remWords(stories, cntryNames):
 	remove=nltk.corpus.stopwords.words('english')
 	remove.extend(
 		( [x.lower() for x in cntryNames],
-			'document', 'end', 'year', 'years',
+			'document', 'end', 
+			'year', 'years','month','months',
+			'day', 'days',
 			'january','february','march','april','may',
 			'june','july','august','september','october',
 			'november','december',
 			'one','two','three','four','five','six','seven',
-			'eight','nine','ten', 'day', 'days', 'month',
-			'department','see','findings', 'months',
-			'do', 'new', 'old', 'men', 'man', 'sun',
+			'eight','nine','ten','grand',
+			'north','east','south','west',
+			'department','see','findings',
+			'new', 'old', 'men', 'man', 'sun',
 			'eye','ear','cut','although',
-			'el', 'en', 'co', 'ad', 'ed', 'al', 'au', 
-			'ex', 'in', 'go', 'et', 'id', 'ni', 'le',
-			'la', 'na', 're', 'do', 'wa', 'de', 'da', 
-			'dy', 'du', 'e', 'ut', 'us', 'un', 'u', 'il',
-			'country','territory','received','report','edition',
-			'ombudsman','province','provincial','aire',
-			'franc','euro','ethiopian','shilling','dirham',
-			'antilles','canton','cantonal','indigenous',
-			'federal','island','macedonian','south','rial',
-			'grand','neo','colombian','mainland',
-			'russian','lira','ath','aire','riyal',
-			'county','lei','japanese',
-			'ruble','dust','principality','north','east',
-			'african','birr',
-			list(string.ascii_lowercase) ) )
+			'country','received','report','edition',
+			'ombudsman',
+			'territory','province','provincial','federal',
+			'mainland','canton','cantonal','island','county',
+			'principality',
+			'riyal','franc','euro','shilling','dirham','rial',
+			'russian','lira','ruble',
+			'ethiopian','macedonian','colombian','japanese',
+			'african',
+			'aire','antilles','ath','aire','birr',
+			'indigenous','neo','lei','dust'  ) )
 	remove=flatten(remove)
 	storiesNoStop = [[word for word in story if word not in remove]
+		for story in stories]
+	storiesNoStop = [[word for word in story if len(word)>2]
 		for story in stories]
 	print('\tStop words removed...')	
 	return storiesNoStop

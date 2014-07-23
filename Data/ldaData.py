@@ -7,9 +7,16 @@ os.chdir(baseGit+'/Data')
 from analysisCrew import *
 
 ###Prepping all data
-# years=[str(x) for x in range(1999,2014)]; sources=['StateHR','FH']
-# years=[str(x) for x in range(2002,2013)]; sources=['StateHR','FH','FHpress','StateRF']
-lFiles=filesToMerge(sources=['StateHR','FH'], years=range(1999,2014), window=True)
-data=combineDicts(lFiles)
+dataForLDA(
+	filename='data_99-12_Shr-FH.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(1999,2013), 
+	srcs=['StateHR','FH'], 
+	roll=True, rsize=1)
 
-saveJSON(data, filename)
+dataForLDA(
+	filename='data_02-13_All.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(2002,2013), 
+	srcs=['StateHR','StateRF','FH','FHpress'], 
+	roll=True, rsize=1)

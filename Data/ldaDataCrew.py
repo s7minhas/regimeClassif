@@ -9,6 +9,18 @@ import csv
 baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
+def dataForLDA(filename, path, yrs, srcs, roll, rsize):
+	"""Aggregate function to prepare then save data"""
+	print 'Start data combo of: ' + ' and '.join(srcs) + \
+	' from ' + str(yrs[0]) + ' to ' + str(yrs[len(yrs)-1]) + '\n'
+	lFiles=filesToMerge(sources=srcs, years=yrs, 
+		window=roll, wdow=rsize)
+	data=combineDicts(lFiles)
+	os.chdir(path)
+	saveJSON(data, filename)
+	print 'Data combo complete for: ' + ' and '.join(srcs) + \
+	' from ' + str(yrs[0]) + ' to ' + str(yrs[len(yrs)-1]) + '\n'
+
 def fhYrFix(x):
 	"""Fix for FH year labels in filename"""
 	src=x.split('_')[0]
@@ -124,6 +136,7 @@ def combineDicts(lFiles):
 	"""Combine lists of dictionaries"""
 	finDict=[]
 	for files in lFiles:
+		print('\n\tMerging: ' + files + '\n')
 		dataFiles=[loadJSON(x) for x in files]
 
 		# Generate unique country name 
@@ -145,13 +158,12 @@ def combineDicts(lFiles):
 				base[ii]['dataClean'].extend(dictPull(ccdataFiles[jj],'dataClean')[dPos])
 				base[ii]['source']=base[ii]['source'] + '_' + dictPull(ccdataFiles[jj],'source')[dPos]
 				base[ii]['year']=base[ii]['year'] + '_' + dictPull(ccdataFiles[jj],'year')[dPos]
-		
+			print('\t\tMerged: ' + files[jj])
 		finDict.append(base)
 	return finDict
 
 def saveJSON(data, filename):
-	print '\n Data for ' + filename + ' cleaned \n'	
-	newFilename=filename.split('.')[0] + '_Clean.json'
-	f=open(newFilename, 'wb')
+	print '\n Data for ' + filename + ' prepped \n'	
+	f=open(filename, 'wb')
 	json.dump(data, f, sort_keys=True)
 	f.close()

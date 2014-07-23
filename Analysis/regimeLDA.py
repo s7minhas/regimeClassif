@@ -1,9 +1,7 @@
 # helpful packages
 import os
 import string
-from countrycode import countrycode
 from compiler.ast import flatten
-from difflib import get_close_matches
 import json
 import csv
 from gensim import corpora, models, similarities
@@ -13,13 +11,26 @@ baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
 os.chdir(baseGit+'/Analysis')
-from analysisCrew import *
 
-###Prepping all data
-# years=[str(x) for x in range(1999,2014)]; sources=['StateHR','FH']
-# years=[str(x) for x in range(2002,2013)]; sources=['StateHR','FH','FHpress','StateRF']
-lFiles=filesToMerge(sources=['StateHR','FH'], years=range(1999,2014), window=True)
-data=combineDicts(lFiles)
+def dictPull(dataDict, key):
+	"""Pull out a list of values from a 
+	dictioanry based on key"""
+	info=[]
+	for dat in dataDict:
+		if not isinstance(dat[key], list):
+			if dat[key]==u'C\xc3\xb4te d&#039;Ivoire' or dat[key]==u'C\xf4te d&#039;Ivoire':
+				info.append('Ivory Coast')
+			elif dat[key]==u'S\xe3o Tom\xe9 and Pr\xedncipe':
+				info.append('Sao Tome and Principe')
+			else:
+				info.append(dat[key].encode('utf-8'))
+		else:
+			tmp=[x.encode('utf-8') for x in dat[key]]
+			info.append(tmp)
+	return info
+
+def loadJSON(file):
+	return json.load(open(file, 'rb'))
 
 ######################
 # Loading in data

@@ -91,7 +91,7 @@ def removePunct(stories):
 	storiesNoPunct = [ re.sub(
 				r'[\x00-\x08\x0b\x0c\x0e-\x1f\x7f-\xff]', ' ', story)
 				for story in storiesNoPunct  ]
-	otherPunct=['nbsp','lsquo','rsquo','ldquo', 'rdquo','quot']
+	otherPunct=['nbsp','lsquo','rsquo','ldquo', 'rdquo','quot','eacute']
 	for slash in otherPunct:
 		storiesNoPunct=[story.replace(slash, " ") for story in storiesNoPunct]
 	print('\tPunctuation removed...')
@@ -126,7 +126,8 @@ def remWords(stories, cntryNames):
 	remove=nltk.corpus.stopwords.words('english')
 	remove.extend(
 		( [x.lower() for x in cntryNames],
-			'document', 'end', 
+			'document', 'end', 'web',
+			'examining',
 			'year', 'years','month','months',
 			'day', 'days',
 			'january','february','march','april','may',
@@ -135,6 +136,7 @@ def remWords(stories, cntryNames):
 			'one','two','three','four','five','six','seven',
 			'eight','nine','ten','grand',
 			'north','east','south','west',
+			'southeast','eastern',
 			'department','see','findings',
 			'new', 'old', 'men', 'man', 'sun',
 			'eye','ear','cut','although',
@@ -144,16 +146,16 @@ def remWords(stories, cntryNames):
 			'mainland','canton','cantonal','island','county',
 			'principality',
 			'riyal','franc','euro','shilling','dirham','rial',
-			'russian','lira','ruble',
+			'russian','lira','ruble','dinar','peso',
 			'ethiopian','macedonian','colombian','japanese',
-			'african',
+			'african','philippine',
 			'aire','antilles','ath','aire','birr',
 			'indigenous','neo','lei','dust'  ) )
 	remove=flatten(remove)
 	storiesNoStop = [[word for word in story if word not in remove]
 		for story in stories]
 	storiesNoStop = [[word for word in story if len(word)>2]
-		for story in stories]
+		for story in storiesNoStop]
 	print('\tStop words removed...')	
 	return storiesNoStop
 

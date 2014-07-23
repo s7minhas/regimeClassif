@@ -13,18 +13,40 @@ baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
 # Helpful function
-def saveDictToCSV(filename, data, keys):
-	"""filename should be string and data in dictionary format """
-	f=open(filename, 'wb')
-	writer=csv.DictWriter(f, keys )
-	writer.writer.writerow( keys )
-	writer.writerows( data  )
-	f.close()
+def fhYrFix(x):
+	"""Fix for FH year labels in filename"""
+	src=x.split('_')[0]
+	yr=x.split('_')[1]
+	if src[0:2]=='FH' and int(yr)>1999:
+		return str( int(yr)-1  )
+	else:
+		return yr
+
+def wdowYr(yr, wdow):
+	"""Helper for creating moving window"""
+	wYrs=[str(int(yr)-x) for x in range(0,wdow+1)]
+	return [x for x in wYrs if int(x)>1998]
+
+def filesToMerge(sources, years, window=False, wdow=2):
+	"""Pull out list of filenames for a
+	 particular time period"""	
+	years=[str(x) for x in years]
+	filesSrc=[f for f in os.listdir(baseDrop+'/Data/forLDA') 
+		if f.split('_')[0] in sources]
+	if window:
+		return [[f for f in filesSrc if fhYrFix(f) in wdowYr(year, wdow)]
+			for year in years]
+	else: 
+		return [[f for f in filesSrc if fhYrFix(f) in year]
+			for year in years]
 
 def loadJSON(file):
+	"""Load json files"""
 	return json.load(open(baseDrop+'/Data/forLDA/'+file, 'rb'))
 
 def dictPull(dataDict, key):
+	"""Pull out a list of values from a 
+	dictioanry based on key"""
 	info=[]
 	for dat in dataDict:
 		if not isinstance(dat[key], list):
@@ -40,6 +62,7 @@ def dictPull(dataDict, key):
 	return info
 
 def closeMatchI(string, words):
+	"""Find closest match to string in list"""
 	val=get_close_matches(string, words, n=1, cutoff=0.3)
 	return words.index(val[0])
 
@@ -55,50 +78,88 @@ def cname(data, details=False):
 			print data[ii]['name'] + ' ---> ' + cntrsClean[ii] + '\n'
 	return data
 
-def getCntries():
-	d=open(baseDrop+'/Data/Components/cntriesForAnalysis.csv', 'rb')
-	reader=csv.reader(d)
-	return [x.lower() for x in flatten([x for x in reader])]
+def getCntries(add=[]):
+	"""Pulls up a list of countries for analysis"""
+	d=open(baseDrop+'/Data/Components/cntriesForAnalysis.csv', 'rU')
+	reader=csv.reader(d, dialect=csv.excel_tab)
+	cntries=[x.lower() for x in flatten([x for x in reader])]
+	if len(add)!=0:
+		cntries.extend(add.lower())
+	return cntries	
 
-def subsetDictByCntry(data, details=False):
-	"""Remove countries"""
+def subsetDictByCntry(data, cntries=getCntries(), details=False):
+	"""Remove countries that are not in the 
+	getCntries list, this gets rid of units like
+	Palestinian territories"""
 	ndata=[]
 	for dat in data:
-		if dat['nameClean'].lower() in getCntries():
+		if dat['nameClean'].lower() in cntries:
 			ndata.append(dat)
 		else:
 			if details:
 				print dat['nameClean'] + ' not in list of cntries'
 	return ndata
 
-def baseData():
+def intersect(*d):
+	"""Find intersecting items from list of lists"""
+    sets = iter(map(set, d))
+    result = sets.next()
+    for s in sets:
+        result = result.intersection(s)
+    return result
+
+def baseData(cntries, 
+	vars=['nameClean','source','year','dataClean'], 
+	matchVar='nameClean' ):
+	"""Set up a base dataset to which
+	we can combine other lists of 
+	dictionaries"""
 	data=[]
-	for cntry in getCntries():
-		baseDict=dict.fromkeys(
-			['nameClean','source','year','dataClean'] )
-		baseDict['nameClean']=cntry
+	for cntry in cntries:
+		baseDict=dict.fromkeys( vars )
+		baseDict[matchVar]=cntry
+		baseDict['source']=''
+		baseDict['year']=''
+		baseDict['dataClean']=[]
 		data.append(baseDict)
 	return data
 
-def combineDictsBySource():
-	"""Combines values in dictionaries from different sources"""
-files=os.listdir(baseDrop+'/Data/forLDA')
-if '.DS_Store' in files: files.remove('.DS_Store')
-srcs=[x.split('_')[0] for x in files]
-yrs=[x.split('_')[1] for x in files]
+# years=[str(x) for x in range(1999,2014)]; sources=['StateHR','FH']
+# years=[str(x) for x in range(2002,2013)]; sources=['StateHR','FH','FHpress','StateRF']
+lFiles=filesToMerge(sources=['StateHR','FH'], years=range(1999,2014), window=True)
 
-# for yr in yrs:
-yr=yrs[10]
+# def combineDicts():
+# Load files
+files=lFiles[2]
+dataFiles=[loadJSON(x) for x in files]
 
-mtchs=[i for i, x in enumerate(yrs) if x in yr]
-toCombine=[files[i] for i in mtchs]
-relFiles=[loadJSON(x) for x in toCombine]
-baseData=baseData()
+# Generate unique country name 
+# and remove cntries not in polity countries list
+cdataFiles=[cname(x, details=False) for x in dataFiles]
+ccdataFiles=[subsetDictByCntry(x) for x in cdataFiles]
 
-# for file in relFiles:
-file=relFiles[0]
-cfile=cname(file, details=True)
-cfile=subsetDictByCntry(cfile)
+# Pull out intersection of countries 
+# and generate base of dataset
+dataCntries=[set(dictPull(x, 'nameClean')) for x in ccdataFiles]
+dCntries=list(set.intersection(*dataCntries))
+base=baseData(cntries=dCntries)
+
+# Match in countries from other lists
+for jj in range(0, len(ccdataFiles)):
+	for ii in range(0,len(base)):
+		cntry=base[ii]['nameClean']
+		dPos=dictPull(ccdataFiles[jj],'nameClean').index(cntry)
+		base[ii]['dataClean'].extend(dictPull(ccdataFiles[jj],'dataClean')[dPos])
+		base[ii]['source']=base[ii]['source'] + '_' + dictPull(ccdataFiles[jj],'source')[dPos]
+		base[ii]['year']=base[ii]['year'] + '_' + dictPull(ccdataFiles[jj],'year')[dPos]
+
+def saveDictToCSV(filename, data, keys):
+	"""filename should be string and data in dictionary format """
+	f=open(filename, 'wb')
+	writer=csv.DictWriter(f, keys )
+	writer.writer.writerow( keys )
+	writer.writerows( data  )
+	f.close()
 
 ######################
 # Loading in data

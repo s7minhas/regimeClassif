@@ -42,11 +42,14 @@ def filesToMerge(sources, years, window=False, wdow=2):
 	filesSrc=[f for f in os.listdir(baseDrop+'/Data/forLDA') 
 		if f.split('_')[0] in sources]
 	if window:
-		return [[f for f in filesSrc if fhYrFix(f) in wdowYr(year, wdow)]
-			for year in years]
+		toMerge=[[f for f in filesSrc if fhYrFix(f) 
+			in wdowYr(year, wdow)] for year in years]
 	else: 
-		return [[f for f in filesSrc if fhYrFix(f) in year]
+		toMerge=[[f for f in filesSrc if fhYrFix(f) in year]
 			for year in years]
+	for x in toMerge:
+		print '\t\tMerging: ' + ' and '.join(x) + '\n'
+	return toMerge
 
 def loadJSON(file):
 	"""Load json files"""
@@ -136,7 +139,7 @@ def combineDicts(lFiles):
 	"""Combine lists of dictionaries"""
 	finDict=[]
 	for files in lFiles:
-		print('\n\tMerging: ' + files + '\n')
+		print('\n\tMerging: ' + ' and '.join(files) + '\n')
 		dataFiles=[loadJSON(x) for x in files]
 
 		# Generate unique country name 
@@ -163,7 +166,7 @@ def combineDicts(lFiles):
 	return finDict
 
 def saveJSON(data, filename):
-	print '\n Data for ' + filename + ' prepped \n'	
+	print '\n Data for ' + filename + ' saved \n'	
 	f=open(filename, 'wb')
 	json.dump(data, f, sort_keys=True)
 	f.close()

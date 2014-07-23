@@ -4,7 +4,7 @@ baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
 os.chdir(baseGit+'/Data')
-from analysisCrew import *
+from ldaDataCrew import *
 
 ###Prepping all data
 dataForLDA(

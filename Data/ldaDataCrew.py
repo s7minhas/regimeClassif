@@ -5,8 +5,6 @@ from compiler.ast import flatten
 from difflib import get_close_matches
 import json
 import csv
-from gensim import corpora, models, similarities
-from operator import itemgetter
 
 baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
@@ -123,6 +121,7 @@ def baseData(cntries,
 	return data
 
 def combineDicts(lFiles):
+	"""Combine lists of dictionaries"""
 	finDict=[]
 	for files in lFiles:
 		dataFiles=[loadJSON(x) for x in files]
@@ -149,3 +148,10 @@ def combineDicts(lFiles):
 		
 		finDict.append(base)
 	return finDict
+
+def saveJSON(data, filename):
+	print '\n Data for ' + filename + ' cleaned \n'	
+	newFilename=filename.split('.')[0] + '_Clean.json'
+	f=open(newFilename, 'wb')
+	json.dump(data, f, sort_keys=True)
+	f.close()

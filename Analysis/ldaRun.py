@@ -66,7 +66,7 @@ def runLDAs(filename, nTopics=12, addClean=False, save=True):
 
 		# Obtain unit level topic classifications
 		storyData=[ {'Cntry':cntries[ii],
-					'Dates':year, 'Sources':source, 
+					'Year':year, 'Source':source, 
 					'TopicProbMix':ldaOUT[corpus[ii]],
 					'MaxTopic':max(ldaOUT[corpus[ii]],key=itemgetter(1))[0] } 
 					for ii in range(0, len(reports)) ]
@@ -78,9 +78,9 @@ def runLDAs(filename, nTopics=12, addClean=False, save=True):
 		TPCDAT=flatten(TPCDAT)
 		STRYDAT=flatten(STRYDAT)
 		saveDictToCSV( cleanName(filename, 'tpcs'), TPCDAT, 
-			['Topic', 'Terms'] )
+			['Year','Source','Topic', 'Terms'] )
 		saveDictToCSV(cleanName(filename, 'unit'), STRYDAT, 
-			['Dates','Sources','OrigStory','ProcStory','TopicProbMix','MaxTopic'] )
+			['Cntry','Year','Source','TopicProbMix','MaxTopic'] )
 	else:
 		print '\t\tReturning results as list'
 		return [TPCDAT, STRYDAT]

@@ -140,14 +140,20 @@ def remWrd(stories, wrds, keepWrds=True):
 		nStories.append(nStory)
 	return nStories
 
+# def remNouns(stories):
+# 	"""Remove proper nouns"""
+# 	allStories=list(set(flatten([x for x in stories])))
+# 	lTokens=tagger.tag(allStories)
+# 	pnouns=[tok[0] for tok in lTokens if tok[1]=='NNP']
+# 	storiesNoNoun = remWrd(stories, pnouns, keepWrds=False)
+# 	print('\tProper Nouns removed...')
+# 	return storiesNoNoun
+
 def remNouns(stories):
-	"""Remove proper nouns"""
-	allStories=list(set(flatten([x for x in stories])))
-	lTokens=tagger.tag(allStories)
-	pnouns=[tok[0] for tok in lTokens if tok[1]=='NNP']
-	storiesNoNoun = remWrd(stories, pnouns, keepWrds=False)
-	print('\tProper Nouns removed...')
-	return storiesNoNoun
+	"""remmove upper case words"""
+	print('\tUpper case words removed...')
+	return [[word for word in story if not word[0].isupper()]
+		for story in stories]
 
 def propUpper(string):
 	"""Helper to remove acronyms"""

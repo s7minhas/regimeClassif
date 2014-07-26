@@ -1,16 +1,93 @@
-# helpful packages
 import os
+import re
 import string
 from compiler.ast import flatten
 import json
 import csv
 from gensim import corpora, models, similarities
 from operator import itemgetter
+import datetime
 
-baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
-baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+#### Master function
+def runLDAs(filename, nTopics=12, addClean=False, save=True):
+	os.chdir(baseDrop+'/Data/forLDA')
+	print '\nLoading data...\n'
+	data=loadJSON(filename)
+	TPCDAT=[]
+	STRYDAT=[]	
 
-os.chdir(baseGit+'/Analysis')
+	for dataYr in data:
+
+		# Source information for dataYr
+		src=[x for x in dictPull(dataYr, 'source')[0].split('_') if len(x)>0]
+		if len(set(src))==4: source='All'
+		else: source='_'.join( set(src) )
+
+		# Year information for dataYr
+		srcPos=[i for i, x in enumerate(src) if x[0:5] == "State"]
+		yr=[x[2:4] for x in dictPull(dataYr, 'year')[0].split('_') if len(x)>0]
+		yrC=sorted( set( [yr[i] for i in srcPos] ) )
+		year='_'.join( [ str(x) for x in yrC ] )
+
+		# Pulling out relevant data
+		cntries=dictPull(dataYr, 'nameClean')
+		reports=dictPull(dataYr, 'dataClean')
+
+		# Additional cleaning
+		if addClean:
+			print 'do stuff'
+
+		# Setting up for LDA
+		dictionary = corpora.Dictionary(reports)
+		corpus = [dictionary.doc2bow(story) for story in reports]
+		tfidf = models.TfidfModel(corpus) 
+		corpusTfidf = tfidf[corpus]
+
+		# Running LDA
+		print('\t\tRunning LDA for ' + year + ' from ' + source)
+		ldaOUT = models.LdaModel(corpusTfidf, 
+			id2word=dictionary, num_topics=nTopics)
+
+		# Obtain topics
+		topics=[]
+		for topic in range(0, nTopics):
+			temp = ldaOUT.show_topic(topic, 10)
+			terms=[]
+			for term in temp:
+				terms.append(term[1])
+			topics.append([", ".join(terms)])
+
+		topicData=[ {
+					'Year':year, 'Source':source,
+					'Topic':ii,'Terms':topics[ii-1] 
+					} 
+					for ii in range(1,nTopics+1)]
+		TPCDAT.append(topicData)
+
+		# Obtain unit level topic classifications
+		storyData=[ {'Cntry':cntries[ii],
+					'Dates':year, 'Sources':source, 
+					'TopicProbMix':ldaOUT[corpus[ii]],
+					'MaxTopic':max(ldaOUT[corpus[ii]],key=itemgetter(1))[0] } 
+					for ii in range(0, len(reports)) ]
+		STRYDAT.append(storyData)
+	
+	if save:
+		print('\t\tWriting results to CSV...')
+		os.chdir(baseDrop+'/Results')
+		TPCDAT=flatten(TPCDAT)
+		STRYDAT=flatten(STRYDAT)
+		saveDictToCSV( cleanName(filename, 'tpcs'), TPCDAT, 
+			['Topic', 'Terms'] )
+		saveDictToCSV(cleanName(filename, 'unit'), STRYDAT, 
+			['Dates','Sources','OrigStory','ProcStory','TopicProbMix','MaxTopic'] )
+	else:
+		print '\t\tReturning results as list'
+		return [TPCDAT, STRYDAT]
+
+### Helpful functions
+def time():
+	print '\t\t'+datetime.datetime.now().time().isoformat()
 
 def dictPull(dataDict, key):
 	"""Pull out a list of values from a 
@@ -32,45 +109,23 @@ def dictPull(dataDict, key):
 def loadJSON(file):
 	return json.load(open(file, 'rb'))
 
-######################
-# Loading in data
-os.chdir(baseDrop+'/Data/forLDA')
-data=loadJSON('data_99-12_Shr-FH.json')
-dataYr=data[10]
-# data=loadJSON('FH_2010_Clean.json')
-storiesFin=dictPull(dataYr, 'dataClean')
+def cleanName(name, add, ext='.csv'):
+	name2=re.sub('.json',ext,name)
+	return re.sub('data',add,name2)
 
-# Setting up for LDA
-dictionary = corpora.Dictionary(storiesFin)
-corpus = [dictionary.doc2bow(story) for story in storiesFin]
-tfidf = models.TfidfModel(corpus) 
-corpus_tfidf = tfidf[corpus]
+def saveDictToCSV(filename, data, keys):
+	"""filename should be string and data in dictionary format """
+	f=open(filename, 'wb')
+	writer=csv.DictWriter(f, keys )
+	writer.writer.writerow( keys )
+	writer.writerows( data  )
+	f.close()
 
-# Running LDA
-print('Running LDA...')
-nTopics = 20
-ldaOUT = models.LdaModel(corpus_tfidf, id2word=dictionary, num_topics=nTopics)
-# ldaOUT.save('ldaOUT_12Topics')
+### Running code
+baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
+baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
-# Write topics to CSV
-print('Writing results to CSV...')
-
-topics=[]
-for topic in range(0, nTopics):
-	temp = ldaOUT.show_topic(topic, 10)
-	terms=[]
-	for term in temp:
-		terms.append(term[1])
-	topics.append([", ".join(terms)])
-
-topicData=[{'Topic':ii,'Terms':topics[ii-1]} for ii in range(1,nTopics+1)]
-print(topicData)
-saveDictToCSV('topicsLDA.csv', topicData, ['Topic', 'Terms'])
-
-# Write out unit level  topic classifications
-storyData=[ { 'Dates':dates[ii], 'Sources':sources[ii], 
-			'TopicProbMix':ldaOUT[corpus[ii]],
-			'MaxTopic':max(ldaOUT[corpus[ii]],key=itemgetter(1))[0] } 
-			for ii in range(0, len(storiesFin)) ]
-saveDictToCSV('storiesLDA.csv', storyData, 
-	['Dates','Sources','OrigStory','ProcStory','TopicProbMix','MaxTopic'] )
+results=runLDAs(filename='data_99-12_Shr-FH.json', 
+	nTopics=12, addClean=False, save=True)
+results=runLDAs(filename='data_02-12_All.json', 
+	nTopics=12, addClean=False, save=True)

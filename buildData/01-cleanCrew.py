@@ -173,7 +173,7 @@ def remCommonWords(stories, cntryNames):
 	remove=nltk.corpus.stopwords.words('english')
 	remove.extend(
 		( [x.lower() for x in cntryNames],
-			'document', 'end', 'web',
+			'document', 'end', 'web', 'facto',
 			'examining','compared','whereabouts',
 			'inspectorate','examination',
 			'year', 'years','month','months',

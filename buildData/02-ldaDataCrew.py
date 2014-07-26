@@ -188,7 +188,7 @@ dataForLDA(
 	roll=True, rsize=1)
 
 dataForLDA(
-	filename='data_02-13_All.json', 
+	filename='data_02-12_All.json', 
 	path=baseDrop+'/Data/forLDA', 
 	yrs=range(2002,2013), 
 	srcs=['StateHR','StateRF','FH','FHpress'], 

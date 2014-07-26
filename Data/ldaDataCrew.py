@@ -5,10 +5,12 @@ from compiler.ast import flatten
 from difflib import get_close_matches
 import json
 import csv
+import datetime
 
 baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
+#### Master function
 def dataForLDA(filename, path, yrs, srcs, roll, rsize):
 	"""Aggregate function to prepare then save data"""
 	print 'Start data combo of: ' + ' and '.join(srcs) + \
@@ -20,6 +22,10 @@ def dataForLDA(filename, path, yrs, srcs, roll, rsize):
 	saveJSON(data, filename)
 	print 'Data combo complete for: ' + ' and '.join(srcs) + \
 	' from ' + str(yrs[0]) + ' to ' + str(yrs[len(yrs)-1]) + '\n'
+
+### Helper functions
+def time():
+	print '\t\t\t\t'+datetime.datetime.now().time().isoformat()
 
 def fhYrFix(x):
 	"""Fix for FH year labels in filename"""
@@ -155,6 +161,7 @@ def combineDicts(lFiles):
 
 		# Match in countries from other lists
 		for jj in range(0, len(ccdataFiles)):
+			time()
 			for ii in range(0,len(base)):
 				cntry=base[ii]['nameClean']
 				dPos=dictPull(ccdataFiles[jj],'nameClean').index(cntry)
@@ -166,7 +173,23 @@ def combineDicts(lFiles):
 	return finDict
 
 def saveJSON(data, filename):
+	"""Save data to JSON"""
 	print '\n Data for ' + filename + ' saved \n'	
 	f=open(filename, 'wb')
 	json.dump(data, f, sort_keys=True)
 	f.close()
+
+### Running code
+dataForLDA(
+	filename='data_99-12_Shr-FH.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(1999,2013), 
+	srcs=['StateHR','FH'], 
+	roll=True, rsize=1)
+
+dataForLDA(
+	filename='data_02-13_All.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(2002,2013), 
+	srcs=['StateHR','StateRF','FH','FHpress'], 
+	roll=True, rsize=1)

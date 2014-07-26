@@ -1,3 +1,4 @@
+# helpful packages
 import os
 import string
 from compiler.ast import flatten
@@ -6,19 +7,38 @@ import csv
 from gensim import corpora, models, similarities
 from operator import itemgetter
 
-def saveDictToCSV(filename, data, keys):
-	"""filename should be string and data in dictionary format """
-	f=open(filename, 'wb')
-	writer=csv.DictWriter(f, keys )
-	writer.writer.writerow( keys )
-	writer.writerows( data  )
-	f.close()
+baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
+baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+
+os.chdir(baseGit+'/Analysis')
+
+def dictPull(dataDict, key):
+	"""Pull out a list of values from a 
+	dictioanry based on key"""
+	info=[]
+	for dat in dataDict:
+		if not isinstance(dat[key], list):
+			if dat[key]==u'C\xc3\xb4te d&#039;Ivoire' or dat[key]==u'C\xf4te d&#039;Ivoire':
+				info.append('Ivory Coast')
+			elif dat[key]==u'S\xe3o Tom\xe9 and Pr\xedncipe':
+				info.append('Sao Tome and Principe')
+			else:
+				info.append(dat[key].encode('utf-8'))
+		else:
+			tmp=[x.encode('utf-8') for x in dat[key]]
+			info.append(tmp)
+	return info
+
+def loadJSON(file):
+	return json.load(open(file, 'rb'))
 
 ######################
 # Loading in data
 os.chdir(baseDrop+'/Data/forLDA')
-data=loadJSON('StateHR_2006_Clean.json')
-storiesFin=dictPull(data, 'dataClean')
+data=loadJSON('data_99-12_Shr-FH.json')
+dataYr=data[10]
+# data=loadJSON('FH_2010_Clean.json')
+storiesFin=dictPull(dataYr, 'dataClean')
 
 # Setting up for LDA
 dictionary = corpora.Dictionary(storiesFin)

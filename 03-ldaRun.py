@@ -185,7 +185,12 @@ def saveDictToCSV(filename, data, keys):
 baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
-results=runLDAs(filename='data_99-12_Shr-FH.json', 
+# results=runLDAs(filename='data_99-12_Shr-FH_wdow1.json', 
+# 	nTopics=5, addClean=True, save=True)
+# results=runLDAs(filename='data_02-12_All_wdow1.json', 
+# 	nTopics=5, addClean=True, save=True)
+
+results=runLDAs(filename='data_99-12_Shr-FH_wdow2.json', 
 	nTopics=5, addClean=True, save=True)
-results=runLDAs(filename='data_02-12_All.json', 
+results=runLDAs(filename='data_02-12_All_wdow2.json', 
 	nTopics=5, addClean=True, save=True)

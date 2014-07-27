@@ -30,8 +30,8 @@ def prepForLDA(filename, inPath, outPath):
 	stClean=remCommonWords(stClean, cntries)
 	stClean=remNum(stClean)
 	stClean=lemmatize(stClean)
-	stClean=infqWrdStry(stClean)
-	stClean=infqWrdStries(stClean)
+	# stClean=infqWrdStry(stClean)
+	# stClean=infqWrdStries(stClean)
 	stClean=remCommonWords(stClean, cntries)
 	time()
 	
@@ -171,8 +171,10 @@ def remACR(stories):
 def remCommonWords(stories, cntryNames):
 	"""Remove common, irrelevant words"""
 	remove=nltk.corpus.stopwords.words('english')
+	cntCurr=['verdean', 'ariary', 'kyat', 'mexican', 'chinese', 'yen', 'uzbekistani', 'cayman', 'dollar', 'lankan', 'belarusian', 'kong', 'macedonian', 'jordanian', 'cambodian', 'lilangeni', 'polish', 'taiwan', 'mozambican', 'icelandic', 'marka', 'lats', 'turkish', 'balboa', 'ugandan', 'iraqi', 'hryvnia', 'won', 'moldovan', 'dalasi', 'somali', 'zloty', 'lira', 'east', 'argentine', 'guatemalan', 'real', 'seychellois', 'indonesian', 'hungarian', 'egyptian', 'koruna', 'kwanza', 'vanuatu', 'comorian', 'sol', 'netherlands', 'vietnamese', 'moroccan', 'malawian', 'new', 'bermudian', 'cape', 'rufiyaa', 'special', 'states', 'maldivian', 'rupiah', 'mauritanian', 'algerian', 'bosnia', 'helena', 'ouguiya', 'kenyan', 'omani', 'kr\xc3\xb3na', 'manat', 'angolan', 'tom\xc3\xa9', 'surinamese', 'saudi', 'serbian', 'metical', 'croatian', 'uruguayan', 'dong', 'vatu', 'franc', 'czech', 'malaysian', 'nepalese', 'japanese', 'cfa', 'nigerian', 'leonean', 'honduran', 'nicaraguan', 'cfp', 'c\xc3\xb3rdoba', 'riel', 'israeli', 'caribbean', 'estonian', 'guyanese', 'birr', 'tobago', 'cedi', 'loti', 'indian', 'ukrainian', 'afghani', 'lari', 'aruban', 'tugrik', 'colombian', 'malagasy', 'brunei', 'lithuanian', 'forint', 'baht', 'lek', 'nuevo', 'bolivian', 'liberian', 'armenian', 'lev', 'paraguayan', 'bhutanese', 'tanzanian', 'belize', 'naira', 'renminbi', 'kazakhstani', 'chilean', 'central', 'kroon', 'canadian', 'albanian', 'guarani', 'united', 'british', 'papua', 'barbadian', 'kuna', 'bahraini', 'antillean', 'latvian', 'romanian', 'islands', 'namibian', 'south', 'leu', 'libyan', 'sri', 'panamanian', 'ethiopian', 'denar', 'colon', 'escudo', 'congolese', 'myanma', 'ringgit', 'rican', 'swazi', 'trinidad', 'gulden', 'west', 'uae', 'nakfa', 'shilling', 'bangladeshi', 'bolivar', 'gibraltar', 'saint', 'brazilian', 'australian', 'dirham', 'rand', 'sheqel', 'krona', 'bahamian', 'bulgarian', 'tunisian', 'krone', 'ruble', 'georgian', 'sierra', 'eritrean', 'turkmen', 'somoni', 'russian', 'gambian', 'kyrgyzstani', 'haitian', 'litas', 'ghanaian', 'lebanese', 'pakistani', 'dominican', 'iranian', 'boliviano', 'pula', 'riyal', 'peso', 'solomon', 'jamaican', 'pataca', 'yemeni', 'and', 'pound', 'danish', 'peruvian', 'herzegovina', 'philippine', 'zambian', 'lesotho', 'tenge', 'sudanese', 'mongolian', 'rights', 'burundi', 'north', 'syrian', 'botswana', 'swedish', 'florin', 'kuwaiti', 'guinean', 'som', 'macanese', 'djiboutian', 'samoan', 's\xc3\xa3o', 'taka', 'norwegian', 'kina', 'konvertibilna', 'rwandan', 'azerbaijani', 'zimbabwean', 'korean', 'falkland', 'rial', 'european', 'tajikistani', 'lao', 'singapore', 'mauritian', 'kip', 'hong', 'kwacha', 'fijian', 'dram', 'gourde', 'qatari', 'afghan', 'euro', 'zealand', 'costa', 'cuban', 'pr\xc3\xadncipe', 'quetzal', 'ngultrum', 'venezuelan', 'rupee', 'thai', 'drawing', 'dinar', 'lempira', 'tala', 'african', 'swiss', 'dobra', 'leone']	
 	remove.extend(
 		( [x.lower() for x in cntryNames],
+			cntCurr, 
 			'document', 'end', 'web', 'facto',
 			'examining','compared','whereabouts',
 			'inspectorate','examination',

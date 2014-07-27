@@ -35,7 +35,8 @@ def runLDAs(filename, nTopics=12, addClean=False, save=True):
 
 		# Additional cleaning
 		if addClean:
-			print 'do stuff'
+			reports=infqWrdStry(reports)
+			reports=infqWrdStries(reports)
 
 		# Setting up for LDA
 		dictionary = corpora.Dictionary(reports)
@@ -89,6 +90,9 @@ def runLDAs(filename, nTopics=12, addClean=False, save=True):
 def time():
 	print '\t\t'+datetime.datetime.now().time().isoformat()
 
+def loadJSON(file):
+	return json.load(open(file, 'rb'))
+
 def dictPull(dataDict, key):
 	"""Pull out a list of values from a 
 	dictioanry based on key"""
@@ -106,8 +110,21 @@ def dictPull(dataDict, key):
 			info.append(tmp)
 	return info
 
-def loadJSON(file):
-	return json.load(open(file, 'rb'))
+def infqWrdStry(stories):
+	"""Remove infrequent words from a story"""
+	wordCounts=getFreqWds(stories)	
+	toKeep=freqWds(wordCounts)
+	storiesFin=remWrd(stories, toKeep, keepWrds=True)
+	print('\tRemoved words occurring infrequently within a story...')
+	return storiesFin
+
+def infqWrdStries(stories):
+	"""Remove infrequent words across stories"""
+	wordStory=getFreqWdsAll(stories)
+	freqWords=[key for key,value in wordStory.items() if value>1]
+	storiesFin=remWrd(stories, freqWords, keepWrds=True)
+	print('\tRemoved words occurring infrequently across stories...')
+	return storiesFin
 
 def cleanName(name, add, ext='.csv'):
 	name2=re.sub('.json',ext,name)
@@ -126,6 +143,6 @@ baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
 results=runLDAs(filename='data_99-12_Shr-FH.json', 
-	nTopics=12, addClean=False, save=True)
+	nTopics=8, addClean=True, save=True)
 results=runLDAs(filename='data_02-12_All.json', 
-	nTopics=12, addClean=False, save=True)
+	nTopics=8, addClean=True, save=True)

@@ -2,6 +2,7 @@ import os
 import re
 import string
 from compiler.ast import flatten
+from collections import defaultdict
 import json
 import csv
 from gensim import corpora, models, similarities
@@ -110,6 +111,23 @@ def dictPull(dataDict, key):
 			info.append(tmp)
 	return info
 
+def remWrd(stories, wrds, keepWrds=True):
+	"""Fast way to remove items in list from
+	another list"""
+	nStories=[]
+	for ii in range(0,len(stories)):
+		story=stories[ii]
+		if len(wrds)==len(stories):
+			sWrds=set(wrds[ii]).intersection(story)
+		else:
+			sWrds=set(wrds).intersection(story)
+		if keepWrds:
+			nStory=[word for word in story if word in sWrds]
+		else:
+			nStory=[word for word in story if word not in sWrds]			
+		nStories.append(nStory)
+	return nStories
+
 def getFreqWds(stories):
 	"""Calculate frequency of words
 	within a story"""
@@ -140,7 +158,7 @@ def infqWrdStry(stories):
 	wordCounts=getFreqWds(stories)	
 	toKeep=freqWds(wordCounts)
 	storiesFin=remWrd(stories, toKeep, keepWrds=True)
-	print('\tRemoved words occurring infrequently within a story...')
+	print('\t\t\tRemoved words occurring infrequently within a story...')
 	return storiesFin
 
 def infqWrdStries(stories):
@@ -148,7 +166,7 @@ def infqWrdStries(stories):
 	wordStory=getFreqWdsAll(stories)
 	freqWords=[key for key,value in wordStory.items() if value>1]
 	storiesFin=remWrd(stories, freqWords, keepWrds=True)
-	print('\tRemoved words occurring infrequently across stories...')
+	print('\t\t\tRemoved words occurring infrequently across stories...')
 	return storiesFin
 
 def cleanName(name, add, ext='.csv'):

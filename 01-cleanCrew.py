@@ -7,7 +7,6 @@ import os
 import re
 import json
 import string
-from collections import defaultdict
 from compiler.ast import flatten
 import datetime
 
@@ -30,8 +29,6 @@ def prepForLDA(filename, inPath, outPath):
 	stClean=remCommonWords(stClean, cntries)
 	stClean=remNum(stClean)
 	stClean=lemmatize(stClean)
-	# stClean=infqWrdStry(stClean)
-	# stClean=infqWrdStries(stClean)
 	stClean=remCommonWords(stClean, cntries)
 	time()
 	
@@ -225,47 +222,6 @@ def lemmatize(stories):
 		for story in stories]
 	print('\tLemmatized...')
 	return storiesLemm
-
-def getFreqWds(stories):
-	"""Calculate frequency of words
-	within a story"""
-	wordCounts=[]
-	for story in stories:
-		wordStory=defaultdict(int)
-		for word in story:
-			wordStory[word]+=1
-		wordCounts.append(wordStory)
-	return wordCounts
-
-def getFreqWdsAll(stories):
-	"""Calculate frequency of words
-	across stories"""
-	wordStory=defaultdict(int)
-	for story in stories:
-		for word in list(set(story)):
-			wordStory[word]+=1
-	return wordStory	
-
-def freqWds(wordCounts, fval=1):
-	"""Return list of frequently used words in texts"""
-	return [[key for key,value in wordFreq.items() if value>fval]
-		for wordFreq in wordCounts]
-
-def infqWrdStry(stories):
-	"""Remove infrequent words from a story"""
-	wordCounts=getFreqWds(stories)	
-	toKeep=freqWds(wordCounts)
-	storiesFin=remWrd(stories, toKeep, keepWrds=True)
-	print('\tRemoved words occurring infrequently within a story...')
-	return storiesFin
-
-def infqWrdStries(stories):
-	"""Remove infrequent words across stories"""
-	wordStory=getFreqWdsAll(stories)
-	freqWords=[key for key,value in wordStory.items() if value>1]
-	storiesFin=remWrd(stories, freqWords, keepWrds=True)
-	print('\tRemoved words occurring infrequently across stories...')
-	return storiesFin
 
 def updateDict(jsonListDict, storiesClean):
 	"""Update dictionary with new data as key, value"""

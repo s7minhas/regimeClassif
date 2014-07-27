@@ -37,7 +37,7 @@ def runLDAs(filename, nTopics=12, addClean=False, save=True):
 		# Additional cleaning
 		if addClean:
 			reports=infqWrdStry(reports)
-			reports=infqWrdStries(reports)
+			# reports=infqWrdStries(reports)
 
 		# Setting up for LDA
 		dictionary = corpora.Dictionary(reports)
@@ -158,7 +158,7 @@ def infqWrdStry(stories):
 	wordCounts=getFreqWds(stories)	
 	toKeep=freqWds(wordCounts)
 	storiesFin=remWrd(stories, toKeep, keepWrds=True)
-	print('\t\t\tRemoved words occurring infrequently within a story...')
+	print('\t\t\tRemoved words occurring infrequently...')
 	return storiesFin
 
 def infqWrdStries(stories):
@@ -186,6 +186,6 @@ baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
 results=runLDAs(filename='data_99-12_Shr-FH.json', 
-	nTopics=8, addClean=True, save=True)
+	nTopics=5, addClean=True, save=True)
 results=runLDAs(filename='data_02-12_All.json', 
-	nTopics=8, addClean=True, save=True)
+	nTopics=5, addClean=True, save=True)

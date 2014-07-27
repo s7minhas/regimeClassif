@@ -110,6 +110,31 @@ def dictPull(dataDict, key):
 			info.append(tmp)
 	return info
 
+def getFreqWds(stories):
+	"""Calculate frequency of words
+	within a story"""
+	wordCounts=[]
+	for story in stories:
+		wordStory=defaultdict(int)
+		for word in story:
+			wordStory[word]+=1
+		wordCounts.append(wordStory)
+	return wordCounts
+
+def getFreqWdsAll(stories):
+	"""Calculate frequency of words
+	across stories"""
+	wordStory=defaultdict(int)
+	for story in stories:
+		for word in list(set(story)):
+			wordStory[word]+=1
+	return wordStory	
+
+def freqWds(wordCounts, fval=1):
+	"""Return list of frequently used words in texts"""
+	return [[key for key,value in wordFreq.items() if value>fval]
+		for wordFreq in wordCounts]
+
 def infqWrdStry(stories):
 	"""Remove infrequent words from a story"""
 	wordCounts=getFreqWds(stories)	

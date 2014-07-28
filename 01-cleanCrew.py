@@ -194,16 +194,21 @@ def remCommonWords(stories, cntryNames):
 			'territory','province','provincial','federal',
 			'mainland','canton','cantonal','island','county',
 			'principality','prefecture','governorates',
-			'governorate',
+			'governorate','oblast','oblasts',
 			'municipality','directorate','district','region',
 			'riyal','franc','euro','shilling','dirham','rial',
 			'russian','lira','ruble','dinar','peso','rupee',
-			'koruna','dollar',
+			'koruna','dollar','peseta','reais','ylang',
+			'emalangeni',
 			'ethiopian','macedonian','colombian','japanese',
-			'kunas','restaveks','bidoon',
+			'kunas','restaveks','restavek',
+			'bidoon','cordoba','kanun','sjambok',
+			'cocaleros','bateyes','takrima','lobola',
 			'african','philippine','emirate','djamena',
+			'zquez','dji','kou','ndez','ada','soum',
+			'nchez','sub','lamibe','iar','los','url',
 			'aire','antilles','ath','aire','birr','del',
-			'indigenous','neo','lei','dust'  ) )
+			'indigenous','neo','lei','dust','non','bin','kou','rez'  ) )
 	remove=flatten(remove)
 	storiesNoStop = remWrd(stories, remove, keepWrds=False)
 	storiesNoStop = [[word for word in story if len(word)>2]

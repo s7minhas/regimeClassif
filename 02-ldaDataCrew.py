@@ -180,19 +180,33 @@ def saveJSON(data, filename):
 	f.close()
 
 ### Running code
-# dataForLDA(
-# 	filename='data_99-12_Shr-FH_wdow1.json', 
-# 	path=baseDrop+'/Data/forLDA', 
-# 	yrs=range(1999,2013), 
-# 	srcs=['StateHR','FH'], 
-# 	roll=True, rsize=1)
+dataForLDA(
+	filename='data_99-12_Shr-FH_wdow0.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(1999,2013), 
+	srcs=['StateHR','FH'], 
+	roll=False, rsize=0)
 
-# dataForLDA(
-# 	filename='data_02-12_All_wdow1.json', 
-# 	path=baseDrop+'/Data/forLDA', 
-# 	yrs=range(2002,2013), 
-# 	srcs=['StateHR','StateRF','FH','FHpress'], 
-# 	roll=True, rsize=1)
+dataForLDA(
+	filename='data_02-12_All_wdow0.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(2002,2013), 
+	srcs=['StateHR','StateRF','FH','FHpress'], 
+	roll=False, rsize=0)
+
+dataForLDA(
+	filename='data_99-12_Shr-FH_wdow1.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(1999,2013), 
+	srcs=['StateHR','FH'], 
+	roll=True, rsize=1)
+
+dataForLDA(
+	filename='data_02-12_All_wdow1.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(2002,2013), 
+	srcs=['StateHR','StateRF','FH','FHpress'], 
+	roll=True, rsize=1)
 
 dataForLDA(
 	filename='data_99-12_Shr-FH_wdow2.json', 
@@ -207,3 +221,17 @@ dataForLDA(
 	yrs=range(2002,2013), 
 	srcs=['StateHR','StateRF','FH','FHpress'], 
 	roll=True, rsize=2)
+
+dataForLDA(
+	filename='data_99-12_Shr-FH_wdow3.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(1999,2013), 
+	srcs=['StateHR','FH'], 
+	roll=True, rsize=3)
+
+dataForLDA(
+	filename='data_02-12_All_wdow3.json', 
+	path=baseDrop+'/Data/forLDA', 
+	yrs=range(2002,2013), 
+	srcs=['StateHR','StateRF','FH','FHpress'], 
+	roll=True, rsize=3)

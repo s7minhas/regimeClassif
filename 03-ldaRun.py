@@ -10,7 +10,10 @@ from operator import itemgetter
 import datetime
 
 #### Master function
-def runLDAs(filename, nTopics=12, addClean=False, save=True):
+def runLDAs(filename, nTopics=12, save=True, 
+	addClean=False, removeWords=False, rWrds=[]):
+	"""Runs LDA, saves results, and contains 
+	options to  perform additional cleaning """
 	os.chdir(baseDrop+'/Data/forLDA')
 	print '\nLoading data...\n'
 	data=loadJSON(filename)
@@ -38,6 +41,10 @@ def runLDAs(filename, nTopics=12, addClean=False, save=True):
 		if addClean:
 			reports=infqWrdStry(reports)
 			# reports=infqWrdStries(reports)
+
+		# Remove extra words
+		if removeWords:
+			reports = remWrd(reports, rWrds, keepWrds=False)
 
 		# Setting up for LDA
 		dictionary = corpora.Dictionary(reports)
@@ -185,12 +192,45 @@ def saveDictToCSV(filename, data, keys):
 baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
-# results=runLDAs(filename='data_99-12_Shr-FH_wdow1.json', 
-# 	nTopics=5, addClean=True, save=True)
-# results=runLDAs(filename='data_02-12_All_wdow1.json', 
-# 	nTopics=5, addClean=True, save=True)
+uselessWrds=[]
+numTopics=21
+
+results=runLDAs(filename='data_99-12_Shr-FH_wdow0.json', 
+	nTopics=numTopics, 
+	save=True, addClean=False, 
+	removeWords=False, rWrds=uselessWrds)
+
+results=runLDAs(filename='data_02-12_All_wdow0.json', 
+	nTopics=numTopics, 
+	save=True, addClean=False, 
+	removeWords=False, rWrds=uselessWrds)
+
+results=runLDAs(filename='data_99-12_Shr-FH_wdow1.json', 
+	nTopics=numTopics, 
+	save=True, addClean=False, 
+	removeWords=False, rWrds=uselessWrds)
+
+results=runLDAs(filename='data_02-12_All_wdow1.json', 
+	nTopics=numTopics, 
+	save=True, addClean=False, 
+	removeWords=False, rWrds=uselessWrds)
 
 results=runLDAs(filename='data_99-12_Shr-FH_wdow2.json', 
-	nTopics=5, addClean=True, save=True)
+	nTopics=numTopics, 
+	save=True, addClean=False, 
+	removeWords=False, rWrds=uselessWrds)
+
 results=runLDAs(filename='data_02-12_All_wdow2.json', 
-	nTopics=5, addClean=True, save=True)
+	nTopics=numTopics, 
+	save=True, addClean=False, 
+	removeWords=False, rWrds=uselessWrds)
+
+results=runLDAs(filename='data_99-12_Shr-FH_wdow3.json', 
+	nTopics=numTopics, 
+	save=True, addClean=False, 
+	removeWords=False, rWrds=uselessWrds)
+
+results=runLDAs(filename='data_02-12_All_wdow3.json', 
+	nTopics=numTopics, 
+	save=True, addClean=False, 
+	removeWords=False, rWrds=uselessWrds)

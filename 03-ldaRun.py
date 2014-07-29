@@ -195,42 +195,42 @@ baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 uselessWrds=[]
 numTopics=3
 
-results=runLDAs(filename='data_99-12_Shr-FH_wdow0.json', 
+runLDAs(filename='data_99-12_Shr-FH_wdow0.json', 
 	nTopics=numTopics, 
 	save=True, addClean=False, 
 	removeWords=False, rWrds=uselessWrds)
 
-results=runLDAs(filename='data_02-12_All_wdow0.json', 
+runLDAs(filename='data_02-12_All_wdow0.json', 
 	nTopics=numTopics, 
 	save=True, addClean=False, 
 	removeWords=False, rWrds=uselessWrds)
 
-results=runLDAs(filename='data_99-12_Shr-FH_wdow1.json', 
+runLDAs(filename='data_99-12_Shr-FH_wdow1.json', 
 	nTopics=numTopics, 
 	save=True, addClean=False, 
 	removeWords=False, rWrds=uselessWrds)
 
-results=runLDAs(filename='data_02-12_All_wdow1.json', 
+runLDAs(filename='data_02-12_All_wdow1.json', 
 	nTopics=numTopics, 
 	save=True, addClean=False, 
 	removeWords=False, rWrds=uselessWrds)
 
-results=runLDAs(filename='data_99-12_Shr-FH_wdow2.json', 
+runLDAs(filename='data_99-12_Shr-FH_wdow2.json', 
 	nTopics=numTopics, 
 	save=True, addClean=False, 
 	removeWords=False, rWrds=uselessWrds)
 
-results=runLDAs(filename='data_02-12_All_wdow2.json', 
+runLDAs(filename='data_02-12_All_wdow2.json', 
 	nTopics=numTopics, 
 	save=True, addClean=False, 
 	removeWords=False, rWrds=uselessWrds)
 
-results=runLDAs(filename='data_99-12_Shr-FH_wdow3.json', 
+runLDAs(filename='data_99-12_Shr-FH_wdow3.json', 
 	nTopics=numTopics, 
 	save=True, addClean=False, 
 	removeWords=False, rWrds=uselessWrds)
 
-results=runLDAs(filename='data_02-12_All_wdow3.json', 
+runLDAs(filename='data_02-12_All_wdow3.json', 
 	nTopics=numTopics, 
 	save=True, addClean=False, 
 	removeWords=False, rWrds=uselessWrds)

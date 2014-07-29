@@ -193,7 +193,7 @@ baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
 baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
 
 uselessWrds=[]
-numTopics=21
+numTopics=3
 
 results=runLDAs(filename='data_99-12_Shr-FH_wdow0.json', 
 	nTopics=numTopics, 

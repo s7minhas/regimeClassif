@@ -93,9 +93,6 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	sys.stdout = orig_stdout
 	##### 
 
-# labelFile='demData_99-13.csv'
-# labelFile='mmpData_99-10.csv'
-
 runAnalysis(
 	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,

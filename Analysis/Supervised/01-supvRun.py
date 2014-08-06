@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import metrics
 from scipy.sparse import csr_matrix, hstack
+from scipy.stats import describe
 
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.svm import LinearSVC
@@ -80,16 +81,18 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	os.chdir(baseDrop+'/Results/Supervised')
 	outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
 	orig_stdout = sys.stdout	
-	f=open(outName, 'w')
-	sys.stdout=f
-	print '\nTrain Data: ' + trainFilename
-	print 'Test Data: ' + testFilename + '\n'
-	print '\nTrain Data Rows: ' + str(xTrain.shape[0])
-	print 'Test Data Rows: ' + str(xTest.shape[0]) + '\n'	
+	out=open(outName, 'w')
+	sys.stdout=out
+	print '\nTrain Data from: ' + trainFilename
+	print '\t\tTrain Data Cases: ' + str(xTrain.shape[0])
+	print '\t\tMean of y in train: ' + round(describe(yTrain)[2],3) + '\n'
+	print 'Test Data from: ' + testFilename
+	print '\t\tTest Data Cases: ' + str(xTest.shape[0])	
+	print '\t\tMean of y in test: ' + round(describe(yTest)[2],3) + '\n'
 	prStats('Naive Bayes', yTest, yPredNB)
 	prStats('SVM', yTest, yPredSVM)
 	# prStats('Logit', yTest, yPredLogit)
-	f.close()
+	out.close()
 	sys.stdout = orig_stdout
 	##### 
 

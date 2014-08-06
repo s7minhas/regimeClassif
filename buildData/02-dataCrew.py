@@ -196,16 +196,30 @@ pathOut=baseDrop+'/Data/forSupv'
 # 	srcs=['StateHR','StateRF','FH','FHpress'], 
 # 	roll=False, rsize=0)
 
+# dataForLDA(
+# 	filename='train_99-08_Shr-FH_wdow0.json', 
+# 	path=pathOut, 
+# 	yrs=range(1999,2009),
+# 	srcs=['StateHR','FH'], 
+# 	roll=False, rsize=0)
+
+# dataForLDA(
+# 	filename='test_09-13_Shr-FH_wdow0.json', 
+# 	path=pathOut, 
+# 	yrs=range(2009,2014), 
+# 	srcs=['StateHR','FH'], 
+# 	roll=False, rsize=0)
+
 dataForLDA(
-	filename='train_99-08_Shr-FH_wdow0.json', 
+	filename='train_99-06_Shr-FH_wdow0.json', 
 	path=pathOut, 
-	yrs=range(1999,2009),
+	yrs=range(1999,2007),
 	srcs=['StateHR','FH'], 
 	roll=False, rsize=0)
 
 dataForLDA(
-	filename='test_09-13_Shr-FH_wdow0.json', 
+	filename='test_07-10_Shr-FH_wdow0.json', 
 	path=pathOut, 
-	yrs=range(2009,2014), 
+	yrs=range(2007,2011), 
 	srcs=['StateHR','FH'], 
 	roll=False, rsize=0)

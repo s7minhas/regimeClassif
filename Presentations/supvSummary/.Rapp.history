@@ -1,0 +1,1375 @@
+require(MASS)#
+set.seed('6886')#
+Sigma <- matrix(c(10,-14,-14,50),2,2)#
+Sigma[1,2]/(sqrt(Sigma[1,1])*sqrt(Sigma[2,2])) # correlation coefficient#
+dat=mvrnorm(n=100, c(0,200), Sigma)#
+# creating confound#
+z=apply(dat,1, function(x) FUN=ifelse(x[1]>-1,rbinom(1,1,0.01), rbinom(1,1,0.99)))#
+z[z==1]=4#
+z[z==0]=1#
+zCol=z; zCol[zCol==4]='darkgreen'; zCol[zCol==1]='darkred'#
+#
+plot(dat[,1],dat[,2], pch=z, las=1, xlim=c(-10,10), xlab='Polity Score', ylab='Number of Labor Protests', col=zCol)#
+abline( lm( dat[,2]~dat[,1] ) , lty=3)#
+legend('topright', c('Growth','Recession'), pch=c(4,1), col=zCol)
+require(MASS)#
+set.seed('6886')#
+Sigma <- matrix(c(10,-14,-14,50),2,2)#
+Sigma[1,2]/(sqrt(Sigma[1,1])*sqrt(Sigma[2,2])) # correlation coefficient#
+dat=mvrnorm(n=100, c(0,200), Sigma)#
+# creating confound#
+z=apply(dat,1, function(x) FUN=ifelse(x[2]>200,rbinom(1,1,0.01), rbinom(1,1,0.99)))#
+z[z==1]=4#
+z[z==0]=1#
+zCol=z; zCol[zCol==4]='darkgreen'; zCol[zCol==1]='darkred'#
+#
+plot(dat[,1],dat[,2], pch=z, las=1, xlim=c(-10,10), xlab='Polity Score', ylab='Number of Labor Protests', col=zCol)#
+abline( lm( dat[,2]~dat[,1] ) , lty=3)#
+legend('topright', c('Growth','Recession'), pch=c(4,1), col=zCol)
+require(MASS)#
+set.seed('6886')#
+Sigma <- matrix(c(10,-14,-14,50),2,2)#
+Sigma[1,2]/(sqrt(Sigma[1,1])*sqrt(Sigma[2,2])) # correlation coefficient#
+dat=mvrnorm(n=100, c(0,200), Sigma)#
+# creating confound#
+z=apply(dat,1, function(x) FUN=ifelse(x[2]>200,rbinom(1,1,0.05), rbinom(1,1,0.95)))#
+z[z==1]=4#
+z[z==0]=1#
+zCol=z; zCol[zCol==4]='darkgreen'; zCol[zCol==1]='darkred'#
+#
+plot(dat[,1],dat[,2], pch=z, las=1, xlim=c(-10,10), xlab='Polity Score', ylab='Number of Labor Protests', col=zCol)#
+abline( lm( dat[,2]~dat[,1] ) , lty=3)#
+legend('topright', c('Growth','Recession'), pch=c(4,1), col=zCol)
+require(MASS)#
+set.seed('6886')#
+Sigma <- matrix(c(10,-14,-14,50),2,2)#
+Sigma[1,2]/(sqrt(Sigma[1,1])*sqrt(Sigma[2,2])) # correlation coefficient#
+dat=mvrnorm(n=100, c(0,20), Sigma)#
+# creating confound#
+z=apply(dat,1, function(x) FUN=ifelse(x[2]>200,rbinom(1,1,0.05), rbinom(1,1,0.95)))#
+z[z==1]=4#
+z[z==0]=1#
+zCol=z; zCol[zCol==4]='darkgreen'; zCol[zCol==1]='darkred'#
+#
+plot(dat[,1],dat[,2], pch=z, las=1, xlim=c(-10,10), xlab='Polity Score', ylab='Number of Labor Protests', col=zCol)#
+abline( lm( dat[,2]~dat[,1] ) , lty=3)#
+legend('topright', c('Growth','Recession'), pch=c(4,1), col=zCol)
+require(MASS)#
+set.seed('6886')#
+Sigma <- matrix(c(10,-14,-14,50),2,2)#
+Sigma[1,2]/(sqrt(Sigma[1,1])*sqrt(Sigma[2,2])) # correlation coefficient#
+dat=mvrnorm(n=100, c(0,20), Sigma)#
+# creating confound#
+z=apply(dat,1, function(x) FUN=ifelse(x[2]>20,rbinom(1,1,0.05), rbinom(1,1,0.95)))#
+z[z==1]=4#
+z[z==0]=1#
+zCol=z; zCol[zCol==4]='darkgreen'; zCol[zCol==1]='darkred'#
+#
+plot(dat[,1],dat[,2], pch=z, las=1, xlim=c(-10,10), xlab='Polity Score', ylab='Number of Labor Protests', col=zCol)#
+abline( lm( dat[,2]~dat[,1] ) , lty=3)#
+legend('topright', c('Growth','Recession'), pch=c(4,1), col=zCol)
+require(MASS)#
+set.seed('6886')#
+Sigma <- matrix(c(10,-13,-13,50),2,2)#
+Sigma[1,2]/(sqrt(Sigma[1,1])*sqrt(Sigma[2,2])) # correlation coefficient#
+dat=mvrnorm(n=100, c(0,20), Sigma)#
+# creating confound#
+z=apply(dat,1, function(x) FUN=ifelse(x[2]>20,rbinom(1,1,0.05), rbinom(1,1,0.95)))#
+z[z==1]=4#
+z[z==0]=1#
+zCol=z; zCol[zCol==4]='darkgreen'; zCol[zCol==1]='darkred'#
+#
+plot(dat[,1],dat[,2], pch=z, las=1, xlim=c(-10,10), xlab='Polity Score', ylab='Number of Labor Protests', col=zCol)#
+abline( lm( dat[,2]~dat[,1] ) , lty=3)#
+legend('topright', c('Growth','Recession'), pch=c(4,1), col=zCol)
+install.packages('qgraph')
+install.packages('rms')
+require(Amelia)
+?mi.meld
+load("/Users/janus829/Dropbox/Research/WardProjects/bitFormation/Data/Legacy/cumulBITsList_FiveYr.rda")
+install.packages('HiveR')
+require(HiveR)
+library(HiveR)
+install.packages('tcltk')
+install.packages('tcltk2')
+require(HiveR)
+update.packages()
+y
+install.packages('HiveR')
+library(HiveR)
+library('HiveR')
+require(HivR)
+require(HiveR)
+install.packages("devtools")#
+library("devtools")#
+install_github(repo = "HiveR", username = "bryanhanson", ref = "master")#
+library("HiveR")
+library(HiveR)
+install.packages('HiveR')
+library(HiveR)
+update.packages()
+y
+y#
+y
+install.packages('lm34')
+install.packages('lme4')
+install.packages('lme4a')
+install.packages('latentnet')
+require(latentnet)
+data(davis)
+ls()
+plot(davis)
+summary(davis)
+davis.fit<-ergmm(davis~euclidean(d=2,G=2)+rsociality)#
+plot(davis.fit,pie=TRUE,rand.eff="sociality")
+davis.fit<-ergmm(davis~euclidean(d=3,G=2)+rsociality)#
+plot(davis.fit,pie=TRUE,rand.eff="sociality")
+davis.fit<-ergmm(davis~euclidean(d=4,G=2)+rsociality)#
+plot(davis.fit,pie=TRUE,rand.eff="sociality")
+davis.fit<-ergmm(davis~euclidean(d=2,G=4)+rsociality)#
+plot(davis.fit,pie=TRUE,rand.eff="sociality")
+install.packages('png')
+exp(-4)/(1+exp(-4))
+require(icews)
+require(wicews)
+data(icews)
+help(icews)
+install.packages('FintIt')
+?install.packages('FindIt')
+install.packages('FindIt')
+i=0#
+x=1#
+while(x==0){#
+	i=i+1#
+	print(i)#
+	if(i==10){x=0}#
+}
+i=0
+x=1
+while(x==1){i=i+1; print(i); if(i==10){x=0}}
+install.packages('RMySQL')
+require(RMySQL)
+m <- dbDriver("MySQL")
+m
+con = dbConnect(drv, user="s133cs", dbname="BaseballDataBank", host="statdocs.berkeley.edu")
+require(RMySQL)#
+#
+drv <- dbDriver("MySQL")#
+con = dbConnect(drv, user="s133cs", dbname="BaseballDataBank", host="statdocs.berkeley.edu")
+require(wicews)
+help(icews)
+require(igraph)
+?get.edge.attribute
+install.packages('survAUC')
+install.packages('survcomp')
+source("http://bioconductor.org/biocLite.R")
+biocLite("survcomp")
+require(CRISP)
+help(CRISP)
+ukWrds=('political', 'highlighted', 'implementation', 'peace', 'agreement', 'devolution', 'legislative', 'power', 'part', 'overall', 'agenda', 'modernize', 'traditional', 'political', 'system', 'hereditary', 'peer', 'chamber', 'government', 'command', 'seat', 'majority', 'parliament', 'enjoys', 'highest', 'popularity', 'rating', 'history', 'government', 'implement', 'political', 'agenda', 'allegation', 'corruption', 'politician', 'including', 'close', 'prime', 'minister', 'encompasses', 'separate', 'parliament', 'elected', 'member', 'vote', 'single', 'member', 'hereditary', 'appointed', 'member', 'cabinet', 'minister', 'appointed', 'majority', 'party', 'exercise', 'executive', 'power', 'party', 'leader', 'support', 'form', 'government', 'called', 'past', 'style', 'position', 'number', 'issue', 'general', 'election', 'government', 'continues', 'along', 'traditional', 'policy', 'taking', 'office', 'tax', 'policy', 'devolved', 'policy', 'imposed', 'strict', 'limit', 'also', 'minimum', 'wage', 'trade', 'union',
+'parliamentary', 'majority', 'successfully', 'number', 'reform', 'power', 'took', 'place', 'establishing', 'legislature', 'member', 'parliament', 'member', 'assembly', 'exercise', 'control', 'health', 'education', 'housing', 'foreign', 'defense', 'economic', 'policy', 'remain', 'parliamentary', 'control', 'dominated', 'parliamentary', 'election', 'government', 'carried', 'sweeping', 'reform', 'measure', 'member', 'hereditary', 'peer', 'lost', 'life', 'peer', 'along', 'remaining', 'remain', 'reform', 'chamber', 'significant', 'political', 'power', 'act', 'influence', 'government', 'announced', 'seat', 'member', 'assembly', 'scheduled', 'continued', 'make', 'left', 'wing', 'join', 'pro', 'campaign', 'government', 'still', 'rule', 'single', 'current', 'parliamentary', 'term', 'likely', 'referendum', 'member', 'based', 'power', 'parliament', 'ending', 'direct', 'rule', 'relation', 'power', 'arrangement', 'political', 'wing', 'stem', 'acceptance', 'power', 'sharing', 'arrangement', 'agree', 'timetable', 'decomm
+issioning', 'arm', 'assembly', 'elected', 'representation', 'establishes', 'council', 'consult', 'matter', 'concern', 'establishes', 'council', 'representative', 'particular', 'policy', 'issue', 'political', 'misconduct', 'since', 'election', 'trade', 'chief', 'resigned', 'late', 'revealed', 'accepted', 'loan', 'time', 'disclosure', 'investigation', 'office', 'corruption', 'also', 'resigned', 'affair', 'forced', 'leaked', 'loan', 'allegation', 'impropriety', 'apparently', 'taken', 'popularity', 'highest', 'approval', 'rating', 'prime', 'minister', 'history', 'change', 'government', 'registered', 'government', 'include', 'former', 'citizen', 'resident', 'subject', 'voting', 'emigration', 'legislature', 'authority', 'matter', 'regional', 'importance', 'education', 'health', 'economic', 'matter', 'parliament', 'limited', 'power', 'tax', 'government', 'hereditary', 'peer', 'critic', 'charged', 'reform', 'arrangement', 'election', 'government', 'house', 'peer', 'half', 'member', 'government', 'written', 'civil',
+'criticized', 'legal', 'attempt', 'combat', 'crime', 'terrorism', 'dangerous', 'freedom', 'renewed', 'every', 'suspect', 'detained', 'without', 'charge', 'legal', 'representation', 'allows', 'jury', 'guilt', 'defendant', 'silence', 'bombing', 'killed', 'people', 'government', 'called', 'emergency', 'session', 'parliament', 'law', 'history', 'law', 'make', 'possible', 'suspected', 'terrorist', 'senior', 'police', 'officer', 'allow', 'security', 'force', 'seize', 'property', 'known', 'terrorist', 'announced', 'set', 'proposal', 'modernize', 'make', 'proposal', 'definition', 'terrorism', 'could', 'political', 'use', 'violence', 'leader', 'proposal', 'would', 'political', 'activity', 'bill', 'also', 'grant', 'wider', 'power', 'police', 'seize', 'drug', 'case', 'government', 'passed', 'law', 'act', 'public', 'body', 'act', 'accordance', 'convention', 'allows', 'citizen', 'take', 'alleged', 'violation', 'convention', 'court', 'defense', 'action', 'homosexual', 'serving', 'armed', 'force', 'ruled', 'ban', 'gay',
+'military', 'unlawful', 'citizen', 'sentenced', 'life', 'prison', 'term', 'role', 'killing', 'first', 'person', 'tried', 'court', 'moved', 'extradite', 'former', 'face', 'charge', 'torture', 'murder', 'human', 'violation', 'high', 'court', 'set', 'date', 'appeal', 'process', 'government', 'issued', 'found', 'police', 'force', 'racism', 'stem', 'complaint', 'police', 'harassment', 'black', 'specific', 'case', 'black', 'stabbed', 'death', 'group', 'white', 'youth', 'inquiry', 'crime', 'said', 'police', 'recommends', 'setting', 'recruitment', 'target', 'black', 'officer', 'police', 'public', 'body', 'police', 'force', 'greater', 'public', 'mostly', 'private', 'press', 'subject', 'strict', 'law', 'medium', 'privately', 'owned', 'independent', 'many', 'national', 'daily', 'newspaper', 'aligned', 'political', 'party', 'run', 'half', 'electronic', 'medium', 'funded', 'government', 'independent', 'ordered', 'based', 'language', 'channel', 'cease', 'call', 'violence', 'language', 'station', 'license', 'revoked', 'au
+thority', 'name', 'secret', 'intelligence', 'former', 'government', 'introduced', 'draft', 'bill', 'public', 'access', 'wide', 'range', 'information', 'previously', 'denied', 'including', 'police', 'data', 'bill', 'including', 'information', 'regarding', 'national', 'security', 'defense', 'international', 'resolution', 'safety', 'individual', 'public', 'interest', 'law', 'enforcement', 'worker', 'free', 'form', 'join', 'independent', 'trade', 'union', 'bill', 'worker', 'improve', 'union', 'recognition', 'includes', 'improvement', 'maternity', 'leave', 'provision', 'equality', 'part', 'time', 'full', 'time', 'worker', 'higher', 'unfair', 'dismissal', 'also', 'grant', 'union', 'automatic', 'recognition', 'percent', 'worker', 'workplace', 'union', 'member', 'percent', 'worker', 'support', 'recognition', 'national', 'minimum', 'wage', 'policy', 'introduced', 'establishing', 'pay', 'based', 'age', 'immigration', 'policy', 'continued', 'human', 'refugee', 'group', 'criticized', 'law', 'increase', 'among', 'critic
+ized', 'proposal', 'bill', 'replace', 'benefit', 'voucher', 'voucher', 'good', 'certain', 'allow', 'critic', 'charge', 'longstanding', 'democratic', 'parliamentary', 'government', 'lower', 'legislative', 'chamber', 'center', 'parliamentary', 'power', 'elected', 'election', 'upper', 'chamber', 'power', 'delay', 'implementation', 'law', 'made', 'hereditary', 'life', 'peer', 'senior', 'clergy', 'established', 'first', 'stage', 'program', 'reform', 'upper', 'chamber', 'remove', 'hereditary', 'peer', 'life', 'peer', 'clergy', 'remain', 'step', 'based', 'recommendation', 'commission', 'expected', 'issue', 'independent', 'judiciary', 'decision', 'legislation', 'police', 'force', 'responsive', 'effective', 'control', 'official', 'intelligence', 'agency', 'authority', 'act', 'support', 'law', 'enforcement', 'agency', 'prevention', 'serious', 'domestic', 'crime', 'police', 'force', 'complex', 'role', 'due', 'difficult', 'circumstance', 'respect', 'law', 'order', 'area', 'continuing', 'threat', 'violence', 'army', 'un
+it', 'operate', 'police', 'force', 'member', 'police', 'force', 'committed', 'human', 'abuse', 'developed', 'market', 'based', 'provides', 'resident', 'high', 'standard', 'living', 'area', 'particularly', 'older', 'industrial', 'area', 'including', 'part', 'higher', 'unemployment', 'rate', 'addition', 'unemployment', 'higher', 'among', 'group', 'youth', 'racial', 'minority', 'among', 'government', 'provides', 'social', 'welfare', 'service', 'including', 'national', 'health', 'system', 'housing', 'family', 'benefit', 'higher', 'education', 'generally', 'respected', 'human', 'citizen', 'however', 'problem', 'area', 'police', 'occasionally', 'abused', 'detainee', 'inquiry', 'death', 'black', 'teenager', 'released', 'concluding', 'investigation', 'case', 'led', 'acquittal', 'suspected', 'attacker', 'marred', 'combination', 'professional', 'incompetence', 'institutional', 'racism', 'police', 'overcrowding', 'remains', 'problem', 'number', 'prison', 'suicide', 'rose', 'nearly', 'hundred', 'limit', 'freedom', 'ass
+embly', 'association', 'related', 'security', 'situation', 'continued', 'take', 'step', 'combat', 'violence', 'woman', 'discrimination', 'woman', 'minority', 'nomadic', 'community', 'problem', 'child', 'abuse', 'occasional', 'societal', 'violence', 'minority', 'took', 'step', 'improve', 'worker', 'political', 'party', 'review', 'result', 'review', 'party', 'elected', 'devolved', 'power', 'power', 'sharing', 'included', 'representative', 'major', 'political', 'party', 'unionist', 'nationalist', 'republican', 'minister', 'unionist', 'meeting', 'including', 'meeting', 'executive', 'included', 'republican', 'party', 'review', 'involved', 'procedure', 'decommissioning', 'paramilitary', 'weapon', 'appointed', 'apart', 'weapon', 'loyalist', 'splinter', 'group', 'none', 'major', 'paramilitary', 'organization', 'weapon', 'began', 'operation', 'effort', 'internal', 'organization', 'human', 'nongovernmental', 'organization', 'criticized', 'body', 'lack', 'investigative', 'power', 'application', 'assistance', 'made', '
+additional', 'informal', 'inquiry', 'amalgamated', 'appointed', 'member', 'commonly', 'referred', 'former', 'called', 'policing', 'recommendation', 'include', 'size', 'force', 'little', 'half', 'current', 'change', 'name', 'scheme', 'increase', 'recruitment', 'force', 'introduction', 'include', 'member', 'political', 'party', 'make', 'recommendation', 'strong', 'criticism', 'unionist', 'community', 'review', 'structure', 'management', 'funding', 'criminal', 'justice', 'system', 'continued', 'originally', 'scheduled', 'release', 'subsequently', 'postponed', 'early', 'especially', 'republican', 'criticized', 'delay', 'support', 'continued', 'release', 'prisoner', 'affiliated', 'paramilitary', 'organization', 'maintain', 'cease', 'fire', 'paramilitary', 'prisoner', 'including', 'republican', 'loyalist', 'others', 'paroled', 'commonly', 'referred', 'early', 'release', 'program', 'troop', 'lowest', 'level', 'since', 'paramilitary', 'dissident', 'group', 'engaged', 'act', 'violence', 'aimed', 'peace', 'process',
+'majority', 'violence', 'resulted', 'republican', 'loyalist', 'paramilitary', 'group', 'continued', 'punishment', 'attack', 'victim', 'lived', 'area', 'influence', 'reported', 'shooting', 'assault', 'paramilitary', 'style', 'attack', 'shooting', 'assault', 'recorded', 'religious', 'organization', 'object', 'sectarian', 'attack', 'political', 'killing', 'independent', 'organization', 'opened', 'inquiry', 'death', 'black', 'died', 'police', 'officer', 'taken', 'failure', 'post', 'establish', 'cause', 'death', 'police', 'shot', 'killed', 'home', 'leg', 'family', 'campaigning', 'public', 'inquiry', 'incident', 'internal', 'police', 'investigation', 'reported', 'death', 'police', 'custody', 'increased', 'ending', 'period', 'previous', 'death', 'occurred', 'natural', 'cause', 'due', 'drug', 'suicide', 'support', 'abolition', 'offense', 'drunk', 'recommends', 'drunk', 'rather', 'police', 'number', 'death', 'police', 'custody', 'number', 'death', 'custody', 'prison', 'due', 'suicide', 'natural', 'cause', 'policeman
+', 'murder', 'shooting', 'duty', 'unarmed', 'shot', 'killed', 'raid', 'home', 'concluded', 'evidence', 'prosecute', 'police', 'officer', 'killed', 'member', 'shot', 'police', 'raid', 'operation', 'policeman', 'acquitted', 'murder', 'unarmed', 'car', 'shot', 'killed', 'close', 'range', 'officer', 'third', 'trial', 'since', 'incident', 'trial', 'second', 'jury', 'agree', 'verdict', 'police', 'officer', 'charged', 'manslaughter', 'death', 'acquitted', 'earlier', 'inquest', 'found', 'killed', 'died', 'following', 'arrest', 'drunk', 'assisting', 'family', 'pursuing', 'formal', 'inquest', 'death', 'prisoner', 'charged', 'prison', 'staff', 'beat', 'government', 'inquiry', 'handling', 'death', 'police', 'custody', 'highlighted', 'inquiry', 'separate', 'case', 'died', 'police', 'custody', 'arrested', 'recommended', 'decision', 'concerning', 'death', 'custody', 'case', 'made', 'identified', 'senior', 'person', 'decision', 'prosecute', 'sent', 'senior', 'counsel', 'case', 'sent', 'complex', 'case', 'urged', 'consider'
+, 'publishing', 'reason', 'decided', 'prosecute', 'police', 'officer', 'campaign', 'relative', 'person', 'custody', 'urged', 'body', 'independent', 'police', 'set', 'investigate', 'complaint', 'involving', 'officer', 'established', 'judicial', 'inquiry', 'unarmed', 'civil', 'killed', 'soldier', 'member', 'security', 'force', 'held', 'accountable', 'inquiry', 'gathered', 'testimony', 'evidence', 'victim', 'journalist', 'government', 'official', 'controversy', 'inquiry', 'proceeding', 'particularly', 'issue', 'anonymity', 'soldier', 'inquiry', 'originally', 'decided', 'grant', 'anonymity', 'soldier', 'unless', 'could', 'risk', 'decision', 'earlier', 'court', 'ruling', 'granted', 'soldier', 'anonymity', 'inquiry', 'proceeding', 'hearing', 'procedural', 'issue', 'formal', 'hearing', 'scheduled', 'bombing', 'person', 'killed', 'wounded', 'attack', 'apparently', 'motivated', 'racism', 'homophobia', 'nail', 'bomb', 'person', 'street', 'market', 'neighborhood', 'week', 'later', 'another', 'nail', 'bomb', 'several',
+'person', 'neighborhood', 'large', 'population', 'third', 'nail', 'bomb', 'gay', 'bar', 'killing', 'person', 'wounding', 'police', 'stated', 'attack', 'believed', 'linked', 'carried', 'homophobic', 'rightwing', 'extremist', 'white', 'arrested', 'subsequently', 'charged', 'bombing', 'police', 'earlier', 'claim', 'responsibility', 'made', 'rightwing', 'extremist', 'group', 'believed', 'trial', 'pending', 'inquiry', 'death', 'black', 'teenager', 'released', 'concluding', 'investigation', 'case', 'led', 'acquittal', 'suspected', 'attacker', 'marred', 'combination', 'professional', 'incompetence', 'institutional', 'racism', 'police', 'criterion', 'main', 'paramilitary', 'group', 'cease', 'fire', 'major', 'republican', 'paramilitary', 'group', 'cease', 'fire', 'loyalist', 'side', 'group', 'cease', 'fire', 'include', 'fact', 'group', 'considered', 'maintain', 'cease', 'fire', 'killing', 'wounding', 'republican', 'loyalist', 'group', 'continued', 'addition', 'republican', 'loyalist', 'splinter', 'group', 'continue
+d', 'terrorist', 'activity', 'widely', 'blamed', 'death', 'former', 'member', 'found', 'dead', 'house', 'drug', 'found', 'murdered', 'found', 'dead', 'murder', 'medium', 'police', 'crime', 'paramilitary', 'blamed', 'car', 'bomb', 'death', 'lawyer', 'lawyer', 'known', 'taking', 'high', 'civil', 'case', 'claimed', 'early', 'made', 'death', 'threat', 'controversy', 'surrounding', 'case', 'within', 'murder', 'invited', 'detective', 'chief', 'constable', 'murder', 'inquiry', 'requested', 'outside', 'technical', 'assistance', 'appointed', 'take', 'overall', 'command', 'investigation', 'week', 'death', 'leaked', 'investigation', 'claim', 'raised', 'doubt', 'impartiality', 'address', 'original', 'claim', 'death', 'threat', 'judge', 'effort', 'investigate', 'claim', 'inadequate', 'learning', 'initial', 'handling', 'case', 'chief', 'constable', 'appointed', 'officer', 'take', 'investigation', 'deemed', 'officer', 'subsequent', 'investigation', 'public', 'prosecution', 'many', 'nationalist', 'outside', 'group', 'role'
+, 'murder', 'inquiry', 'circumstance', 'surrounding', 'death', 'call', 'nationalist', 'politician', 'human', 'group', 'independent', 'inquiry', 'murder', 'date', 'arrest', 'made', 'group', 'claimed', 'responsibility', 'dissident', 'loyalist', 'blamed', 'shooting', 'death', 'loyalist', 'area', 'well', 'pipe', 'bomb', 'murder', 'resident', 'total', 'arrest', 'made', 'connection', 'bombing', 'killed', 'person', 'claimed', 'responsibility', 'person', 'charged', 'involvement', 'bombing', 'unionist', 'politician', 'many', 'human', 'group', 'continue', 'call', 'independent', 'investigation', 'murder', 'leader', 'high', 'security', 'member', 'murder', 'state', 'state', 'fact', 'murder', 'call', 'question', 'prison', 'security', 'standard', 'housed', 'separate', 'wing', 'prison', 'still', 'able', 'enter', 'area', 'perpetrator', 'weapon', 'specific', 'movement', 'suspect', 'arrested', 'murder', 'acquitted', 'killing', 'found', 'guilty', 'minor', 'offense', 'case', 'widespread', 'officer', 'vehicle', 'act', 'death', '
+trial', 'judge', 'expressed', 'concern', 'police', 'concluded', 'early', 'intervention', 'could', 'group', 'argue', 'successfully', 'similar', 'circumstance', 'past', 'charge', 'failure', 'made', 'thus', 'prosecution', 'difficult', 'arrested', 'involvement', 'murder', 'respected', 'legal', 'counsel', 'arrest', 'result', 'third', 'independent', 'investigation', 'chief', 'constable', 'invited', 'initiate', 'another', 'investigation', 'result', 'information', 'allegation', 'security', 'force', 'collusion', 'murder', 'originally', 'human', 'organization', 'organization', 'previous', 'inquiry', 'made', 'public', 'continue', 'call', 'investigation', 'evidence', 'say', 'support', 'charge', 'collusion', 'murder', 'government', 'official', 'loyalist', 'paramilitary', 'group', 'court', 'claimed', 'time', 'death', 'warned', 'police', 'hit', 'whether', 'target', 'already', 'arrested', 'weapon', 'charge', 'acquitted', 'subsequently', 'person', 'arrested', 'current', 'inquiry', 'released', 'without', 'charge', 'third', '
+charged', 'minor', 'offense', 'family', 'judicial', 'review', 'board', 'allowed', 'rejoin', 'regiment', 'convicted', 'murder', 'released', 'incarceration', 'rejoin', 'regiment', 'ruling', 'board', 'decision', 'soldier', 'power', 'compel', 'suspected', 'involvement', 'killing', 'inquest', 'relative', 'deceased', 'disclosure', 'evidence', 'law', 'permitted', 'deceased', 'died', 'rather', 'broad', 'circumstance', 'death', 'group', 'argue', 'definition', 'including', 'soldier', 'police', 'officer', 'family', 'member', 'learning', 'circumstance', 'regarding', 'relative', 'death', 'information', 'provided', 'led', 'discovery', 'body', 'person', 'disappeared', 'following', 'earlier', 'agreement', 'court', 'try', 'bombing', 'suspect', 'accepted', 'responsibility', 'death', 'killed', 'outside', 'building', 'paid', 'family', 'war', 'criminal', 'age', 'found', 'guilty', 'given', 'life', 'sentence', 'first', 'prosecuted', 'successfully', 'war', 'crime', 'legislation', 'remained', 'house', 'arrest', 'sought', 'extradite
+', 'try', 'involvement', 'disappearance', 'torture', 'highest', 'court', 'decided', 'enjoy', 'charge', 'international', 'crime', 'torture', 'conspiracy', 'torture', 'committed', 'international', 'torture', 'convention', 'binding', 'hearing', 'began', 'magistrate', 'ruled', 'could', 'trial', 'charge', 'torture', 'conspiracy', 'torture', 'appealed', 'magistrate', 'decision', 'requested', 'allow', 'return', 'age', 'poor', 'health', 'response', 'ordered', 'independent', 'medical', 'pending', 'along', 'legal', 'appeal', 'politically', 'motivated', 'disappearance', 'established', 'purpose', 'location', 'remains', 'victim', 'paramilitary', 'violence', 'commission', 'obtained', 'information', 'led', 'discovery', 'remains', 'person', 'disappeared', 'location', 'remains', 'inaccurate', 'commission', 'decided', 'search', 'additional', 'known', 'person', 'disappeared', 'allow', 'examine', 'possible', 'law', 'torture', 'treatment', 'however', 'police', 'occasionally', 'abused', 'detainee', 'organization', 'abuse', 'wide
+spread', 'matter', 'serious', 'concern', 'injury', 'illness', 'result', 'often', 'neglect', 'physical', 'attack', 'incident', 'police', 'occurred', 'claim', 'physical', 'right', 'immediate', 'medical', 'trial', 'judge', 'must', 'examine', 'claim', 'obtained', 'abusive', 'treatment', 'admissible', 'court', 'judge', 'exclude', 'even', 'voluntary', 'confession', 'human', 'organization', 'claim', 'confession', 'obtained', 'abusive', 'treatment', 'regularly', 'found', 'admissible', 'court', 'sexual', 'harassment', 'criminal', 'conduct', 'within', 'continued', 'hundred', 'case', 'investigation', 'police', 'official', 'remain', 'committed', 'abusive', 'treatment', 'corruption', 'originally', 'intended', 'replace', 'early', 'appointed', 'authority', 'complaint', 'police', 'police', 'investigate', 'independently', 'complaint', 'police', 'referred', 'chief', 'constable', 'automatically', 'case', 'involving', 'death', 'serious', 'injury', 'direct', 'chief', 'constable', 'bring', 'charge', 'police', 'officer', 'must',
+'provide', 'recruit', 'independent', 'investigative', 'staff', 'reported', 'complaint', 'case', 'completed', 'percent', 'led', 'informal', 'disciplinary', 'action', 'formal', 'criminal', 'charge', 'series', 'public', 'private', 'meeting', 'throughout', 'gathered', 'testimony', 'order', 'future', 'policing', 'structure', 'arrangement', 'goal', 'recommend', 'proposal', 'would', 'ensure', 'police', 'service', 'enjoys', 'widespread', 'support', 'community', 'side', 'community', 'generally', 'recognized', 'qualification', 'member', 'commission', 'published', 'recommendation', 'call', 'includes', 'measure', 'local', 'control', 'police', 'increasing', 'number', 'officer', 'make', 'percent', 'force', 'significantly', 'size', 'force', 'change', 'many', 'particularly', 'critical', 'recommendation', 'change', 'name', 'force', 'human', 'group', 'human', 'based', 'included', 'recommendation', 'would', 'hold', 'accountable', 'serving', 'officer', 'might', 'committed', 'human', 'abuse', 'independent', 'assessor', 'militar
+y', 'complaint', 'continued', 'investigation', 'complaint', 'abuse', 'committed', 'army', 'formal', 'informal', 'complaint', 'primarily', 'harassment', 'abuse', 'annual', 'independent', 'assessor', 'expressed', 'concern', 'police', 'complaint', 'soldier', 'arresting', 'terrorist', 'suspect', 'independently', 'police', 'independent', 'commissioner', 'holding', 'center', 'made', 'visit', 'holding', 'center', 'order', 'interrogation', 'interview', 'detainee', 'visit', 'holding', 'center', 'commissioner', 'number', 'complaint', 'generally', 'harassment', 'technical', 'assault', 'police', 'continued', 'use', 'plastic', 'bullet', 'quell', 'civil', 'given', 'relative', 'summer', 'marching', 'season', 'use', 'reported', 'plastic', 'bullet', 'fired', 'first', 'week', 'period', 'reported', 'additional', 'plastic', 'bullet', 'fired', 'member', 'crowd', 'police', 'total', 'security', 'force', 'fired', 'plastic', 'bullet', 'rule', 'plastic', 'bullet', 'aimed', 'nevertheless', 'medical', 'serious', 'head', 'upper', 'body
+', 'injury', 'resulted', 'plastic', 'bullet', 'use', 'past', 'bullet', 'use', 'criticized', 'human', 'monitor', 'ruled', 'quell', 'serious', 'called', 'ban', 'use', 'considered', 'alternative', 'stated', 'found', 'either', 'dangerous', 'inaccurate', 'guideline', 'recommended', 'use', 'plastic', 'bullet', 'public', 'order', 'situation', 'guideline', 'use', 'plastic', 'bullet', 'change', 'past', 'practice', 'permitted', 'use', 'plastic', 'bullet', 'property', 'peace', 'prevent', 'crime', 'guideline', 'plastic', 'bullet', 'used', 'case', 'serious', 'risk', 'life', 'injury', 'investigation', 'also', 'recommend', 'plastic', 'bullet', 'use', 'encouraged', 'use', 'alternative', 'crowd', 'control', 'measure', 'activist', 'continued', 'call', 'closure', 'holding', 'center', 'including', 'complaint', 'police', 'impropriety', 'interrogation', 'process', 'independent', 'commissioner', 'holding', 'center', 'also', 'recommended', 'facility', 'poor', 'physical', 'state', 'audio', 'recording', 'equipment', 'introduced', 'v
+ideo', 'recording', 'equipment', 'use', 'interrogation', 'session', 'holding', 'center', 'group', 'criticized', 'fact', 'video', 'audio', 'recording', 'produced', 'system', 'given', 'interrogation', 'session', 'announced', 'closure', 'effective', 'remained', 'open', 'decided', 'bring', 'charge', 'officer', 'involved', 'case', 'arrest', 'initial', 'incarceration', 'interrogation', 'center', 'later', 'sentenced', 'conspiracy', 'murder', 'court', 'awarded', 'damage', 'court', 'decision', 'independent', 'inquiry', 'treatment', 'chief', 'constable', 'basis', 'charge', 'officer', 'involved', 'police', 'member', 'minority', 'black', 'lost', 'suit', 'police', 'harassment', 'stopped', 'time', 'jury', 'found', 'charge', 'officer', 'awarded', 'damage', 'unlawful', 'arrest', 'ordered', 'police', 'recruit', 'officer', 'ethnic', 'minority', 'within', 'commissioned', 'revealed', 'term', 'usually', 'mostly', 'likely', 'stopped', 'searched', 'drug', 'white', 'black', 'warned', 'police', 'risk', 'young', 'stop', 'search', 'p
+ower', 'armed', 'force', 'registered', 'total', 'internal', 'harassment', 'complaint', 'number', 'significant', 'decrease', 'past', 'sexual', 'harassment', 'racial', 'harassment', 'harassment', 'complaint', 'procedure', 'implemented', 'fully', 'also', 'right', 'complaint', 'employment', 'tribunal', 'service', 'agreement', 'racial', 'equality', 'practice', 'loyalist', 'republican', 'paramilitary', 'group', 'continued', 'carry', 'punishment', 'attack', 'victim', 'lived', 'area', 'paramilitary', 'influence', 'attack', 'often', 'carried', 'within', 'paramilitary', 'group', 'often', 'targeted', 'member', 'rank', 'order', 'attack', 'also', 'targeted', 'engaged', 'called', 'activity', 'drug', 'dealing', 'group', 'used', 'method', 'maintain', 'control', 'influence', 'community', 'attacker', 'beat', 'victim', 'pipe', 'shot', 'victim', 'leg', 'recorded', 'total', 'casualty', 'result', 'paramilitary', 'style', 'attack', 'includes', 'shooting', 'loyalist', 'republican', 'assault', 'loyalist', 'republican', 'group', 'sa
+y', 'figure', 'true', 'number', 'casualty', 'many', 'victim', 'paramilitary', 'punishment', 'attack', 'condition', 'generally', 'minimum', 'international', 'standard', 'chief', 'inspector', 'prison', 'annual', 'published', 'overcrowding', 'poor', 'local', 'prison', 'prison', 'identified', 'continuing', 'problem', 'despite', 'increase', 'prison', 'population', 'decreased', 'percent', 'period', 'previous', 'home', 'detention', 'program', 'administered', 'electronic', 'unit', 'began', 'operation', 'offender', 'program', 'considered', 'success', 'fewer', 'percent', 'offender', 'prison', 'reported', 'death', 'prisoner', 'death', 'death', 'self', 'due', 'natural', 'cause', 'reported', 'death', 'custody', 'suicide', 'natural', 'cause', 'implemented', 'policy', 'change', 'attempt', 'number', 'prisoner', 'suicide', 'continues', 'develop', 'suicide', 'prevention', 'strategy', 'measure', 'taken', 'group', 'particularly', 'critical', 'security', 'unit', 'used', 'hold', 'prisoner', 'deemed', 'exceptional', 'risk', 'smal
+l', 'group', 'lack', 'exercise', 'work', 'educational', 'opportunity', 'natural', 'well', 'strict', 'enforcement', 'visit', 'human', 'group', 'imprisonment', 'international', 'standard', 'government', 'inquiry', 'concluded', 'prolonged', 'incarceration', 'could', 'lead', 'mental', 'illness', 'took', 'step', 'address', 'concern', 'provided', 'detail', 'case', 'security', 'health', 'revealed', 'health', 'prisoner', 'prisoner', 'longer', 'exceptional', 'risk', 'moved', 'prolonged', 'incarceration', 'could', 'lead', 'mental', 'illness', 'current', 'case', 'occurred', 'prisoner', 'remained', 'none', 'terrorist', 'related', 'crime', 'distinct', 'prison', 'exist', 'administered', 'office', 'number', 'prisoner', 'continued', 'woman', 'commit', 'percent', 'crime', 'number', 'woman', 'sent', 'prison', 'past', 'undertook', 'review', 'need', 'mother', 'prison', 'published', 'list', 'recommendation', 'based', 'premise', 'mother', 'baby', 'unit', 'prison', 'would', 'allow', 'mother', 'baby', 'develop', 'promoting', 'chil
+d', 'welfare', 'announced', 'majority', 'recommendation', 'full', 'procedure', 'admission', 'unit', 'published', 'standard', 'management', 'change', 'effect', 'early', 'large', 'increase', 'number', 'asylum', 'seeker', 'housed', 'approximately', 'half', 'immigration', 'detainee', 'regular', 'prison', 'normally', 'held', 'separately', 'convicted', 'prisoner', 'prisoner', 'awaiting', 'trial', 'human', 'group', 'regular', 'prison', 'house', 'immigration', 'detainee', 'chief', 'inspector', 'prison', 'called', 'upon', 'establish', 'specific', 'guideline', 'treatment', 'asylum', 'seeker', 'detention', 'center', 'prison', 'guideline', 'currently', 'exist', 'group', 'lack', 'among', 'regular', 'prison', 'official', 'dealing', 'immigration', 'detainee', 'regularly', 'visit', 'detention', 'center', 'relation', 'detention', 'center', 'official', 'however', 'noncompliance', 'asylum', 'seeker', 'stated', 'prisoner', 'convicted', 'offense', 'related', 'situation', 'request', 'repatriation', 'prisoner', 'committed', 'offe
+nse', 'signing', 'provision', 'early', 'release', 'prisoner', 'permit', 'human', 'monitor', 'visit', 'prison', 'immigration', 'detention', 'center', 'authority', 'often', 'make', 'arrest', 'detain', 'suspect', 'without', 'judicial', 'warrant', 'especially', 'believe', 'reasonable', 'cause', 'suspect', 'allows', 'police', 'officer', 'stop', 'search', 'vehicle', 'police', 'officer', 'least', 'superintendent', 'rank', 'chief', 'inspector', 'superintendent', 'available', 'belief', 'prevent', 'act', 'violence', 'limited', 'hour', 'period', 'renewable', 'certain', 'circumstance', 'permit', 'soldier', 'duty', 'member', 'police', 'officer', 'arrest', 'detain', 'hour', 'person', 'reasonable', 'ground', 'suspect', 'commit', 'offense', 'without', 'trial', 'allows', 'police', 'arrest', 'without', 'warrant', 'person', 'reason', 'suspect', 'involved', 'terrorism', 'authority', 'detain', 'person', 'even', 'age', 'hour', 'without', 'legal', 'representation', 'judicial', 'review', 'time', 'confession', 'obtained', 'used', '
+subsequent', 'court', 'proceeding', 'detainee', 'granted', 'right', 'lawyer', 'interrogation', 'without', 'charge', 'extended', 'authority', 'detention', 'power', 'held', 'breach', 'led', 'derogation', 'government', 'reviewed', 'legislation', 'every', 'due', 'security', 'situation', 'amended', 'change', 'critic', 'charge', 'annual', 'review', 'introduced', 'intended', 'replace', 'emergency', 'law', 'cover', 'foreign', 'based', 'well', 'domestic', 'group', 'wider', 'definition', 'terrorism', 'criticized', 'broad', 'bill', 'continue', 'suspect', 'arrested', 'without', 'warrant', 'must', 'released', 'within', 'hour', 'hour', 'serious', 'offense', 'involved', 'unless', 'brought', 'magistrate', 'court', 'arrested', 'provision', 'court', 'extension', 'detention', 'hour', 'application', 'another', 'hour', 'hour', 'scheme', 'awaiting', 'trial', 'statutory', 'right', 'bail', 'unless', 'risk', 'would', 'commit', 'offense', 'witness', 'otherwise', 'course', 'justice', 'unless', 'bail', 'alleged', 'offense', 'committed
+', 'custody', 'protected', 'statutory', 'custody', 'time', 'limit', 'period', 'held', 'awaiting', 'trial', 'maximum', 'unless', 'court', 'grant', 'extension', 'defendant', 'awaiting', 'trial', 'custody', 'custody', 'awaiting', 'trial', 'week', 'longer', 'week', 'defendant', 'awaiting', 'trial', 'fewer', 'custody', 'time', 'awaiting', 'trial', 'includes', 'measure', 'reduce', 'delay', 'criminal', 'proceeding', 'procedural', 'reform', 'time', 'allowed', 'prosecution', 'case', 'law', 'give', 'detention', 'power', 'immigration', 'officer', 'time', 'limit', 'detention', 'right', 'reviewed', 'court', 'given', 'time', 'approximately', 'asylum', 'seeker', 'detained', 'percent', 'asylum', 'seeker', 'detained', 'either', 'immigration', 'detention', 'center', 'regular', 'prison', 'normally', 'held', 'separately', 'convicted', 'prisoner', 'awaiting', 'trial', 'held', 'police', 'hour', 'pending', 'another', 'asylum', 'detainee', 'held', 'percent', 'held', 'percent', 'percent', 'percent', 'accused', 'criminal', 'offense'
+, 'asylum', 'seeker', 'given', 'written', 'statement', 'detained', 'practice', 'provide', 'status', 'claim', 'time', 'required', 'seeker', 'automatic', 'right', 'apply', 'bail', 'bail', 'application', 'made', 'immigration', 'appellate', 'authority', 'requires', 'relatively', 'high', 'level', 'detention', 'used', 'good', 'ground', 'noncompliance', 'term', 'temporary', 'admission', 'practice', 'affect', 'percent', 'asylum', 'seeker', 'given', 'time', 'use', 'exile', 'also', 'organization', 'continued', 'individual', 'family', 'compel', 'leave', 'difficult', 'count', 'left', 'threat', 'paramilitary', 'group', 'number', 'people', 'exile', 'since', 'signing', 'range', 'high', 'local', 'many', 'threat', 'reported', 'case', 'case', 'left', 'immediate', 'area', 'threat', 'left', 'city', 'left', 'case', 'investigation', 'revealed', 'threat', 'case', 'intervention', 'agency', 'threat', 'half', 'person', 'age', 'judiciary', 'independent', 'provides', 'citizen', 'generally', 'fair', 'judicial', 'process', 'several', 'l
+evel', 'court', 'majority', 'criminal', 'case', 'heard', 'magistrate', 'court', 'based', 'committee', 'decision', 'appealed', 'also', 'criminal', 'case', 'requiring', 'jury', 'trial', 'conviction', 'appealed', 'turn', 'case', 'involving', 'point', 'law', 'senior', 'judge', 'distinct', 'legislative', 'arm', 'court', 'appeal', 'additional', 'appellate', 'body', 'investigate', 'suspected', 'justice', 'case', 'judicial', 'appeal', 'process', 'exhausted', 'significant', 'evidence', 'doubt', 'conviction', 'similar', 'appeal', 'made', 'law', 'provides', 'fair', 'trial', 'authority', 'respect', 'law', 'regard', 'enjoy', 'guilty', 'right', 'question', 'witness', 'right', 'appeal', 'higher', 'court', 'take', 'effect', 'bringing', 'law', 'law', 'public', 'body', 'must', 'act', 'convention', 'law', 'provides', 'citizen', 'right', 'take', 'alleged', 'violation', 'convention', 'court', 'convention', 'dealing', 'resolution', 'case', 'arrest', 'detention', 'criticize', 'derogation', 'also', 'date', 'arrested', 'detained',
+'legislation', 'testimony', 'senior', 'police', 'officer', 'considered', 'prima', 'facie', 'evidence', 'suspect', 'membership', 'proscribed', 'terrorist', 'organization', 'act', 'also', 'conspiracy', 'commit', 'terrorist', 'act', 'outside', 'act', 'also', 'allows', 'property', 'person', 'convicted', 'membership', 'offense', 'act', 'used', 'activity', 'organization', 'organization', 'concern', 'act', 'violates', 'certain', 'fundamental', 'right', 'silence', 'freedom', 'expression', 'association', 'judge', 'power', 'jury', 'inference', 'guilt', 'defendant', 'question', 'interrogation', 'trial', 'conviction', 'based', 'inference', 'group', 'criticize', 'provision', 'consider', 'right', 'self', 'similar', 'provision', 'effect', 'guideline', 'issued', 'prohibited', 'inference', 'silence', 'suspect', 'permitted', 'access', 'right', 'free', 'counsel', 'exception', 'proceeding', 'must', 'held', 'public', 'except', 'juvenile', 'court', 'involving', 'public', 'security', 'trial', 'judge', 'order', 'court', 'closed',
+'must', 'public', 'emergency', 'restriction', 'affect', 'due', 'process', 'trial', 'certain', 'terrorist', 'related', 'offense', 'tried', 'automatically', 'court', 'without', 'jury', 'unless', 'specifically', 'scheduled', 'jury', 'court', 'court', 'established', 'case', 'heard', 'jury', 'might', 'make', 'decision', 'along', 'sectarian', 'well', 'protect', 'intimidation', 'terrorist', 'judge', 'must', 'decision', 'part', 'court', 'appellate', 'court', 'decision', 'either', 'legal', 'ground', 'person', 'tried', 'court', 'person', 'either', 'found', 'guilty', 'court', 'widely', 'criticized', 'human', 'group', 'well', 'committee', 'increased', 'number', 'scheduled', 'offense', 'trial', 'jury', 'expected', 'reduce', 'number', 'case', 'considered', 'court', 'given', 'overall', 'decrease', 'offense', 'difficult', 'ass', 'impact', 'change', 'exclude', 'use', 'confession', 'used', 'basis', 'conviction', 'permit', 'police', 'prevent', 'suspected', 'terrorist', 'legal', 'counsel', 'hour', 'arrest', 'certain', 'circums
+tance', 'request', 'police', 'officer', 'minimum', 'rank', 'superintendent', 'detainee', 'lawyer', 'done', 'period', 'renewable', 'subsequent', 'hour', 'period', 'detainee', 'charged', 'released', 'group', 'criticized', 'provision', 'detainee', 'likely', 'need', 'counsel', 'first', 'hour', 'lack', 'counsel', 'time', 'make', 'false', 'confession', 'abuse', 'detainee', 'likely', 'request', 'access', 'lawyer', 'made', 'defense', 'lawyer', 'access', 'evidence', 'held', 'prosecution', 'including', 'information', 'evidence', 'local', 'practice', 'guideline', 'role', 'group', 'elsewhere', 'expressed', 'serious', 'concern', 'threat', 'death', 'serious', 'physical', 'injury', 'directed', 'defense', 'lawyer', 'prison', 'prisoner', 'continue', 'lodge', 'complaint', 'say', 'little', 'done', 'address', 'complaint', 'issued', 'upon', 'conduct', 'independent', 'impartial', 'investigation', 'murder', 'solicitor', 'also', 'accused', 'complete', 'allegation', 'lawyer', 'harassment', 'prima', 'facie', 'evidence', 'military',
+'collusion', 'murder', 'expressed', 'concern', 'impartiality', 'investigating', 'murder', 'recommendation', 'independent', 'inquiry', 'murder', 'previous', 'recommended', 'government', 'conduct', 'independent', 'impartial', 'investigation', 'threat', 'legal', 'counsel', 'specific', 'physical', 'threat', 'provide', 'necessary', 'protection', 'investigate', 'threat', 'bring', 'guilty', 'party', 'justice', 'also', 'recommended', 'lawyer', 'lodge', 'formal', 'complaint', 'training', 'police', 'officer', 'according', 'defense', 'solicitor', 'subject', 'harassment', 'intimidation', 'dialog', 'address', 'problem', 'response', 'chief', 'constable', 'denied', 'allegation', 'collusion', 'complaint', 'said', 'open', 'channel', 'review', 'structure', 'management', 'funding', 'criminal', 'justice', 'system', 'continued', 'scheduled', 'release', 'postponed', 'early', 'support', 'continued', 'release', 'prisoner', 'affiliated', 'paramilitary', 'organization', 'maintain', 'cease', 'fire', 'paramilitary', 'prisoner', 'inclu
+ding', 'republican', 'loyalist', 'others', 'paroled', 'commonly', 'referred', 'early', 'release', 'program', 'troop', 'lowest', 'level', 'since', 'political', 'prisoner', 'normally', 'required', 'police', 'search', 'private', 'premise', 'however', 'member', 'armed', 'force', 'police', 'enter', 'search', 'premise', 'purpose', 'arresting', 'person', 'offense', 'reasonable', 'ground', 'person', 'sought', 'premise', 'court', 'interpreted', 'requirement', 'reasonable', 'ground', 'government', 'person', 'whose', 'house', 'property', 'house', 'search', 'fear', 'violence', 'led', 'pattern', 'community', 'family', 'moved', 'neighborhood', 'pattern', 'continued', 'despite', 'approval', 'referendum', 'paramilitary', 'attack', 'home', 'family', 'police', 'politician', 'decreased', 'significantly', 'security', 'force', 'believe', 'paramilitary', 'group', 'continue', 'conduct', 'target', 'police', 'politician', 'held', 'law', 'independent', 'press', 'democratic', 'political', 'system', 'freedom', 'press', 'critical', 'go
+vernment', 'well', 'represented', 'print', 'medium', 'dominated', 'national', 'daily', 'newspaper', 'privately', 'owned', 'independent', 'often', 'generally', 'aligned', 'political', 'party', 'half', 'electronic', 'medium', 'run', 'funded', 'government', 'enjoys', 'complete', 'renewable', 'government', 'license', 'run', 'remainder', 'leading', 'shot', 'killed', 'program', 'leading', 'criminal', 'revoked', 'license', 'pro', 'station', 'program', 'included', 'statement', 'act', 'violence', 'elsewhere', 'according', 'organization', 'human', 'group', 'continued', 'criticize', 'allows', 'court', 'order', 'journalist', 'source', 'deemed', 'interest', 'justice', 'also', 'provision', 'compel', 'journalist', 'give', 'evidence', 'case', 'police', 'necessary', 'investigation', 'another', 'law', 'journalist', 'prohibits', 'defense', 'information', 'already', 'public', 'publication', 'public', 'interest', 'proposed', 'policy', 'preparation', 'legislation', 'freedom', 'information', 'asserted', 'would', 'legislation', 'w
+ould', 'allow', 'widespread', 'public', 'access', 'official', 'information', 'require', 'public', 'organization', 'regularly', 'data', 'improve', 'individual', 'access', 'personal', 'information', 'published', 'draft', 'freedom', 'information', 'bill', 'press', 'freedom', 'information', 'widely', 'criticized', 'bill', 'primarily', 'number', 'release', 'information', 'committee', 'called', 'improvement', 'bill', 'second', 'bill', 'criticism', 'bill', 'continued', 'connection', 'investigation', 'local', 'newspaper', 'ordered', 'court', 'turn', 'note', 'interview', 'charged', 'murder', 'refused', 'charge', 'court', 'justice', 'lower', 'court', 'request', 'group', 'point', 'decision', 'little', 'assistance', 'journalist', 'future', 'ruled', 'note', 'assistance', 'investigation', 'journalist', 'right', 'protect', 'source', 'freedom', 'respected', 'law', 'provides', 'right', 'assembly', 'right', 'limited', 'would', 'impose', 'public', 'annual', 'marching', 'season', 'significant', 'problem', 'since', 'right', 'as
+sembly', 'concern', 'local', 'resident', 'community', 'responsibility', 'ruling', 'parade', 'established', 'parade', 'held', 'imposed', 'restriction', 'parade', 'related', 'situation', 'high', 'period', 'parade', 'security', 'use', 'parade', 'general', 'among', 'marcher', 'allowed', 'parade', 'take', 'place', 'relatively', 'summer', 'marching', 'season', 'exception', 'parade', 'parade', 'police', 'protester', 'refused', 'continued', 'later', 'security', 'force', 'nationalist', 'protester', 'security', 'operation', 'designed', 'separate', 'nationalist', 'crowd', 'marcher', 'late', 'long', 'parade', 'ended', 'several', 'business', 'center', 'city', 'law', 'provides', 'freedom', 'association', 'right', 'limited', 'organization', 'involved', 'encourages', 'terrorism', 'banned', 'paramilitary', 'group', 'continuing', 'involvement', 'sectarian', 'violence', 'proscribed', 'paramilitary', 'group', 'punishable', 'imprisonment', 'paramilitary', 'group', 'also', 'offense', 'reasonable', 'support', 'proscribed', 'organ
+ization', 'human', 'organization', 'object', 'law', 'others', 'argue', 'violates', 'fundamental', 'freedom', 'association', 'expression', 'requires', 'government', 'school', 'hold', 'daily', 'act', 'worship', 'parental', 'right', 'exists', 'child', 'wish', 'participate', 'exist', 'wish', 'participate', 'conduct', 'religious', 'education', 'act', 'provides', 'alternative', 'collective', 'worship', 'faith', 'organization', 'called', 'government', 'review', 'act', 'respect', 'belief', 'still', 'illegal', 'religious', 'organization', 'association', 'either', 'law', 'protect', 'faith', 'enjoy', 'freedom', 'movement', 'within', 'foreign', 'emigration', 'repatriation', 'revoked', 'exclusion', 'order', 'individual', 'linked', 'terrorism', 'renewed', 'include', 'provision', 'exclusion', 'order', 'power', 'implementing', 'exclusion', 'order', 'time', 'cooperates', 'organization', 'assisting', 'refugee', 'asylum', 'provided', 'temporary', 'protection', 'process', 'number', 'asylum', 'seeker', 'rose', 'basis', 'applica
+tion', 'outstanding', 'application', 'outstanding', 'earlier', 'first', 'asylum', 'program', 'applicant', 'given', 'leave', 'enter', 'apply', 'automatic', 'extension', 'apply', 'refugee', 'status', 'time', 'application', 'considered', 'accordance', 'criterion', 'set', 'asylum', 'seeker', 'detained', 'review', 'case', 'detained', 'regular', 'prison', 'right', 'appeal', 'failed', 'asylum', 'seeker', 'introduced', 'provision', 'abusive', 'asylum', 'applicant', 'illegal', 'imposed', 'restriction', 'person', 'subject', 'immigration', 'control', 'seeking', 'employment', 'housing', 'social', 'security', 'benefit', 'decision', 'taken', 'asylum', 'application', 'first', 'percent', 'recognized', 'applicant', 'refugee', 'granted', 'asylum', 'percent', 'granted', 'exceptional', 'leave', 'remain', 'refused', 'asylum', 'remainder', 'refused', 'late', 'introduced', 'requirement', 'citizen', 'response', 'large', 'number', 'sought', 'asylum', 'economic', 'true', 'refugee', 'concern', 'large', 'number', 'seeking', 'asylum',
+'passed', 'modernize', 'immigration', 'asylum', 'system', 'designed', 'right', 'appeal', 'support', 'arrangement', 'asylum', 'seeker', 'immigration', 'law', 'enforcement', 'power', 'reform', 'detention', 'arrangement', 'person', 'forced', 'return', 'right', 'change', 'government', 'freely', 'exercise', 'right', 'government', 'basis', 'majority', 'seat', 'election', 'held', 'least', 'every', 'political', 'process', 'open', 'person', 'party', 'citizen', 'age', 'older', 'vote', 'city', 'council', 'fewer', 'power', 'also', 'council', 'opened', 'devolved', 'body', 'control', 'matter', 'regional', 'importance', 'education', 'health', 'economic', 'matter', 'affair', 'defense', 'continue', 'responsibility', 'government', 'review', 'power', 'devolved', 'remaining', 'population', 'approximately', 'enjoy', 'self', 'government', 'appointed', 'minority', 'face', 'legal', 'voting', 'holding', 'office', 'woman', 'underrepresented', 'government', 'percent', 'nearly', 'percent', 'total', 'identified', 'member', 'minority',
+'ethnic', 'group', 'wide', 'human', 'group', 'operate', 'without', 'government', 'restriction', 'investigating', 'publishing', 'human', 'issue', 'case', 'official', 'generally', 'responsive', 'number', 'international', 'nongovernmental', 'human', 'organization', 'including', 'based', 'cooperates', 'fully', 'international', 'inquiry', 'alleged', 'violation', 'human', 'provision', 'domestic', 'law', 'main', 'provision', 'act', 'implemented', 'provision', 'already', 'taken', 'effect', 'act', 'take', 'effect', 'first', 'practice', 'term', 'devolution', 'legislation', 'devolved', 'power', 'convention', 'provision', 'created', 'human', 'force', 'made', 'representative', 'government', 'publicity', 'training', 'preparation', 'act', 'implementation', 'brought', 'victim', 'breach', 'convention', 'public', 'authority', 'human', 'unit', 'carry', 'human', 'policy', 'legislation', 'created', 'human', 'commission', 'ruled', 'future', 'lack', 'provision', 'commission', 'commissioner', 'make', 'implementation', 'difficult',
+'commission', 'established', 'peace', 'process', 'case', 'still', 'taken', 'domestic', 'must', 'exhausted', 'first', 'based', 'prohibits', 'discrimination', 'basis', 'race', 'national', 'ethnic', 'origin', 'outlaw', 'racial', 'hatred', 'protection', 'extended', 'group', 'continued', 'experience', 'official', 'societal', 'discrimination', 'discrimination', 'ground', 'religious', 'political', 'specifically', 'took', 'effect', 'extends', 'prohibition', 'discrimination', 'good', 'facility', 'service', 'premise', 'basis', 'illegal', 'effect', 'member', 'minority', 'ethnic', 'group', 'government', 'respect', 'enforces', 'law', 'employment', 'good', 'service', 'amalgamated', 'appointed', 'member', 'person', 'killed', 'wounded', 'bombing', 'arrested', 'charged', 'bombing', 'carried', 'gay', 'bar', 'apparently', 'motivated', 'part', 'homophobia', 'government', 'concluded', 'fire', 'service', 'racist', 'homophobic', 'carried', 'fire', 'service', 'found', 'throughout', 'white', 'male', 'service', 'gave', 'fire', 'chi
+ef', 'implement', 'recommendation', 'leadership', 'change', 'order', 'improve', 'equality', 'service', 'woman', 'continues', 'problem', 'government', 'indicated', 'woman', 'experience', 'domestic', 'violence', 'stage', 'life', 'reported', 'incident', 'rape', 'past', 'woman', 'week', 'killed', 'current', 'former', 'woman', 'fear', 'personal', 'attack', 'crime', 'paramilitary', 'cease', 'fire', 'violence', 'woman', 'increased', 'also', 'indicate', 'domestic', 'violence', 'crime', 'least', 'likely', 'reported', 'police', 'law', 'provides', 'personal', 'protection', 'order', 'exclusion', 'order', 'similar', 'order', 'woman', 'victim', 'violence', 'provides', 'assistance', 'rape', 'free', 'legal', 'woman', 'abuser', 'government', 'actively', 'perpetrator', 'domestic', 'violence', 'provides', 'prison', 'sentence', 'convicted', 'figure', 'indicate', 'act', 'effective', 'assisting', 'woman', 'violence', 'long', 'term', 'goal', 'violence', 'woman', 'including', 'plan', 'modernize', 'legislation', 'sex', 'offense', '
+reform', 'government', 'action', 'protection', 'justice', 'prevention', 'training', 'legislative', 'reform', 'passed', 'publication', 'violence', 'woman', 'crime', 'plan', 'significant', 'future', 'commitment', 'making', 'impact', 'woman', 'life', 'action', 'sexual', 'harassment', 'case', 'must', 'prosecuted', 'assault', 'legislation', 'since', 'law', 'specifically', 'prohibits', 'sexual', 'harassment', 'group', 'civil', 'suit', 'concerning', 'sexual', 'harassment', 'discrimination', 'basis', 'take', 'industrial', 'tribunal', 'law', 'provides', 'equal', 'opportunity', 'sex', 'woman', 'experience', 'discrimination', 'practice', 'amended', 'prohibits', 'direct', 'indirect', 'discrimination', 'training', 'housing', 'provision', 'good', 'service', 'well', 'employment', 'equal', 'regarding', 'property', 'support', 'person', 'bring', 'discrimination', 'case', 'industrial', 'tribunal', 'court', 'guideline', 'good', 'practice', 'employer', 'significant', 'progress', 'made', 'towards', 'equal', 'opportunity', 'woman
+', 'since', 'established', 'introduction', 'national', 'minimum', 'wage', 'effective', 'change', 'effort', 'pay', 'according', 'woman', 'working', 'full', 'time', 'approximately', 'percent', 'male', 'similar', 'position', 'indicated', 'progress', 'towards', 'equality', 'pay', 'equal', 'work', 'single', 'problem', 'woman', 'percent', 'increase', 'relative', 'pay', 'past', 'announced', 'maternity', 'benefit', 'reform', 'provision', 'parental', 'leave', 'came', 'effect', 'national', 'child', 'care', 'strategy', 'set', 'increase', 'child', 'care', 'place', 'increased', 'child', 'benefit', 'issue', 'within', 'represented', 'cabinet', 'level', 'head', 'woman', 'unit', 'dialog', 'woman', 'government', 'authority', 'direct', 'action', 'government', 'strong', 'commitment', 'child', 'welfare', 'system', 'public', 'education', 'medical', 'care', 'government', 'provides', 'free', 'compulsory', 'education', 'age', 'education', 'age', 'desire', 'societal', 'pattern', 'abuse', 'directed', 'child', 'despite', 'lack', 'data
+', 'child', 'abuse', 'nevertheless', 'problem', 'paramilitary', 'cease', 'fire', 'violence', 'child', 'increased', 'publicity', 'surrounding', 'pedophile', 'growing', 'part', 'government', 'protect', 'young', 'child', 'abuser', 'previously', 'secret', 'pedophile', 'available', 'employer', 'run', 'organization', 'person', 'age', 'could', 'risk', 'school', 'child', 'home', 'voluntary', 'organization', 'addition', 'suspected', 'child', 'abuser', 'convicted', 'pedophile', 'banned', 'working', 'child', 'passed', 'organization', 'must', 'consult', 'list', 'anyone', 'job', 'paid', 'otherwise', 'illegal', 'anyone', 'law', 'covering', 'child', 'right', 'apply', 'court', 'order', 'give', 'withhold', 'medical', 'treatment', 'making', 'decision', 'make', 'complaint', 'local', 'authority', 'ethnic', 'religious', 'considered', 'decision', 'reasonable', 'family', 'usually', 'circumstance', 'abuse', 'general', 'regarding', 'desire', 'enacted', 'sentence', 'youth', 'offender', 'first', 'time', 'young', 'offender', 'guilty',
+'providing', 'greater', 'protection', 'witness', 'child', 'disabled', 'police', 'arrest', 'detain', 'child', 'young', 'ruled', 'human', 'young', 'boy', 'violated', 'trial', 'boy', 'murdered', 'ruling', 'require', 'sweeping', 'change', 'court', 'juvenile', 'charged', 'murder', 'manslaughter', 'role', 'setting', 'minimum', 'sentence', 'child', 'court', 'case', 'involving', 'incident', 'raised', 'issue', 'right', 'hit', 'following', 'ruling', 'boy', 'violated', 'extended', 'ban', 'corporal', 'punishment', 'state', 'school', 'private', 'school', 'school', 'welfare', 'group', 'called', 'corporal', 'punishment', 'child', 'outlaw', 'discrimination', 'disabled', 'person', 'provision', 'access', 'public', 'facility', 'employer', 'worker', 'service', 'provider', 'apart', 'providing', 'education', 'vehicle', 'anyone', 'property', 'specific', 'duty', 'local', 'education', 'authority', 'make', 'provision', 'educational', 'need', 'disabled', 'child', 'passed', 'set', 'body', 'whose', 'include', 'review', 'assisting', 'd
+isabled', 'people', 'bringing', 'legal', 'action', 'promoting', 'good', 'practice', 'among', 'service', 'provider', 'also', 'power', 'conduct', 'formal', 'investigation', 'disability', 'organization', 'campaigning', 'law', 'discrimination', 'ground', 'disability', 'reported', 'employer', 'time', 'likely', 'turn', 'disabled', 'person', 'job', 'applicant', 'qualification', 'regulation', 'require', 'building', 'access', 'requirement', 'person', 'impaired', 'government', 'similar', 'regulation', 'impaired', 'person', 'regulation', 'require', 'generally', 'access', 'many', 'building', 'remains', 'inadequate', 'building', 'station', 'percent', 'station', 'election', 'disability', 'access', 'problem', 'stage', 'came', 'effect', 'requiring', 'business', 'disabled', 'must', 'reasonable', 'circumstance', 'size', 'business', 'might', 'expected', 'print', 'menu', 'small', 'neighborhood', 'might', 'menu', 'person', 'number', 'anti', 'incident', 'anti', 'political', 'fringe', 'either', 'far', 'right', 'said', 'subject',
+'death', 'homosexual', 'government', 'effort', 'overall', 'unemployment', 'rate', 'unemployment', 'rate', 'amended', 'even', 'indirect', 'discrimination', 'workplace', 'public', 'tribunal', 'complaint', 'public', 'employer', 'private', 'worker', 'must', 'religious', 'work', 'force', 'must', 'review', 'employment', 'practice', 'least', 'every', 'bring', 'criminal', 'loss', 'government', 'contract', 'employment', 'discrimination', 'damage', 'critic', 'act', 'asserted', 'target', 'timetable', 'leader', 'community', 'regard', 'step', 'recruitment', 'civil', 'service', 'produced', 'overall', 'number', 'service', 'remain', 'significantly', 'underrepresented', 'senior', 'wide', 'employment', 'thus', 'far', 'hampered', 'effort', 'effort', 'increase', 'recruitment', 'currently', 'percent', 'related', 'security', 'job', 'hampered', 'killing', 'death', 'threat', 'well', 'widespread', 'community', 'security', 'force', 'recruitment', 'effort', 'officer', 'police', 'force', 'significantly', 'summer', 'marching', 'season'
+, 'several', 'legal', 'prohibition', 'race', 'discrimination', 'person', 'origin', 'face', 'occasional', 'act', 'societal', 'violence', 'discrimination', 'racial', 'hatred', 'criminal', 'offense', 'punishable', 'maximum', 'imprisonment', 'enforces', 'law', 'regulation', 'area', 'person', 'killed', 'wounded', 'bombing', 'white', 'arrested', 'charged', 'attack', 'directed', 'ethnic', 'minority', 'neighborhood', 'government', 'appointed', 'independent', 'provides', 'guideline', 'good', 'practice', 'support', 'person', 'taking', 'court', 'action', 'initiate', 'court', 'action', 'investigating', 'complaint', 'issue', 'notice', 'requiring', 'discrimination', 'stopped', 'monitor', 'response', 'notice', 'claim', 'police', 'misconduct', 'case', 'black', 'youth', 'stabbed', 'death', 'led', 'inquiry', 'police', 'action', 'investigation', 'murder', 'inquiry', 'testimony', 'police', 'serious', 'flaw', 'investigation', 'began', 'review', 'method', 'dealing', 'racially', 'motivated', 'crime', 'inquiry', 'resulted', 'widel
+y', 'released', 'stated', 'investigation', 'marred', 'fundamental', 'including', 'combination', 'professional', 'incompetence', 'institutional', 'racism', 'failure', 'leadership', 'senior', 'officer', 'sweeping', 'made', 'recommendation', 'change', 'police', 'practice', 'acceptance', 'many', 'flaw', 'failure', 'involved', 'case', 'charged', 'crime', 'white', 'male', 'accused', 'crime', 'charged', 'due', 'law', 'continues', 'possible', 'change', 'certain', 'law', 'another', 'recommendation', 'review', 'conduct', 'case', 'recommended', 'detective', 'face', 'disciplinary', 'charge', 'officer', 'already', 'announced', 'officer', 'face', 'charge', 'found', 'guilty', 'count', 'neglect', 'duty', 'result', 'inquiry', 'police', 'training', 'community', 'relation', 'program', 'improve', 'overall', 'public', 'service', 'ordered', 'review', 'investigative', 'procedure', 'alleged', 'racist', 'murder', 'chief', 'constable', 'recognized', 'institutional', 'racism', 'exists', 'within', 'force', 'inquiry', 'encouraged', 'ra
+cism', 'commissioned', 'showed', 'black', 'white', 'stopped', 'searched', 'police', 'figure', 'showed', 'black', 'time', 'likely', 'stopped', 'police', 'white', 'also', 'highlighted', 'increasing', 'drug', 'search', 'young', 'police', 'black', 'found', 'fire', 'street', 'victim', 'racist', 'attack', 'established', 'result', 'inquiry', 'case', 'originally', 'suicide', 'convicted', 'killing', 'sentenced', 'life', 'imprisonment', 'pursuing', 'formal', 'complaint', 'family', 'officer', 'death', 'family', 'flaw', 'original', 'investigation', 'death', 'young', 'found', 'made', 'public', 'family', 'belief', 'victim', 'racial', 'attack', 'claimed', 'police', 'failed', 'investigate', 'crime', 'police', 'investigation', 'mother', 'made', 'appeal', 'police', 'information', 'white', 'suspected', 'racially', 'disappeared', 'inquest', 'jury', 'original', 'verdict', 'death', 'open', 'verdict', 'case', 'nomadic', 'population', 'estimated', 'number', 'person', 'experience', 'educational', 'discrimination', 'police', 'societ
+al', 'harassment', 'greater', 'population', 'according', 'human', 'group', 'expressed', 'similar', 'concern', 'passed', 'first', 'time', 'gave', 'specific', 'legal', 'protection', 'minority', 'ethnic', 'group', 'including', 'community', 'right', 'form', 'join', 'union', 'respect', 'right', 'practice', 'enacted', 'law', 'established', 'first', 'procedure', 'statutory', 'distinct', 'voluntary', 'union', 'recognition', 'free', 'government', 'control', 'significant', 'protection', 'union', 'effort', 'first', 'time', 'statutory', 'right', 'strike', 'act', 'set', 'minimum', 'employment', 'standard', 'first', 'time', 'labor', 'law', 'also', 'post', 'commissioner', 'trade', 'union', 'member', 'commissioner', 'protection', 'unlawful', 'industrial', 'action', 'previous', 'government', 'office', 'widely', 'interpreted', 'politically', 'motivated', 'attempt', 'labor', 'movement', 'detail', 'left', 'implementing', 'legislation', 'expected', 'completed', 'participate', 'freely', 'international', 'organization', 'bargaini
+ng', 'longstanding', 'widespread', 'covering', 'percent', 'work', 'force', 'labor', 'management', 'contract', 'court', 'act', 'union', 'request', 'recognition', 'proposed', 'bargaining', 'unit', 'act', 'cover', 'employer', 'worker', 'encompasses', 'estimated', 'third', 'workplace', 'appropriate', 'bargaining', 'unit', 'ass', 'whether', 'union', 'likely', 'majority', 'support', 'union', 'member', 'already', 'make', 'majority', 'bargaining', 'unit', 'issue', 'union', 'recognized', 'collective', 'bargaining', 'without', 'ballot', 'order', 'ballot', 'majority', 'bargaining', 'unit', 'employee', 'already', 'union', 'member', 'employer', 'must', 'providing', 'list', 'name', 'union', 'access', 'workplace', 'campaign', 'recognition', 'majority', 'voting', 'agree', 'including', 'least', 'percent', 'bargaining', 'unit', 'act', 'encourages', 'voluntary', 'agreement', 'employer', 'union', 'necessary', 'impose', 'binding', 'procedure', 'bargaining', 'pay', 'hour', 'protected', 'dismissal', 'retaliation', 'campaigning',
+'voting', 'recognition', 'longer', 'required', 'name', 'member', 'strike', 'ballot', 'opportunity', 'retaliation', 'bill', 'also', 'prohibits', 'list', 'union', 'member', 'labor', 'activist', 'use', 'employer', 'employment', 'agency', 'aimed', 'past', 'able', 'claim', 'unfair', 'dismissal', 'fired', 'within', 'week', 'employee', 'first', 'undertook', 'legal', 'strike', 'member', 'protected', 'subject', 'due', 'union', 'activity', 'membership', 'protection', 'previous', 'language', 'action', 'dismissal', 'taken', 'individual', 'legal', 'employer', 'withhold', 'fringe', 'benefit', 'otherwise', 'available', 'employee', 'time', 'act', 'policy', 'implemented', 'previous', 'government', 'ballot', 'notice', 'strike', 'abolition', 'closed', 'prohibition', 'also', 'extends', 'protection', 'contract', 'part', 'time', 'worker', 'attempt', 'close', 'previously', 'allowed', 'employer', 'labor', 'regulation', 'worker', 'protected', 'full', 'law', 'compulsory', 'labor', 'including', 'child', 'prohibited', 'raised', 'quest
+ion', 'situation', 'prison', 'age', 'compulsory', 'age', 'permitted', 'work', 'industrial', 'except', 'part', 'educational', 'course', 'child', 'labor', 'prohibited', 'effectively', 'enforces', 'prohibition', 'first', 'minimum', 'wage', 'effect', 'percent', 'work', 'force', 'youth', 'provide', 'standard', 'living', 'worker', 'family', 'welfare', 'state', 'particular', 'working', 'family', 'tax', 'credit', 'disabled', 'person', 'tax', 'credit', 'implemented', 'designed', 'ensure', 'working', 'family', 'living', 'wage', 'estimated', 'benefit', 'minimum', 'wage', 'introduced', 'working', 'time', 'bring', 'domestic', 'legislation', 'hour', 'regulation', 'still', 'developed', 'public', 'health', 'safety', 'employee', 'risk', 'practice', 'act', 'effectively', 'enforces', 'regulation', 'matter', 'initiate', 'criminal', 'proceeding', 'appropriate', 'case', 'representative', 'actively', 'monitor', 'enforcement', 'act', 'remove', 'condition', 'without', 'loss', 'employment', 'law', 'specifically', 'trafficking', 'per
+son', 'police', 'success', 'law', 'living', 'immoral', 'earnings', 'review', 'sexual', 'offense', 'law', 'completed', 'whether', 'specific', 'law', 'address', 'trafficking', 'person', 'found', 'illegal', 'person', 'growing', 'problem', 'trafficking', 'woman', 'expected', 'issued', 'address', 'problem', 'jailed', 'charge', 'living', 'immoral', 'earnings', 'brought', 'member', 'gang', 'found', 'guilty', 'false', 'imprisonment', 'conspiracy', 'bringing', 'person', 'making', 'effectively', 'ended', 'series', 'trial', 'gang', 'member', 'jailed', 'total')
+x=['a','b']
+ukWrds=c('political', 'highlighted', 'implementation', 'peace', 'agreement', 'devolution', 'legislative', 'power', 'part', 'overall', 'agenda', 'modernize', 'traditional', 'political', 'system', 'hereditary', 'peer', 'chamber', 'government', 'command', 'seat', 'majority', 'parliament', 'enjoys', 'highest', 'popularity', 'rating', 'history', 'government', 'implement', 'political', 'agenda', 'allegation', 'corruption', 'politician', 'including', 'close', 'prime', 'minister', 'encompasses', 'separate', 'parliament', 'elected', 'member', 'vote', 'single', 'member', 'hereditary', 'appointed', 'member', 'cabinet', 'minister', 'appointed', 'majority', 'party', 'exercise', 'executive', 'power', 'party', 'leader', 'support', 'form', 'government', 'called', 'past', 'style', 'position', 'number', 'issue', 'general', 'election', 'government', 'continues', 'along', 'traditional', 'policy', 'taking', 'office', 'tax', 'policy', 'devolved', 'policy', 'imposed', 'strict', 'limit', 'also', 'minimum', 'wage', 'trade', 'union'
+, 'parliamentary', 'majority', 'successfully', 'number', 'reform', 'power', 'took', 'place', 'establishing', 'legislature', 'member', 'parliament', 'member', 'assembly', 'exercise', 'control', 'health', 'education', 'housing', 'foreign', 'defense', 'economic', 'policy', 'remain', 'parliamentary', 'control', 'dominated', 'parliamentary', 'election', 'government', 'carried', 'sweeping', 'reform', 'measure', 'member', 'hereditary', 'peer', 'lost', 'life', 'peer', 'along', 'remaining', 'remain', 'reform', 'chamber', 'significant', 'political', 'power', 'act', 'influence', 'government', 'announced', 'seat', 'member', 'assembly', 'scheduled', 'continued', 'make', 'left', 'wing', 'join', 'pro', 'campaign', 'government', 'still', 'rule', 'single', 'current', 'parliamentary', 'term', 'likely', 'referendum', 'member', 'based', 'power', 'parliament', 'ending', 'direct', 'rule', 'relation', 'power', 'arrangement', 'political', 'wing', 'stem', 'acceptance', 'power', 'sharing', 'arrangement', 'agree', 'timetable', 'decom
+missioning', 'arm', 'assembly', 'elected', 'representation', 'establishes', 'council', 'consult', 'matter', 'concern', 'establishes', 'council', 'representative', 'particular', 'policy', 'issue', 'political', 'misconduct', 'since', 'election', 'trade', 'chief', 'resigned', 'late', 'revealed', 'accepted', 'loan', 'time', 'disclosure', 'investigation', 'office', 'corruption', 'also', 'resigned', 'affair', 'forced', 'leaked', 'loan', 'allegation', 'impropriety', 'apparently', 'taken', 'popularity', 'highest', 'approval', 'rating', 'prime', 'minister', 'history', 'change', 'government', 'registered', 'government', 'include', 'former', 'citizen', 'resident', 'subject', 'voting', 'emigration', 'legislature', 'authority', 'matter', 'regional', 'importance', 'education', 'health', 'economic', 'matter', 'parliament', 'limited', 'power', 'tax', 'government', 'hereditary', 'peer', 'critic', 'charged', 'reform', 'arrangement', 'election', 'government', 'house', 'peer', 'half', 'member', 'government', 'written', 'civil'
+, 'criticized', 'legal', 'attempt', 'combat', 'crime', 'terrorism', 'dangerous', 'freedom', 'renewed', 'every', 'suspect', 'detained', 'without', 'charge', 'legal', 'representation', 'allows', 'jury', 'guilt', 'defendant', 'silence', 'bombing', 'killed', 'people', 'government', 'called', 'emergency', 'session', 'parliament', 'law', 'history', 'law', 'make', 'possible', 'suspected', 'terrorist', 'senior', 'police', 'officer', 'allow', 'security', 'force', 'seize', 'property', 'known', 'terrorist', 'announced', 'set', 'proposal', 'modernize', 'make', 'proposal', 'definition', 'terrorism', 'could', 'political', 'use', 'violence', 'leader', 'proposal', 'would', 'political', 'activity', 'bill', 'also', 'grant', 'wider', 'power', 'police', 'seize', 'drug', 'case', 'government', 'passed', 'law', 'act', 'public', 'body', 'act', 'accordance', 'convention', 'allows', 'citizen', 'take', 'alleged', 'violation', 'convention', 'court', 'defense', 'action', 'homosexual', 'serving', 'armed', 'force', 'ruled', 'ban', 'gay',
+'military', 'unlawful', 'citizen', 'sentenced', 'life', 'prison', 'term', 'role', 'killing', 'first', 'person', 'tried', 'court', 'moved', 'extradite', 'former', 'face', 'charge', 'torture', 'murder', 'human', 'violation', 'high', 'court', 'set', 'date', 'appeal', 'process', 'government', 'issued', 'found', 'police', 'force', 'racism', 'stem', 'complaint', 'police', 'harassment', 'black', 'specific', 'case', 'black', 'stabbed', 'death', 'group', 'white', 'youth', 'inquiry', 'crime', 'said', 'police', 'recommends', 'setting', 'recruitment', 'target', 'black', 'officer', 'police', 'public', 'body', 'police', 'force', 'greater', 'public', 'mostly', 'private', 'press', 'subject', 'strict', 'law', 'medium', 'privately', 'owned', 'independent', 'many', 'national', 'daily', 'newspaper', 'aligned', 'political', 'party', 'run', 'half', 'electronic', 'medium', 'funded', 'government', 'independent', 'ordered', 'based', 'language', 'channel', 'cease', 'call', 'violence', 'language', 'station', 'license', 'revoked', 'a
+uthority', 'name', 'secret', 'intelligence', 'former', 'government', 'introduced', 'draft', 'bill', 'public', 'access', 'wide', 'range', 'information', 'previously', 'denied', 'including', 'police', 'data', 'bill', 'including', 'information', 'regarding', 'national', 'security', 'defense', 'international', 'resolution', 'safety', 'individual', 'public', 'interest', 'law', 'enforcement', 'worker', 'free', 'form', 'join', 'independent', 'trade', 'union', 'bill', 'worker', 'improve', 'union', 'recognition', 'includes', 'improvement', 'maternity', 'leave', 'provision', 'equality', 'part', 'time', 'full', 'time', 'worker', 'higher', 'unfair', 'dismissal', 'also', 'grant', 'union', 'automatic', 'recognition', 'percent', 'worker', 'workplace', 'union', 'member', 'percent', 'worker', 'support', 'recognition', 'national', 'minimum', 'wage', 'policy', 'introduced', 'establishing', 'pay', 'based', 'age', 'immigration', 'policy', 'continued', 'human', 'refugee', 'group', 'criticized', 'law', 'increase', 'among', 'criti
+cized', 'proposal', 'bill', 'replace', 'benefit', 'voucher', 'voucher', 'good', 'certain', 'allow', 'critic', 'charge', 'longstanding', 'democratic', 'parliamentary', 'government', 'lower', 'legislative', 'chamber', 'center', 'parliamentary', 'power', 'elected', 'election', 'upper', 'chamber', 'power', 'delay', 'implementation', 'law', 'made', 'hereditary', 'life', 'peer', 'senior', 'clergy', 'established', 'first', 'stage', 'program', 'reform', 'upper', 'chamber', 'remove', 'hereditary', 'peer', 'life', 'peer', 'clergy', 'remain', 'step', 'based', 'recommendation', 'commission', 'expected', 'issue', 'independent', 'judiciary', 'decision', 'legislation', 'police', 'force', 'responsive', 'effective', 'control', 'official', 'intelligence', 'agency', 'authority', 'act', 'support', 'law', 'enforcement', 'agency', 'prevention', 'serious', 'domestic', 'crime', 'police', 'force', 'complex', 'role', 'due', 'difficult', 'circumstance', 'respect', 'law', 'order', 'area', 'continuing', 'threat', 'violence', 'army', 'u
+nit', 'operate', 'police', 'force', 'member', 'police', 'force', 'committed', 'human', 'abuse', 'developed', 'market', 'based', 'provides', 'resident', 'high', 'standard', 'living', 'area', 'particularly', 'older', 'industrial', 'area', 'including', 'part', 'higher', 'unemployment', 'rate', 'addition', 'unemployment', 'higher', 'among', 'group', 'youth', 'racial', 'minority', 'among', 'government', 'provides', 'social', 'welfare', 'service', 'including', 'national', 'health', 'system', 'housing', 'family', 'benefit', 'higher', 'education', 'generally', 'respected', 'human', 'citizen', 'however', 'problem', 'area', 'police', 'occasionally', 'abused', 'detainee', 'inquiry', 'death', 'black', 'teenager', 'released', 'concluding', 'investigation', 'case', 'led', 'acquittal', 'suspected', 'attacker', 'marred', 'combination', 'professional', 'incompetence', 'institutional', 'racism', 'police', 'overcrowding', 'remains', 'problem', 'number', 'prison', 'suicide', 'rose', 'nearly', 'hundred', 'limit', 'freedom', 'as
+sembly', 'association', 'related', 'security', 'situation', 'continued', 'take', 'step', 'combat', 'violence', 'woman', 'discrimination', 'woman', 'minority', 'nomadic', 'community', 'problem', 'child', 'abuse', 'occasional', 'societal', 'violence', 'minority', 'took', 'step', 'improve', 'worker', 'political', 'party', 'review', 'result', 'review', 'party', 'elected', 'devolved', 'power', 'power', 'sharing', 'included', 'representative', 'major', 'political', 'party', 'unionist', 'nationalist', 'republican', 'minister', 'unionist', 'meeting', 'including', 'meeting', 'executive', 'included', 'republican', 'party', 'review', 'involved', 'procedure', 'decommissioning', 'paramilitary', 'weapon', 'appointed', 'apart', 'weapon', 'loyalist', 'splinter', 'group', 'none', 'major', 'paramilitary', 'organization', 'weapon', 'began', 'operation', 'effort', 'internal', 'organization', 'human', 'nongovernmental', 'organization', 'criticized', 'body', 'lack', 'investigative', 'power', 'application', 'assistance', 'made',
+'additional', 'informal', 'inquiry', 'amalgamated', 'appointed', 'member', 'commonly', 'referred', 'former', 'called', 'policing', 'recommendation', 'include', 'size', 'force', 'little', 'half', 'current', 'change', 'name', 'scheme', 'increase', 'recruitment', 'force', 'introduction', 'include', 'member', 'political', 'party', 'make', 'recommendation', 'strong', 'criticism', 'unionist', 'community', 'review', 'structure', 'management', 'funding', 'criminal', 'justice', 'system', 'continued', 'originally', 'scheduled', 'release', 'subsequently', 'postponed', 'early', 'especially', 'republican', 'criticized', 'delay', 'support', 'continued', 'release', 'prisoner', 'affiliated', 'paramilitary', 'organization', 'maintain', 'cease', 'fire', 'paramilitary', 'prisoner', 'including', 'republican', 'loyalist', 'others', 'paroled', 'commonly', 'referred', 'early', 'release', 'program', 'troop', 'lowest', 'level', 'since', 'paramilitary', 'dissident', 'group', 'engaged', 'act', 'violence', 'aimed', 'peace', 'process',
+'majority', 'violence', 'resulted', 'republican', 'loyalist', 'paramilitary', 'group', 'continued', 'punishment', 'attack', 'victim', 'lived', 'area', 'influence', 'reported', 'shooting', 'assault', 'paramilitary', 'style', 'attack', 'shooting', 'assault', 'recorded', 'religious', 'organization', 'object', 'sectarian', 'attack', 'political', 'killing', 'independent', 'organization', 'opened', 'inquiry', 'death', 'black', 'died', 'police', 'officer', 'taken', 'failure', 'post', 'establish', 'cause', 'death', 'police', 'shot', 'killed', 'home', 'leg', 'family', 'campaigning', 'public', 'inquiry', 'incident', 'internal', 'police', 'investigation', 'reported', 'death', 'police', 'custody', 'increased', 'ending', 'period', 'previous', 'death', 'occurred', 'natural', 'cause', 'due', 'drug', 'suicide', 'support', 'abolition', 'offense', 'drunk', 'recommends', 'drunk', 'rather', 'police', 'number', 'death', 'police', 'custody', 'number', 'death', 'custody', 'prison', 'due', 'suicide', 'natural', 'cause', 'policema
+n', 'murder', 'shooting', 'duty', 'unarmed', 'shot', 'killed', 'raid', 'home', 'concluded', 'evidence', 'prosecute', 'police', 'officer', 'killed', 'member', 'shot', 'police', 'raid', 'operation', 'policeman', 'acquitted', 'murder', 'unarmed', 'car', 'shot', 'killed', 'close', 'range', 'officer', 'third', 'trial', 'since', 'incident', 'trial', 'second', 'jury', 'agree', 'verdict', 'police', 'officer', 'charged', 'manslaughter', 'death', 'acquitted', 'earlier', 'inquest', 'found', 'killed', 'died', 'following', 'arrest', 'drunk', 'assisting', 'family', 'pursuing', 'formal', 'inquest', 'death', 'prisoner', 'charged', 'prison', 'staff', 'beat', 'government', 'inquiry', 'handling', 'death', 'police', 'custody', 'highlighted', 'inquiry', 'separate', 'case', 'died', 'police', 'custody', 'arrested', 'recommended', 'decision', 'concerning', 'death', 'custody', 'case', 'made', 'identified', 'senior', 'person', 'decision', 'prosecute', 'sent', 'senior', 'counsel', 'case', 'sent', 'complex', 'case', 'urged', 'consider
+', 'publishing', 'reason', 'decided', 'prosecute', 'police', 'officer', 'campaign', 'relative', 'person', 'custody', 'urged', 'body', 'independent', 'police', 'set', 'investigate', 'complaint', 'involving', 'officer', 'established', 'judicial', 'inquiry', 'unarmed', 'civil', 'killed', 'soldier', 'member', 'security', 'force', 'held', 'accountable', 'inquiry', 'gathered', 'testimony', 'evidence', 'victim', 'journalist', 'government', 'official', 'controversy', 'inquiry', 'proceeding', 'particularly', 'issue', 'anonymity', 'soldier', 'inquiry', 'originally', 'decided', 'grant', 'anonymity', 'soldier', 'unless', 'could', 'risk', 'decision', 'earlier', 'court', 'ruling', 'granted', 'soldier', 'anonymity', 'inquiry', 'proceeding', 'hearing', 'procedural', 'issue', 'formal', 'hearing', 'scheduled', 'bombing', 'person', 'killed', 'wounded', 'attack', 'apparently', 'motivated', 'racism', 'homophobia', 'nail', 'bomb', 'person', 'street', 'market', 'neighborhood', 'week', 'later', 'another', 'nail', 'bomb', 'several'
+, 'person', 'neighborhood', 'large', 'population', 'third', 'nail', 'bomb', 'gay', 'bar', 'killing', 'person', 'wounding', 'police', 'stated', 'attack', 'believed', 'linked', 'carried', 'homophobic', 'rightwing', 'extremist', 'white', 'arrested', 'subsequently', 'charged', 'bombing', 'police', 'earlier', 'claim', 'responsibility', 'made', 'rightwing', 'extremist', 'group', 'believed', 'trial', 'pending', 'inquiry', 'death', 'black', 'teenager', 'released', 'concluding', 'investigation', 'case', 'led', 'acquittal', 'suspected', 'attacker', 'marred', 'combination', 'professional', 'incompetence', 'institutional', 'racism', 'police', 'criterion', 'main', 'paramilitary', 'group', 'cease', 'fire', 'major', 'republican', 'paramilitary', 'group', 'cease', 'fire', 'loyalist', 'side', 'group', 'cease', 'fire', 'include', 'fact', 'group', 'considered', 'maintain', 'cease', 'fire', 'killing', 'wounding', 'republican', 'loyalist', 'group', 'continued', 'addition', 'republican', 'loyalist', 'splinter', 'group', 'continu
+ed', 'terrorist', 'activity', 'widely', 'blamed', 'death', 'former', 'member', 'found', 'dead', 'house', 'drug', 'found', 'murdered', 'found', 'dead', 'murder', 'medium', 'police', 'crime', 'paramilitary', 'blamed', 'car', 'bomb', 'death', 'lawyer', 'lawyer', 'known', 'taking', 'high', 'civil', 'case', 'claimed', 'early', 'made', 'death', 'threat', 'controversy', 'surrounding', 'case', 'within', 'murder', 'invited', 'detective', 'chief', 'constable', 'murder', 'inquiry', 'requested', 'outside', 'technical', 'assistance', 'appointed', 'take', 'overall', 'command', 'investigation', 'week', 'death', 'leaked', 'investigation', 'claim', 'raised', 'doubt', 'impartiality', 'address', 'original', 'claim', 'death', 'threat', 'judge', 'effort', 'investigate', 'claim', 'inadequate', 'learning', 'initial', 'handling', 'case', 'chief', 'constable', 'appointed', 'officer', 'take', 'investigation', 'deemed', 'officer', 'subsequent', 'investigation', 'public', 'prosecution', 'many', 'nationalist', 'outside', 'group', 'role
+', 'murder', 'inquiry', 'circumstance', 'surrounding', 'death', 'call', 'nationalist', 'politician', 'human', 'group', 'independent', 'inquiry', 'murder', 'date', 'arrest', 'made', 'group', 'claimed', 'responsibility', 'dissident', 'loyalist', 'blamed', 'shooting', 'death', 'loyalist', 'area', 'well', 'pipe', 'bomb', 'murder', 'resident', 'total', 'arrest', 'made', 'connection', 'bombing', 'killed', 'person', 'claimed', 'responsibility', 'person', 'charged', 'involvement', 'bombing', 'unionist', 'politician', 'many', 'human', 'group', 'continue', 'call', 'independent', 'investigation', 'murder', 'leader', 'high', 'security', 'member', 'murder', 'state', 'state', 'fact', 'murder', 'call', 'question', 'prison', 'security', 'standard', 'housed', 'separate', 'wing', 'prison', 'still', 'able', 'enter', 'area', 'perpetrator', 'weapon', 'specific', 'movement', 'suspect', 'arrested', 'murder', 'acquitted', 'killing', 'found', 'guilty', 'minor', 'offense', 'case', 'widespread', 'officer', 'vehicle', 'act', 'death',
+'trial', 'judge', 'expressed', 'concern', 'police', 'concluded', 'early', 'intervention', 'could', 'group', 'argue', 'successfully', 'similar', 'circumstance', 'past', 'charge', 'failure', 'made', 'thus', 'prosecution', 'difficult', 'arrested', 'involvement', 'murder', 'respected', 'legal', 'counsel', 'arrest', 'result', 'third', 'independent', 'investigation', 'chief', 'constable', 'invited', 'initiate', 'another', 'investigation', 'result', 'information', 'allegation', 'security', 'force', 'collusion', 'murder', 'originally', 'human', 'organization', 'organization', 'previous', 'inquiry', 'made', 'public', 'continue', 'call', 'investigation', 'evidence', 'say', 'support', 'charge', 'collusion', 'murder', 'government', 'official', 'loyalist', 'paramilitary', 'group', 'court', 'claimed', 'time', 'death', 'warned', 'police', 'hit', 'whether', 'target', 'already', 'arrested', 'weapon', 'charge', 'acquitted', 'subsequently', 'person', 'arrested', 'current', 'inquiry', 'released', 'without', 'charge', 'third',
+'charged', 'minor', 'offense', 'family', 'judicial', 'review', 'board', 'allowed', 'rejoin', 'regiment', 'convicted', 'murder', 'released', 'incarceration', 'rejoin', 'regiment', 'ruling', 'board', 'decision', 'soldier', 'power', 'compel', 'suspected', 'involvement', 'killing', 'inquest', 'relative', 'deceased', 'disclosure', 'evidence', 'law', 'permitted', 'deceased', 'died', 'rather', 'broad', 'circumstance', 'death', 'group', 'argue', 'definition', 'including', 'soldier', 'police', 'officer', 'family', 'member', 'learning', 'circumstance', 'regarding', 'relative', 'death', 'information', 'provided', 'led', 'discovery', 'body', 'person', 'disappeared', 'following', 'earlier', 'agreement', 'court', 'try', 'bombing', 'suspect', 'accepted', 'responsibility', 'death', 'killed', 'outside', 'building', 'paid', 'family', 'war', 'criminal', 'age', 'found', 'guilty', 'given', 'life', 'sentence', 'first', 'prosecuted', 'successfully', 'war', 'crime', 'legislation', 'remained', 'house', 'arrest', 'sought', 'extradit
+e', 'try', 'involvement', 'disappearance', 'torture', 'highest', 'court', 'decided', 'enjoy', 'charge', 'international', 'crime', 'torture', 'conspiracy', 'torture', 'committed', 'international', 'torture', 'convention', 'binding', 'hearing', 'began', 'magistrate', 'ruled', 'could', 'trial', 'charge', 'torture', 'conspiracy', 'torture', 'appealed', 'magistrate', 'decision', 'requested', 'allow', 'return', 'age', 'poor', 'health', 'response', 'ordered', 'independent', 'medical', 'pending', 'along', 'legal', 'appeal', 'politically', 'motivated', 'disappearance', 'established', 'purpose', 'location', 'remains', 'victim', 'paramilitary', 'violence', 'commission', 'obtained', 'information', 'led', 'discovery', 'remains', 'person', 'disappeared', 'location', 'remains', 'inaccurate', 'commission', 'decided', 'search', 'additional', 'known', 'person', 'disappeared', 'allow', 'examine', 'possible', 'law', 'torture', 'treatment', 'however', 'police', 'occasionally', 'abused', 'detainee', 'organization', 'abuse', 'wid
+espread', 'matter', 'serious', 'concern', 'injury', 'illness', 'result', 'often', 'neglect', 'physical', 'attack', 'incident', 'police', 'occurred', 'claim', 'physical', 'right', 'immediate', 'medical', 'trial', 'judge', 'must', 'examine', 'claim', 'obtained', 'abusive', 'treatment', 'admissible', 'court', 'judge', 'exclude', 'even', 'voluntary', 'confession', 'human', 'organization', 'claim', 'confession', 'obtained', 'abusive', 'treatment', 'regularly', 'found', 'admissible', 'court', 'sexual', 'harassment', 'criminal', 'conduct', 'within', 'continued', 'hundred', 'case', 'investigation', 'police', 'official', 'remain', 'committed', 'abusive', 'treatment', 'corruption', 'originally', 'intended', 'replace', 'early', 'appointed', 'authority', 'complaint', 'police', 'police', 'investigate', 'independently', 'complaint', 'police', 'referred', 'chief', 'constable', 'automatically', 'case', 'involving', 'death', 'serious', 'injury', 'direct', 'chief', 'constable', 'bring', 'charge', 'police', 'officer', 'must',
+'provide', 'recruit', 'independent', 'investigative', 'staff', 'reported', 'complaint', 'case', 'completed', 'percent', 'led', 'informal', 'disciplinary', 'action', 'formal', 'criminal', 'charge', 'series', 'public', 'private', 'meeting', 'throughout', 'gathered', 'testimony', 'order', 'future', 'policing', 'structure', 'arrangement', 'goal', 'recommend', 'proposal', 'would', 'ensure', 'police', 'service', 'enjoys', 'widespread', 'support', 'community', 'side', 'community', 'generally', 'recognized', 'qualification', 'member', 'commission', 'published', 'recommendation', 'call', 'includes', 'measure', 'local', 'control', 'police', 'increasing', 'number', 'officer', 'make', 'percent', 'force', 'significantly', 'size', 'force', 'change', 'many', 'particularly', 'critical', 'recommendation', 'change', 'name', 'force', 'human', 'group', 'human', 'based', 'included', 'recommendation', 'would', 'hold', 'accountable', 'serving', 'officer', 'might', 'committed', 'human', 'abuse', 'independent', 'assessor', 'milita
+ry', 'complaint', 'continued', 'investigation', 'complaint', 'abuse', 'committed', 'army', 'formal', 'informal', 'complaint', 'primarily', 'harassment', 'abuse', 'annual', 'independent', 'assessor', 'expressed', 'concern', 'police', 'complaint', 'soldier', 'arresting', 'terrorist', 'suspect', 'independently', 'police', 'independent', 'commissioner', 'holding', 'center', 'made', 'visit', 'holding', 'center', 'order', 'interrogation', 'interview', 'detainee', 'visit', 'holding', 'center', 'commissioner', 'number', 'complaint', 'generally', 'harassment', 'technical', 'assault', 'police', 'continued', 'use', 'plastic', 'bullet', 'quell', 'civil', 'given', 'relative', 'summer', 'marching', 'season', 'use', 'reported', 'plastic', 'bullet', 'fired', 'first', 'week', 'period', 'reported', 'additional', 'plastic', 'bullet', 'fired', 'member', 'crowd', 'police', 'total', 'security', 'force', 'fired', 'plastic', 'bullet', 'rule', 'plastic', 'bullet', 'aimed', 'nevertheless', 'medical', 'serious', 'head', 'upper', 'bod
+y', 'injury', 'resulted', 'plastic', 'bullet', 'use', 'past', 'bullet', 'use', 'criticized', 'human', 'monitor', 'ruled', 'quell', 'serious', 'called', 'ban', 'use', 'considered', 'alternative', 'stated', 'found', 'either', 'dangerous', 'inaccurate', 'guideline', 'recommended', 'use', 'plastic', 'bullet', 'public', 'order', 'situation', 'guideline', 'use', 'plastic', 'bullet', 'change', 'past', 'practice', 'permitted', 'use', 'plastic', 'bullet', 'property', 'peace', 'prevent', 'crime', 'guideline', 'plastic', 'bullet', 'used', 'case', 'serious', 'risk', 'life', 'injury', 'investigation', 'also', 'recommend', 'plastic', 'bullet', 'use', 'encouraged', 'use', 'alternative', 'crowd', 'control', 'measure', 'activist', 'continued', 'call', 'closure', 'holding', 'center', 'including', 'complaint', 'police', 'impropriety', 'interrogation', 'process', 'independent', 'commissioner', 'holding', 'center', 'also', 'recommended', 'facility', 'poor', 'physical', 'state', 'audio', 'recording', 'equipment', 'introduced', '
+video', 'recording', 'equipment', 'use', 'interrogation', 'session', 'holding', 'center', 'group', 'criticized', 'fact', 'video', 'audio', 'recording', 'produced', 'system', 'given', 'interrogation', 'session', 'announced', 'closure', 'effective', 'remained', 'open', 'decided', 'bring', 'charge', 'officer', 'involved', 'case', 'arrest', 'initial', 'incarceration', 'interrogation', 'center', 'later', 'sentenced', 'conspiracy', 'murder', 'court', 'awarded', 'damage', 'court', 'decision', 'independent', 'inquiry', 'treatment', 'chief', 'constable', 'basis', 'charge', 'officer', 'involved', 'police', 'member', 'minority', 'black', 'lost', 'suit', 'police', 'harassment', 'stopped', 'time', 'jury', 'found', 'charge', 'officer', 'awarded', 'damage', 'unlawful', 'arrest', 'ordered', 'police', 'recruit', 'officer', 'ethnic', 'minority', 'within', 'commissioned', 'revealed', 'term', 'usually', 'mostly', 'likely', 'stopped', 'searched', 'drug', 'white', 'black', 'warned', 'police', 'risk', 'young', 'stop', 'search', '
+power', 'armed', 'force', 'registered', 'total', 'internal', 'harassment', 'complaint', 'number', 'significant', 'decrease', 'past', 'sexual', 'harassment', 'racial', 'harassment', 'harassment', 'complaint', 'procedure', 'implemented', 'fully', 'also', 'right', 'complaint', 'employment', 'tribunal', 'service', 'agreement', 'racial', 'equality', 'practice', 'loyalist', 'republican', 'paramilitary', 'group', 'continued', 'carry', 'punishment', 'attack', 'victim', 'lived', 'area', 'paramilitary', 'influence', 'attack', 'often', 'carried', 'within', 'paramilitary', 'group', 'often', 'targeted', 'member', 'rank', 'order', 'attack', 'also', 'targeted', 'engaged', 'called', 'activity', 'drug', 'dealing', 'group', 'used', 'method', 'maintain', 'control', 'influence', 'community', 'attacker', 'beat', 'victim', 'pipe', 'shot', 'victim', 'leg', 'recorded', 'total', 'casualty', 'result', 'paramilitary', 'style', 'attack', 'includes', 'shooting', 'loyalist', 'republican', 'assault', 'loyalist', 'republican', 'group', 's
+ay', 'figure', 'true', 'number', 'casualty', 'many', 'victim', 'paramilitary', 'punishment', 'attack', 'condition', 'generally', 'minimum', 'international', 'standard', 'chief', 'inspector', 'prison', 'annual', 'published', 'overcrowding', 'poor', 'local', 'prison', 'prison', 'identified', 'continuing', 'problem', 'despite', 'increase', 'prison', 'population', 'decreased', 'percent', 'period', 'previous', 'home', 'detention', 'program', 'administered', 'electronic', 'unit', 'began', 'operation', 'offender', 'program', 'considered', 'success', 'fewer', 'percent', 'offender', 'prison', 'reported', 'death', 'prisoner', 'death', 'death', 'self', 'due', 'natural', 'cause', 'reported', 'death', 'custody', 'suicide', 'natural', 'cause', 'implemented', 'policy', 'change', 'attempt', 'number', 'prisoner', 'suicide', 'continues', 'develop', 'suicide', 'prevention', 'strategy', 'measure', 'taken', 'group', 'particularly', 'critical', 'security', 'unit', 'used', 'hold', 'prisoner', 'deemed', 'exceptional', 'risk', 'sma
+ll', 'group', 'lack', 'exercise', 'work', 'educational', 'opportunity', 'natural', 'well', 'strict', 'enforcement', 'visit', 'human', 'group', 'imprisonment', 'international', 'standard', 'government', 'inquiry', 'concluded', 'prolonged', 'incarceration', 'could', 'lead', 'mental', 'illness', 'took', 'step', 'address', 'concern', 'provided', 'detail', 'case', 'security', 'health', 'revealed', 'health', 'prisoner', 'prisoner', 'longer', 'exceptional', 'risk', 'moved', 'prolonged', 'incarceration', 'could', 'lead', 'mental', 'illness', 'current', 'case', 'occurred', 'prisoner', 'remained', 'none', 'terrorist', 'related', 'crime', 'distinct', 'prison', 'exist', 'administered', 'office', 'number', 'prisoner', 'continued', 'woman', 'commit', 'percent', 'crime', 'number', 'woman', 'sent', 'prison', 'past', 'undertook', 'review', 'need', 'mother', 'prison', 'published', 'list', 'recommendation', 'based', 'premise', 'mother', 'baby', 'unit', 'prison', 'would', 'allow', 'mother', 'baby', 'develop', 'promoting', 'chi
+ld', 'welfare', 'announced', 'majority', 'recommendation', 'full', 'procedure', 'admission', 'unit', 'published', 'standard', 'management', 'change', 'effect', 'early', 'large', 'increase', 'number', 'asylum', 'seeker', 'housed', 'approximately', 'half', 'immigration', 'detainee', 'regular', 'prison', 'normally', 'held', 'separately', 'convicted', 'prisoner', 'prisoner', 'awaiting', 'trial', 'human', 'group', 'regular', 'prison', 'house', 'immigration', 'detainee', 'chief', 'inspector', 'prison', 'called', 'upon', 'establish', 'specific', 'guideline', 'treatment', 'asylum', 'seeker', 'detention', 'center', 'prison', 'guideline', 'currently', 'exist', 'group', 'lack', 'among', 'regular', 'prison', 'official', 'dealing', 'immigration', 'detainee', 'regularly', 'visit', 'detention', 'center', 'relation', 'detention', 'center', 'official', 'however', 'noncompliance', 'asylum', 'seeker', 'stated', 'prisoner', 'convicted', 'offense', 'related', 'situation', 'request', 'repatriation', 'prisoner', 'committed', 'off
+ense', 'signing', 'provision', 'early', 'release', 'prisoner', 'permit', 'human', 'monitor', 'visit', 'prison', 'immigration', 'detention', 'center', 'authority', 'often', 'make', 'arrest', 'detain', 'suspect', 'without', 'judicial', 'warrant', 'especially', 'believe', 'reasonable', 'cause', 'suspect', 'allows', 'police', 'officer', 'stop', 'search', 'vehicle', 'police', 'officer', 'least', 'superintendent', 'rank', 'chief', 'inspector', 'superintendent', 'available', 'belief', 'prevent', 'act', 'violence', 'limited', 'hour', 'period', 'renewable', 'certain', 'circumstance', 'permit', 'soldier', 'duty', 'member', 'police', 'officer', 'arrest', 'detain', 'hour', 'person', 'reasonable', 'ground', 'suspect', 'commit', 'offense', 'without', 'trial', 'allows', 'police', 'arrest', 'without', 'warrant', 'person', 'reason', 'suspect', 'involved', 'terrorism', 'authority', 'detain', 'person', 'even', 'age', 'hour', 'without', 'legal', 'representation', 'judicial', 'review', 'time', 'confession', 'obtained', 'used',
+'subsequent', 'court', 'proceeding', 'detainee', 'granted', 'right', 'lawyer', 'interrogation', 'without', 'charge', 'extended', 'authority', 'detention', 'power', 'held', 'breach', 'led', 'derogation', 'government', 'reviewed', 'legislation', 'every', 'due', 'security', 'situation', 'amended', 'change', 'critic', 'charge', 'annual', 'review', 'introduced', 'intended', 'replace', 'emergency', 'law', 'cover', 'foreign', 'based', 'well', 'domestic', 'group', 'wider', 'definition', 'terrorism', 'criticized', 'broad', 'bill', 'continue', 'suspect', 'arrested', 'without', 'warrant', 'must', 'released', 'within', 'hour', 'hour', 'serious', 'offense', 'involved', 'unless', 'brought', 'magistrate', 'court', 'arrested', 'provision', 'court', 'extension', 'detention', 'hour', 'application', 'another', 'hour', 'hour', 'scheme', 'awaiting', 'trial', 'statutory', 'right', 'bail', 'unless', 'risk', 'would', 'commit', 'offense', 'witness', 'otherwise', 'course', 'justice', 'unless', 'bail', 'alleged', 'offense', 'committe
+d', 'custody', 'protected', 'statutory', 'custody', 'time', 'limit', 'period', 'held', 'awaiting', 'trial', 'maximum', 'unless', 'court', 'grant', 'extension', 'defendant', 'awaiting', 'trial', 'custody', 'custody', 'awaiting', 'trial', 'week', 'longer', 'week', 'defendant', 'awaiting', 'trial', 'fewer', 'custody', 'time', 'awaiting', 'trial', 'includes', 'measure', 'reduce', 'delay', 'criminal', 'proceeding', 'procedural', 'reform', 'time', 'allowed', 'prosecution', 'case', 'law', 'give', 'detention', 'power', 'immigration', 'officer', 'time', 'limit', 'detention', 'right', 'reviewed', 'court', 'given', 'time', 'approximately', 'asylum', 'seeker', 'detained', 'percent', 'asylum', 'seeker', 'detained', 'either', 'immigration', 'detention', 'center', 'regular', 'prison', 'normally', 'held', 'separately', 'convicted', 'prisoner', 'awaiting', 'trial', 'held', 'police', 'hour', 'pending', 'another', 'asylum', 'detainee', 'held', 'percent', 'held', 'percent', 'percent', 'percent', 'accused', 'criminal', 'offense
+', 'asylum', 'seeker', 'given', 'written', 'statement', 'detained', 'practice', 'provide', 'status', 'claim', 'time', 'required', 'seeker', 'automatic', 'right', 'apply', 'bail', 'bail', 'application', 'made', 'immigration', 'appellate', 'authority', 'requires', 'relatively', 'high', 'level', 'detention', 'used', 'good', 'ground', 'noncompliance', 'term', 'temporary', 'admission', 'practice', 'affect', 'percent', 'asylum', 'seeker', 'given', 'time', 'use', 'exile', 'also', 'organization', 'continued', 'individual', 'family', 'compel', 'leave', 'difficult', 'count', 'left', 'threat', 'paramilitary', 'group', 'number', 'people', 'exile', 'since', 'signing', 'range', 'high', 'local', 'many', 'threat', 'reported', 'case', 'case', 'left', 'immediate', 'area', 'threat', 'left', 'city', 'left', 'case', 'investigation', 'revealed', 'threat', 'case', 'intervention', 'agency', 'threat', 'half', 'person', 'age', 'judiciary', 'independent', 'provides', 'citizen', 'generally', 'fair', 'judicial', 'process', 'several', '
+level', 'court', 'majority', 'criminal', 'case', 'heard', 'magistrate', 'court', 'based', 'committee', 'decision', 'appealed', 'also', 'criminal', 'case', 'requiring', 'jury', 'trial', 'conviction', 'appealed', 'turn', 'case', 'involving', 'point', 'law', 'senior', 'judge', 'distinct', 'legislative', 'arm', 'court', 'appeal', 'additional', 'appellate', 'body', 'investigate', 'suspected', 'justice', 'case', 'judicial', 'appeal', 'process', 'exhausted', 'significant', 'evidence', 'doubt', 'conviction', 'similar', 'appeal', 'made', 'law', 'provides', 'fair', 'trial', 'authority', 'respect', 'law', 'regard', 'enjoy', 'guilty', 'right', 'question', 'witness', 'right', 'appeal', 'higher', 'court', 'take', 'effect', 'bringing', 'law', 'law', 'public', 'body', 'must', 'act', 'convention', 'law', 'provides', 'citizen', 'right', 'take', 'alleged', 'violation', 'convention', 'court', 'convention', 'dealing', 'resolution', 'case', 'arrest', 'detention', 'criticize', 'derogation', 'also', 'date', 'arrested', 'detained',
+'legislation', 'testimony', 'senior', 'police', 'officer', 'considered', 'prima', 'facie', 'evidence', 'suspect', 'membership', 'proscribed', 'terrorist', 'organization', 'act', 'also', 'conspiracy', 'commit', 'terrorist', 'act', 'outside', 'act', 'also', 'allows', 'property', 'person', 'convicted', 'membership', 'offense', 'act', 'used', 'activity', 'organization', 'organization', 'concern', 'act', 'violates', 'certain', 'fundamental', 'right', 'silence', 'freedom', 'expression', 'association', 'judge', 'power', 'jury', 'inference', 'guilt', 'defendant', 'question', 'interrogation', 'trial', 'conviction', 'based', 'inference', 'group', 'criticize', 'provision', 'consider', 'right', 'self', 'similar', 'provision', 'effect', 'guideline', 'issued', 'prohibited', 'inference', 'silence', 'suspect', 'permitted', 'access', 'right', 'free', 'counsel', 'exception', 'proceeding', 'must', 'held', 'public', 'except', 'juvenile', 'court', 'involving', 'public', 'security', 'trial', 'judge', 'order', 'court', 'closed',
+'must', 'public', 'emergency', 'restriction', 'affect', 'due', 'process', 'trial', 'certain', 'terrorist', 'related', 'offense', 'tried', 'automatically', 'court', 'without', 'jury', 'unless', 'specifically', 'scheduled', 'jury', 'court', 'court', 'established', 'case', 'heard', 'jury', 'might', 'make', 'decision', 'along', 'sectarian', 'well', 'protect', 'intimidation', 'terrorist', 'judge', 'must', 'decision', 'part', 'court', 'appellate', 'court', 'decision', 'either', 'legal', 'ground', 'person', 'tried', 'court', 'person', 'either', 'found', 'guilty', 'court', 'widely', 'criticized', 'human', 'group', 'well', 'committee', 'increased', 'number', 'scheduled', 'offense', 'trial', 'jury', 'expected', 'reduce', 'number', 'case', 'considered', 'court', 'given', 'overall', 'decrease', 'offense', 'difficult', 'ass', 'impact', 'change', 'exclude', 'use', 'confession', 'used', 'basis', 'conviction', 'permit', 'police', 'prevent', 'suspected', 'terrorist', 'legal', 'counsel', 'hour', 'arrest', 'certain', 'circum
+stance', 'request', 'police', 'officer', 'minimum', 'rank', 'superintendent', 'detainee', 'lawyer', 'done', 'period', 'renewable', 'subsequent', 'hour', 'period', 'detainee', 'charged', 'released', 'group', 'criticized', 'provision', 'detainee', 'likely', 'need', 'counsel', 'first', 'hour', 'lack', 'counsel', 'time', 'make', 'false', 'confession', 'abuse', 'detainee', 'likely', 'request', 'access', 'lawyer', 'made', 'defense', 'lawyer', 'access', 'evidence', 'held', 'prosecution', 'including', 'information', 'evidence', 'local', 'practice', 'guideline', 'role', 'group', 'elsewhere', 'expressed', 'serious', 'concern', 'threat', 'death', 'serious', 'physical', 'injury', 'directed', 'defense', 'lawyer', 'prison', 'prisoner', 'continue', 'lodge', 'complaint', 'say', 'little', 'done', 'address', 'complaint', 'issued', 'upon', 'conduct', 'independent', 'impartial', 'investigation', 'murder', 'solicitor', 'also', 'accused', 'complete', 'allegation', 'lawyer', 'harassment', 'prima', 'facie', 'evidence', 'military',
+'collusion', 'murder', 'expressed', 'concern', 'impartiality', 'investigating', 'murder', 'recommendation', 'independent', 'inquiry', 'murder', 'previous', 'recommended', 'government', 'conduct', 'independent', 'impartial', 'investigation', 'threat', 'legal', 'counsel', 'specific', 'physical', 'threat', 'provide', 'necessary', 'protection', 'investigate', 'threat', 'bring', 'guilty', 'party', 'justice', 'also', 'recommended', 'lawyer', 'lodge', 'formal', 'complaint', 'training', 'police', 'officer', 'according', 'defense', 'solicitor', 'subject', 'harassment', 'intimidation', 'dialog', 'address', 'problem', 'response', 'chief', 'constable', 'denied', 'allegation', 'collusion', 'complaint', 'said', 'open', 'channel', 'review', 'structure', 'management', 'funding', 'criminal', 'justice', 'system', 'continued', 'scheduled', 'release', 'postponed', 'early', 'support', 'continued', 'release', 'prisoner', 'affiliated', 'paramilitary', 'organization', 'maintain', 'cease', 'fire', 'paramilitary', 'prisoner', 'incl
+uding', 'republican', 'loyalist', 'others', 'paroled', 'commonly', 'referred', 'early', 'release', 'program', 'troop', 'lowest', 'level', 'since', 'political', 'prisoner', 'normally', 'required', 'police', 'search', 'private', 'premise', 'however', 'member', 'armed', 'force', 'police', 'enter', 'search', 'premise', 'purpose', 'arresting', 'person', 'offense', 'reasonable', 'ground', 'person', 'sought', 'premise', 'court', 'interpreted', 'requirement', 'reasonable', 'ground', 'government', 'person', 'whose', 'house', 'property', 'house', 'search', 'fear', 'violence', 'led', 'pattern', 'community', 'family', 'moved', 'neighborhood', 'pattern', 'continued', 'despite', 'approval', 'referendum', 'paramilitary', 'attack', 'home', 'family', 'police', 'politician', 'decreased', 'significantly', 'security', 'force', 'believe', 'paramilitary', 'group', 'continue', 'conduct', 'target', 'police', 'politician', 'held', 'law', 'independent', 'press', 'democratic', 'political', 'system', 'freedom', 'press', 'critical', 'g
+overnment', 'well', 'represented', 'print', 'medium', 'dominated', 'national', 'daily', 'newspaper', 'privately', 'owned', 'independent', 'often', 'generally', 'aligned', 'political', 'party', 'half', 'electronic', 'medium', 'run', 'funded', 'government', 'enjoys', 'complete', 'renewable', 'government', 'license', 'run', 'remainder', 'leading', 'shot', 'killed', 'program', 'leading', 'criminal', 'revoked', 'license', 'pro', 'station', 'program', 'included', 'statement', 'act', 'violence', 'elsewhere', 'according', 'organization', 'human', 'group', 'continued', 'criticize', 'allows', 'court', 'order', 'journalist', 'source', 'deemed', 'interest', 'justice', 'also', 'provision', 'compel', 'journalist', 'give', 'evidence', 'case', 'police', 'necessary', 'investigation', 'another', 'law', 'journalist', 'prohibits', 'defense', 'information', 'already', 'public', 'publication', 'public', 'interest', 'proposed', 'policy', 'preparation', 'legislation', 'freedom', 'information', 'asserted', 'would', 'legislation', '
+would', 'allow', 'widespread', 'public', 'access', 'official', 'information', 'require', 'public', 'organization', 'regularly', 'data', 'improve', 'individual', 'access', 'personal', 'information', 'published', 'draft', 'freedom', 'information', 'bill', 'press', 'freedom', 'information', 'widely', 'criticized', 'bill', 'primarily', 'number', 'release', 'information', 'committee', 'called', 'improvement', 'bill', 'second', 'bill', 'criticism', 'bill', 'continued', 'connection', 'investigation', 'local', 'newspaper', 'ordered', 'court', 'turn', 'note', 'interview', 'charged', 'murder', 'refused', 'charge', 'court', 'justice', 'lower', 'court', 'request', 'group', 'point', 'decision', 'little', 'assistance', 'journalist', 'future', 'ruled', 'note', 'assistance', 'investigation', 'journalist', 'right', 'protect', 'source', 'freedom', 'respected', 'law', 'provides', 'right', 'assembly', 'right', 'limited', 'would', 'impose', 'public', 'annual', 'marching', 'season', 'significant', 'problem', 'since', 'right', 'a
+ssembly', 'concern', 'local', 'resident', 'community', 'responsibility', 'ruling', 'parade', 'established', 'parade', 'held', 'imposed', 'restriction', 'parade', 'related', 'situation', 'high', 'period', 'parade', 'security', 'use', 'parade', 'general', 'among', 'marcher', 'allowed', 'parade', 'take', 'place', 'relatively', 'summer', 'marching', 'season', 'exception', 'parade', 'parade', 'police', 'protester', 'refused', 'continued', 'later', 'security', 'force', 'nationalist', 'protester', 'security', 'operation', 'designed', 'separate', 'nationalist', 'crowd', 'marcher', 'late', 'long', 'parade', 'ended', 'several', 'business', 'center', 'city', 'law', 'provides', 'freedom', 'association', 'right', 'limited', 'organization', 'involved', 'encourages', 'terrorism', 'banned', 'paramilitary', 'group', 'continuing', 'involvement', 'sectarian', 'violence', 'proscribed', 'paramilitary', 'group', 'punishable', 'imprisonment', 'paramilitary', 'group', 'also', 'offense', 'reasonable', 'support', 'proscribed', 'orga
+nization', 'human', 'organization', 'object', 'law', 'others', 'argue', 'violates', 'fundamental', 'freedom', 'association', 'expression', 'requires', 'government', 'school', 'hold', 'daily', 'act', 'worship', 'parental', 'right', 'exists', 'child', 'wish', 'participate', 'exist', 'wish', 'participate', 'conduct', 'religious', 'education', 'act', 'provides', 'alternative', 'collective', 'worship', 'faith', 'organization', 'called', 'government', 'review', 'act', 'respect', 'belief', 'still', 'illegal', 'religious', 'organization', 'association', 'either', 'law', 'protect', 'faith', 'enjoy', 'freedom', 'movement', 'within', 'foreign', 'emigration', 'repatriation', 'revoked', 'exclusion', 'order', 'individual', 'linked', 'terrorism', 'renewed', 'include', 'provision', 'exclusion', 'order', 'power', 'implementing', 'exclusion', 'order', 'time', 'cooperates', 'organization', 'assisting', 'refugee', 'asylum', 'provided', 'temporary', 'protection', 'process', 'number', 'asylum', 'seeker', 'rose', 'basis', 'applic
+ation', 'outstanding', 'application', 'outstanding', 'earlier', 'first', 'asylum', 'program', 'applicant', 'given', 'leave', 'enter', 'apply', 'automatic', 'extension', 'apply', 'refugee', 'status', 'time', 'application', 'considered', 'accordance', 'criterion', 'set', 'asylum', 'seeker', 'detained', 'review', 'case', 'detained', 'regular', 'prison', 'right', 'appeal', 'failed', 'asylum', 'seeker', 'introduced', 'provision', 'abusive', 'asylum', 'applicant', 'illegal', 'imposed', 'restriction', 'person', 'subject', 'immigration', 'control', 'seeking', 'employment', 'housing', 'social', 'security', 'benefit', 'decision', 'taken', 'asylum', 'application', 'first', 'percent', 'recognized', 'applicant', 'refugee', 'granted', 'asylum', 'percent', 'granted', 'exceptional', 'leave', 'remain', 'refused', 'asylum', 'remainder', 'refused', 'late', 'introduced', 'requirement', 'citizen', 'response', 'large', 'number', 'sought', 'asylum', 'economic', 'true', 'refugee', 'concern', 'large', 'number', 'seeking', 'asylum',
+'passed', 'modernize', 'immigration', 'asylum', 'system', 'designed', 'right', 'appeal', 'support', 'arrangement', 'asylum', 'seeker', 'immigration', 'law', 'enforcement', 'power', 'reform', 'detention', 'arrangement', 'person', 'forced', 'return', 'right', 'change', 'government', 'freely', 'exercise', 'right', 'government', 'basis', 'majority', 'seat', 'election', 'held', 'least', 'every', 'political', 'process', 'open', 'person', 'party', 'citizen', 'age', 'older', 'vote', 'city', 'council', 'fewer', 'power', 'also', 'council', 'opened', 'devolved', 'body', 'control', 'matter', 'regional', 'importance', 'education', 'health', 'economic', 'matter', 'affair', 'defense', 'continue', 'responsibility', 'government', 'review', 'power', 'devolved', 'remaining', 'population', 'approximately', 'enjoy', 'self', 'government', 'appointed', 'minority', 'face', 'legal', 'voting', 'holding', 'office', 'woman', 'underrepresented', 'government', 'percent', 'nearly', 'percent', 'total', 'identified', 'member', 'minority',
+'ethnic', 'group', 'wide', 'human', 'group', 'operate', 'without', 'government', 'restriction', 'investigating', 'publishing', 'human', 'issue', 'case', 'official', 'generally', 'responsive', 'number', 'international', 'nongovernmental', 'human', 'organization', 'including', 'based', 'cooperates', 'fully', 'international', 'inquiry', 'alleged', 'violation', 'human', 'provision', 'domestic', 'law', 'main', 'provision', 'act', 'implemented', 'provision', 'already', 'taken', 'effect', 'act', 'take', 'effect', 'first', 'practice', 'term', 'devolution', 'legislation', 'devolved', 'power', 'convention', 'provision', 'created', 'human', 'force', 'made', 'representative', 'government', 'publicity', 'training', 'preparation', 'act', 'implementation', 'brought', 'victim', 'breach', 'convention', 'public', 'authority', 'human', 'unit', 'carry', 'human', 'policy', 'legislation', 'created', 'human', 'commission', 'ruled', 'future', 'lack', 'provision', 'commission', 'commissioner', 'make', 'implementation', 'difficult'
+, 'commission', 'established', 'peace', 'process', 'case', 'still', 'taken', 'domestic', 'must', 'exhausted', 'first', 'based', 'prohibits', 'discrimination', 'basis', 'race', 'national', 'ethnic', 'origin', 'outlaw', 'racial', 'hatred', 'protection', 'extended', 'group', 'continued', 'experience', 'official', 'societal', 'discrimination', 'discrimination', 'ground', 'religious', 'political', 'specifically', 'took', 'effect', 'extends', 'prohibition', 'discrimination', 'good', 'facility', 'service', 'premise', 'basis', 'illegal', 'effect', 'member', 'minority', 'ethnic', 'group', 'government', 'respect', 'enforces', 'law', 'employment', 'good', 'service', 'amalgamated', 'appointed', 'member', 'person', 'killed', 'wounded', 'bombing', 'arrested', 'charged', 'bombing', 'carried', 'gay', 'bar', 'apparently', 'motivated', 'part', 'homophobia', 'government', 'concluded', 'fire', 'service', 'racist', 'homophobic', 'carried', 'fire', 'service', 'found', 'throughout', 'white', 'male', 'service', 'gave', 'fire', 'ch
+ief', 'implement', 'recommendation', 'leadership', 'change', 'order', 'improve', 'equality', 'service', 'woman', 'continues', 'problem', 'government', 'indicated', 'woman', 'experience', 'domestic', 'violence', 'stage', 'life', 'reported', 'incident', 'rape', 'past', 'woman', 'week', 'killed', 'current', 'former', 'woman', 'fear', 'personal', 'attack', 'crime', 'paramilitary', 'cease', 'fire', 'violence', 'woman', 'increased', 'also', 'indicate', 'domestic', 'violence', 'crime', 'least', 'likely', 'reported', 'police', 'law', 'provides', 'personal', 'protection', 'order', 'exclusion', 'order', 'similar', 'order', 'woman', 'victim', 'violence', 'provides', 'assistance', 'rape', 'free', 'legal', 'woman', 'abuser', 'government', 'actively', 'perpetrator', 'domestic', 'violence', 'provides', 'prison', 'sentence', 'convicted', 'figure', 'indicate', 'act', 'effective', 'assisting', 'woman', 'violence', 'long', 'term', 'goal', 'violence', 'woman', 'including', 'plan', 'modernize', 'legislation', 'sex', 'offense',
+'reform', 'government', 'action', 'protection', 'justice', 'prevention', 'training', 'legislative', 'reform', 'passed', 'publication', 'violence', 'woman', 'crime', 'plan', 'significant', 'future', 'commitment', 'making', 'impact', 'woman', 'life', 'action', 'sexual', 'harassment', 'case', 'must', 'prosecuted', 'assault', 'legislation', 'since', 'law', 'specifically', 'prohibits', 'sexual', 'harassment', 'group', 'civil', 'suit', 'concerning', 'sexual', 'harassment', 'discrimination', 'basis', 'take', 'industrial', 'tribunal', 'law', 'provides', 'equal', 'opportunity', 'sex', 'woman', 'experience', 'discrimination', 'practice', 'amended', 'prohibits', 'direct', 'indirect', 'discrimination', 'training', 'housing', 'provision', 'good', 'service', 'well', 'employment', 'equal', 'regarding', 'property', 'support', 'person', 'bring', 'discrimination', 'case', 'industrial', 'tribunal', 'court', 'guideline', 'good', 'practice', 'employer', 'significant', 'progress', 'made', 'towards', 'equal', 'opportunity', 'woma
+n', 'since', 'established', 'introduction', 'national', 'minimum', 'wage', 'effective', 'change', 'effort', 'pay', 'according', 'woman', 'working', 'full', 'time', 'approximately', 'percent', 'male', 'similar', 'position', 'indicated', 'progress', 'towards', 'equality', 'pay', 'equal', 'work', 'single', 'problem', 'woman', 'percent', 'increase', 'relative', 'pay', 'past', 'announced', 'maternity', 'benefit', 'reform', 'provision', 'parental', 'leave', 'came', 'effect', 'national', 'child', 'care', 'strategy', 'set', 'increase', 'child', 'care', 'place', 'increased', 'child', 'benefit', 'issue', 'within', 'represented', 'cabinet', 'level', 'head', 'woman', 'unit', 'dialog', 'woman', 'government', 'authority', 'direct', 'action', 'government', 'strong', 'commitment', 'child', 'welfare', 'system', 'public', 'education', 'medical', 'care', 'government', 'provides', 'free', 'compulsory', 'education', 'age', 'education', 'age', 'desire', 'societal', 'pattern', 'abuse', 'directed', 'child', 'despite', 'lack', 'dat
+a', 'child', 'abuse', 'nevertheless', 'problem', 'paramilitary', 'cease', 'fire', 'violence', 'child', 'increased', 'publicity', 'surrounding', 'pedophile', 'growing', 'part', 'government', 'protect', 'young', 'child', 'abuser', 'previously', 'secret', 'pedophile', 'available', 'employer', 'run', 'organization', 'person', 'age', 'could', 'risk', 'school', 'child', 'home', 'voluntary', 'organization', 'addition', 'suspected', 'child', 'abuser', 'convicted', 'pedophile', 'banned', 'working', 'child', 'passed', 'organization', 'must', 'consult', 'list', 'anyone', 'job', 'paid', 'otherwise', 'illegal', 'anyone', 'law', 'covering', 'child', 'right', 'apply', 'court', 'order', 'give', 'withhold', 'medical', 'treatment', 'making', 'decision', 'make', 'complaint', 'local', 'authority', 'ethnic', 'religious', 'considered', 'decision', 'reasonable', 'family', 'usually', 'circumstance', 'abuse', 'general', 'regarding', 'desire', 'enacted', 'sentence', 'youth', 'offender', 'first', 'time', 'young', 'offender', 'guilty'
+, 'providing', 'greater', 'protection', 'witness', 'child', 'disabled', 'police', 'arrest', 'detain', 'child', 'young', 'ruled', 'human', 'young', 'boy', 'violated', 'trial', 'boy', 'murdered', 'ruling', 'require', 'sweeping', 'change', 'court', 'juvenile', 'charged', 'murder', 'manslaughter', 'role', 'setting', 'minimum', 'sentence', 'child', 'court', 'case', 'involving', 'incident', 'raised', 'issue', 'right', 'hit', 'following', 'ruling', 'boy', 'violated', 'extended', 'ban', 'corporal', 'punishment', 'state', 'school', 'private', 'school', 'school', 'welfare', 'group', 'called', 'corporal', 'punishment', 'child', 'outlaw', 'discrimination', 'disabled', 'person', 'provision', 'access', 'public', 'facility', 'employer', 'worker', 'service', 'provider', 'apart', 'providing', 'education', 'vehicle', 'anyone', 'property', 'specific', 'duty', 'local', 'education', 'authority', 'make', 'provision', 'educational', 'need', 'disabled', 'child', 'passed', 'set', 'body', 'whose', 'include', 'review', 'assisting', '
+disabled', 'people', 'bringing', 'legal', 'action', 'promoting', 'good', 'practice', 'among', 'service', 'provider', 'also', 'power', 'conduct', 'formal', 'investigation', 'disability', 'organization', 'campaigning', 'law', 'discrimination', 'ground', 'disability', 'reported', 'employer', 'time', 'likely', 'turn', 'disabled', 'person', 'job', 'applicant', 'qualification', 'regulation', 'require', 'building', 'access', 'requirement', 'person', 'impaired', 'government', 'similar', 'regulation', 'impaired', 'person', 'regulation', 'require', 'generally', 'access', 'many', 'building', 'remains', 'inadequate', 'building', 'station', 'percent', 'station', 'election', 'disability', 'access', 'problem', 'stage', 'came', 'effect', 'requiring', 'business', 'disabled', 'must', 'reasonable', 'circumstance', 'size', 'business', 'might', 'expected', 'print', 'menu', 'small', 'neighborhood', 'might', 'menu', 'person', 'number', 'anti', 'incident', 'anti', 'political', 'fringe', 'either', 'far', 'right', 'said', 'subject',
+'death', 'homosexual', 'government', 'effort', 'overall', 'unemployment', 'rate', 'unemployment', 'rate', 'amended', 'even', 'indirect', 'discrimination', 'workplace', 'public', 'tribunal', 'complaint', 'public', 'employer', 'private', 'worker', 'must', 'religious', 'work', 'force', 'must', 'review', 'employment', 'practice', 'least', 'every', 'bring', 'criminal', 'loss', 'government', 'contract', 'employment', 'discrimination', 'damage', 'critic', 'act', 'asserted', 'target', 'timetable', 'leader', 'community', 'regard', 'step', 'recruitment', 'civil', 'service', 'produced', 'overall', 'number', 'service', 'remain', 'significantly', 'underrepresented', 'senior', 'wide', 'employment', 'thus', 'far', 'hampered', 'effort', 'effort', 'increase', 'recruitment', 'currently', 'percent', 'related', 'security', 'job', 'hampered', 'killing', 'death', 'threat', 'well', 'widespread', 'community', 'security', 'force', 'recruitment', 'effort', 'officer', 'police', 'force', 'significantly', 'summer', 'marching', 'season
+', 'several', 'legal', 'prohibition', 'race', 'discrimination', 'person', 'origin', 'face', 'occasional', 'act', 'societal', 'violence', 'discrimination', 'racial', 'hatred', 'criminal', 'offense', 'punishable', 'maximum', 'imprisonment', 'enforces', 'law', 'regulation', 'area', 'person', 'killed', 'wounded', 'bombing', 'white', 'arrested', 'charged', 'attack', 'directed', 'ethnic', 'minority', 'neighborhood', 'government', 'appointed', 'independent', 'provides', 'guideline', 'good', 'practice', 'support', 'person', 'taking', 'court', 'action', 'initiate', 'court', 'action', 'investigating', 'complaint', 'issue', 'notice', 'requiring', 'discrimination', 'stopped', 'monitor', 'response', 'notice', 'claim', 'police', 'misconduct', 'case', 'black', 'youth', 'stabbed', 'death', 'led', 'inquiry', 'police', 'action', 'investigation', 'murder', 'inquiry', 'testimony', 'police', 'serious', 'flaw', 'investigation', 'began', 'review', 'method', 'dealing', 'racially', 'motivated', 'crime', 'inquiry', 'resulted', 'wide
+ly', 'released', 'stated', 'investigation', 'marred', 'fundamental', 'including', 'combination', 'professional', 'incompetence', 'institutional', 'racism', 'failure', 'leadership', 'senior', 'officer', 'sweeping', 'made', 'recommendation', 'change', 'police', 'practice', 'acceptance', 'many', 'flaw', 'failure', 'involved', 'case', 'charged', 'crime', 'white', 'male', 'accused', 'crime', 'charged', 'due', 'law', 'continues', 'possible', 'change', 'certain', 'law', 'another', 'recommendation', 'review', 'conduct', 'case', 'recommended', 'detective', 'face', 'disciplinary', 'charge', 'officer', 'already', 'announced', 'officer', 'face', 'charge', 'found', 'guilty', 'count', 'neglect', 'duty', 'result', 'inquiry', 'police', 'training', 'community', 'relation', 'program', 'improve', 'overall', 'public', 'service', 'ordered', 'review', 'investigative', 'procedure', 'alleged', 'racist', 'murder', 'chief', 'constable', 'recognized', 'institutional', 'racism', 'exists', 'within', 'force', 'inquiry', 'encouraged', 'r
+acism', 'commissioned', 'showed', 'black', 'white', 'stopped', 'searched', 'police', 'figure', 'showed', 'black', 'time', 'likely', 'stopped', 'police', 'white', 'also', 'highlighted', 'increasing', 'drug', 'search', 'young', 'police', 'black', 'found', 'fire', 'street', 'victim', 'racist', 'attack', 'established', 'result', 'inquiry', 'case', 'originally', 'suicide', 'convicted', 'killing', 'sentenced', 'life', 'imprisonment', 'pursuing', 'formal', 'complaint', 'family', 'officer', 'death', 'family', 'flaw', 'original', 'investigation', 'death', 'young', 'found', 'made', 'public', 'family', 'belief', 'victim', 'racial', 'attack', 'claimed', 'police', 'failed', 'investigate', 'crime', 'police', 'investigation', 'mother', 'made', 'appeal', 'police', 'information', 'white', 'suspected', 'racially', 'disappeared', 'inquest', 'jury', 'original', 'verdict', 'death', 'open', 'verdict', 'case', 'nomadic', 'population', 'estimated', 'number', 'person', 'experience', 'educational', 'discrimination', 'police', 'socie
+tal', 'harassment', 'greater', 'population', 'according', 'human', 'group', 'expressed', 'similar', 'concern', 'passed', 'first', 'time', 'gave', 'specific', 'legal', 'protection', 'minority', 'ethnic', 'group', 'including', 'community', 'right', 'form', 'join', 'union', 'respect', 'right', 'practice', 'enacted', 'law', 'established', 'first', 'procedure', 'statutory', 'distinct', 'voluntary', 'union', 'recognition', 'free', 'government', 'control', 'significant', 'protection', 'union', 'effort', 'first', 'time', 'statutory', 'right', 'strike', 'act', 'set', 'minimum', 'employment', 'standard', 'first', 'time', 'labor', 'law', 'also', 'post', 'commissioner', 'trade', 'union', 'member', 'commissioner', 'protection', 'unlawful', 'industrial', 'action', 'previous', 'government', 'office', 'widely', 'interpreted', 'politically', 'motivated', 'attempt', 'labor', 'movement', 'detail', 'left', 'implementing', 'legislation', 'expected', 'completed', 'participate', 'freely', 'international', 'organization', 'bargain
+ing', 'longstanding', 'widespread', 'covering', 'percent', 'work', 'force', 'labor', 'management', 'contract', 'court', 'act', 'union', 'request', 'recognition', 'proposed', 'bargaining', 'unit', 'act', 'cover', 'employer', 'worker', 'encompasses', 'estimated', 'third', 'workplace', 'appropriate', 'bargaining', 'unit', 'ass', 'whether', 'union', 'likely', 'majority', 'support', 'union', 'member', 'already', 'make', 'majority', 'bargaining', 'unit', 'issue', 'union', 'recognized', 'collective', 'bargaining', 'without', 'ballot', 'order', 'ballot', 'majority', 'bargaining', 'unit', 'employee', 'already', 'union', 'member', 'employer', 'must', 'providing', 'list', 'name', 'union', 'access', 'workplace', 'campaign', 'recognition', 'majority', 'voting', 'agree', 'including', 'least', 'percent', 'bargaining', 'unit', 'act', 'encourages', 'voluntary', 'agreement', 'employer', 'union', 'necessary', 'impose', 'binding', 'procedure', 'bargaining', 'pay', 'hour', 'protected', 'dismissal', 'retaliation', 'campaigning',
+'voting', 'recognition', 'longer', 'required', 'name', 'member', 'strike', 'ballot', 'opportunity', 'retaliation', 'bill', 'also', 'prohibits', 'list', 'union', 'member', 'labor', 'activist', 'use', 'employer', 'employment', 'agency', 'aimed', 'past', 'able', 'claim', 'unfair', 'dismissal', 'fired', 'within', 'week', 'employee', 'first', 'undertook', 'legal', 'strike', 'member', 'protected', 'subject', 'due', 'union', 'activity', 'membership', 'protection', 'previous', 'language', 'action', 'dismissal', 'taken', 'individual', 'legal', 'employer', 'withhold', 'fringe', 'benefit', 'otherwise', 'available', 'employee', 'time', 'act', 'policy', 'implemented', 'previous', 'government', 'ballot', 'notice', 'strike', 'abolition', 'closed', 'prohibition', 'also', 'extends', 'protection', 'contract', 'part', 'time', 'worker', 'attempt', 'close', 'previously', 'allowed', 'employer', 'labor', 'regulation', 'worker', 'protected', 'full', 'law', 'compulsory', 'labor', 'including', 'child', 'prohibited', 'raised', 'ques
+tion', 'situation', 'prison', 'age', 'compulsory', 'age', 'permitted', 'work', 'industrial', 'except', 'part', 'educational', 'course', 'child', 'labor', 'prohibited', 'effectively', 'enforces', 'prohibition', 'first', 'minimum', 'wage', 'effect', 'percent', 'work', 'force', 'youth', 'provide', 'standard', 'living', 'worker', 'family', 'welfare', 'state', 'particular', 'working', 'family', 'tax', 'credit', 'disabled', 'person', 'tax', 'credit', 'implemented', 'designed', 'ensure', 'working', 'family', 'living', 'wage', 'estimated', 'benefit', 'minimum', 'wage', 'introduced', 'working', 'time', 'bring', 'domestic', 'legislation', 'hour', 'regulation', 'still', 'developed', 'public', 'health', 'safety', 'employee', 'risk', 'practice', 'act', 'effectively', 'enforces', 'regulation', 'matter', 'initiate', 'criminal', 'proceeding', 'appropriate', 'case', 'representative', 'actively', 'monitor', 'enforcement', 'act', 'remove', 'condition', 'without', 'loss', 'employment', 'law', 'specifically', 'trafficking', 'pe
+rson', 'police', 'success', 'law', 'living', 'immoral', 'earnings', 'review', 'sexual', 'offense', 'law', 'completed', 'whether', 'specific', 'law', 'address', 'trafficking', 'person', 'found', 'illegal', 'person', 'growing', 'problem', 'trafficking', 'woman', 'expected', 'issued', 'address', 'problem', 'jailed', 'charge', 'living', 'immoral', 'earnings', 'brought', 'member', 'gang', 'found', 'guilty', 'false', 'imprisonment', 'conspiracy', 'bringing', 'person', 'making', 'effectively', 'ended', 'series', 'trial', 'gang', 'member', 'jailed', 'total')
+len(ukWrds)
+length(ukWrds)
+barplot(ukWrds)
+table(ukWrds)
+cbind(table(ukWrds))
+freqs=cbind(table(ukWrds))
+dim(freqs)
+sort(freqs)
+freqs=cbind(names(table(ukWrds)), table(ukWrds))
+head(freqs)
+rownames(freqs)=NULL
+head(freqs)
+freqs=data.frame(cbind(names(table(ukWrds)), table(ukWrds)))#
+rownames(freqs)=NULL
+head(freqs)
+class(freqs$X2)
+freqs=data.frame(cbind(names(table(ukWrds)), table(ukWrds)))#
+rownames(freqs)=NULL#
+freqs$X2=as.numeric(as.character(freqs$X2))
+head(freqs)
+freqs[order(freqs$X2),]
+rm(list=ls())#
+if(Sys.info()["user"]=="janus829"){#
+	pathData='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'#
+	pathTex='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'#
+}#
+#
+# Helpful libaries and functions#
+require(reshape)#
+require(ggplot2)#
+theme_set(theme_bw())#
+require(tikzDevice)#
+#
+char=function(x){as.character(x)}#
+num=function(x){as.numeric(char(x))}#
+extractNum=function(x){num(strsplit(char(x),':')[[1]][2])}#
+#
+##### Aggregate measures ######
+# Pulling data from textfiles#
+setwd(pathData)#
+files=list.files()
+files
+rm(list=ls())#
+if(Sys.info()["user"]=="janus829"){#
+	pathData='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'#
+	pathTex='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'#
+}#
+#
+# Helpful libaries and functions#
+require(reshape)#
+require(ggplot2)#
+theme_set(theme_bw())#
+require(tikzDevice)#
+#
+char=function(x){as.character(x)}#
+num=function(x){as.numeric(char(x))}#
+extractNum=function(x){num(strsplit(char(x),':')[[1]][2])}#
+#
+##### Aggregate measures ######
+# Pulling data from textfiles#
+setwd(pathData)#
+files=list.files()[1:4]#
+#
+supData=NULL
+texFile=files[1]
+texFile
+text = read.table(texfile,sep="\n", strip.white=TRUE)
+texfile=files[1]
+text = read.table(texfile,sep="\n", strip.white=TRUE)
+text
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=2, ncol=3, dimnames=list(NULL,#
+	c('Variable','TrainProp','TestProp')))#
+	results[1,]=c( variable, #
+		unlist(lapply(2:3, function(x) FUN=extractNum(text[x,]))) )#
+	results[2,]=c( variable, 'SVM',#
+		unlist(lapply(5:6, function(x) FUN=extractNum(text[x,]))) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+##### End Descriptive measures
+unlist(lapply(2:3, function(x) FUN=extractNum(text[x,])))
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','TrainProp','TestProp')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+##### End Descriptive measures
+descData
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)
+ggData
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train\\qquad\\qquad','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+##### End Descriptive measures
+##### Descriptive measures ######
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+##### End Descriptive measures
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train\\qquad\\qquad','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData[,'Train\\qquad\\qquad']=num(descData[,'Train\\qquad\\qquad'])#
+descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+##### End Descriptive measures
+##### Descriptive measures ######
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+##### End Descriptive measures
+ggData
+##### Descriptive measures ######
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+##### End Descriptive measures
+##### Descriptive measures ######
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+ggData$variable[ggData$variable=='Test']='Test\\qquad\\qquad'#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+##### End Descriptive measures
+?factor
+##### Descriptive measures ######
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+ggData$variable[ggData$variable=='Test']='Test\\qquad\\qquad'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Train\\qquad\\qquad','Test\\qquad\\qquad'))#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp#
+##### End Descriptive measures
+rm(list=ls())#
+if(Sys.info()["user"]=="janus829"){#
+	pathData='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'#
+	pathTex='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'#
+}#
+#
+# Helpful libaries and functions#
+require(reshape)#
+require(ggplot2)#
+theme_set(theme_bw())#
+require(tikzDevice)#
+#
+char=function(x){as.character(x)}#
+num=function(x){as.numeric(char(x))}#
+extractNum=function(x){num(strsplit(char(x),':')[[1]][2])}#
+#
+##### Aggregate measures ######
+# Pulling data from textfiles#
+setwd(pathData)#
+files=list.files()[1:4]#
+#
+supData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=2, ncol=6, dimnames=list(NULL,#
+	c('Variable','Method','Precision','Recall','Fscore','Accuracy')))#
+	results[1,]=c( variable, 'Naive Bayes\\qquad\\qquad',#
+		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )#
+	results[2,]=c( variable, 'SVM',#
+		unlist(lapply(18:21, function(x) FUN=extractNum(text[x,]))) )#
+	# Organize#
+	supData=rbind(supData, results)#
+	print(paste0(texfile, ' added to data'))	#
+}#
+#
+# Cleaning and melting data for GG#
+supData=data.frame(supData)#
+supData$Precision=num(supData$Precision); supData$Recall=num(supData$Recall)#
+supData$Fscore=num(supData$Fscore); supData$Accuracy=num(supData$Accuracy)#
+ggData=melt(supData)#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Fscore']='F-Score'#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# Plotting#
+tmp=ggplot(ggData, aes(x=factor(Variable),y=value,fill=Method))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('')#
+tmp=tmp+facet_wrap(~variable)#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+setwd(pathTex)#
+tikz(file='aggStats.tex', height=5, width=7, standAlone=F)#
+tmp#
+dev.off()#
+##### End Aggregate measures ######
+#
+##### Descriptive measures ######
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+ggData$variable[ggData$variable=='Test']='Test\\qquad\\qquad'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Train\\qquad\\qquad','Test\\qquad\\qquad'))#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp#
+setwd(pathTex)#
+tikz(file='descStats.tex', height=5, width=7, standAlone=F)#
+tmp#
+dev.off()#
+##### End Descriptive measures
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+ggData$variable[ggData$variable=='Test']='Test\\qquad\\qquad'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Train\\qquad\\qquad','Test\\qquad\\qquad'))#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=factor(variable)))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp
+##### Descriptive measures ######
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# ggData$variable=char(ggData$variable)#
+# ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+# ggData$variable[ggData$variable=='Test']='Test\\qquad\\qquad'#
+# ggData$variable=factor(ggData$variable, #
+	# levels=c('Train\\qquad\\qquad','Test\\qquad\\qquad'))#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp
+rm(list=ls())#
+if(Sys.info()["user"]=="janus829"){#
+	pathData='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'#
+	pathTex='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'#
+}#
+#
+# Helpful libaries and functions#
+require(reshape)#
+require(ggplot2)#
+theme_set(theme_bw())#
+require(tikzDevice)#
+#
+char=function(x){as.character(x)}#
+num=function(x){as.numeric(char(x))}#
+extractNum=function(x){num(strsplit(char(x),':')[[1]][2])}#
+#
+##### Aggregate measures ######
+# Pulling data from textfiles#
+setwd(pathData)#
+files=list.files()[1:4]#
+#
+supData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=2, ncol=6, dimnames=list(NULL,#
+	c('Variable','Method','Precision','Recall','Fscore','Accuracy')))#
+	results[1,]=c( variable, 'Naive Bayes\\qquad\\qquad',#
+		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )#
+	results[2,]=c( variable, 'SVM',#
+		unlist(lapply(18:21, function(x) FUN=extractNum(text[x,]))) )#
+	# Organize#
+	supData=rbind(supData, results)#
+	print(paste0(texfile, ' added to data'))	#
+}#
+#
+# Cleaning and melting data for GG#
+supData=data.frame(supData)#
+supData$Precision=num(supData$Precision); supData$Recall=num(supData$Recall)#
+supData$Fscore=num(supData$Fscore); supData$Accuracy=num(supData$Accuracy)#
+ggData=melt(supData)#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Fscore']='F-Score'#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# Plotting#
+tmp=ggplot(ggData, aes(x=factor(Variable),y=value,fill=Method))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('')#
+tmp=tmp+facet_wrap(~variable)#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+setwd(pathTex)#
+tikz(file='aggStats.tex', height=5, width=7, standAlone=F)#
+tmp#
+dev.off()#
+##### End Aggregate measures ######
+#
+##### Descriptive measures ######
+setwd(pathData)#
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+ggData$variable[ggData$variable=='Test']='Test\\qquad\\qquad'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Train\\qquad\\qquad','Test\\qquad\\qquad'))#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp#
+setwd(pathTex)#
+tikz(file='descStats.tex', height=5, width=7, standAlone=F)#
+tmp#
+dev.off()#
+##### End Descriptive measures
+##### Descriptive measures ######
+setwd(pathData)#
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+ggData$variable[ggData$variable=='Test']='Test\\qquad\\qquad'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Train\\qquad\\qquad','Test\\qquad\\qquad'))#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.text.y = element_text(hjust=1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.text.y = element_text(hjust=2),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.text.y = element_text(hjust=-2),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.text.y = element_text(vjust=-2),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.text.y = element_text(vjust=-10),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp#
+setwd(pathTex)
+rm(list=ls())#
+if(Sys.info()["user"]=="janus829"){#
+	pathData='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'#
+	pathTex='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'#
+}#
+#
+# Helpful libaries and functions#
+require(reshape)#
+require(ggplot2)#
+theme_set(theme_bw())#
+require(tikzDevice)#
+#
+char=function(x){as.character(x)}#
+num=function(x){as.numeric(char(x))}#
+extractNum=function(x){num(strsplit(char(x),':')[[1]][2])}#
+#
+##### Aggregate measures ######
+# Pulling data from textfiles#
+setwd(pathData)#
+files=list.files()[1:4]#
+#
+supData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=2, ncol=6, dimnames=list(NULL,#
+	c('Variable','Method','Precision','Recall','Fscore','Accuracy')))#
+	results[1,]=c( variable, 'Naive Bayes\\qquad\\qquad',#
+		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )#
+	results[2,]=c( variable, 'SVM',#
+		unlist(lapply(18:21, function(x) FUN=extractNum(text[x,]))) )#
+	# Organize#
+	supData=rbind(supData, results)#
+	print(paste0(texfile, ' added to data'))	#
+}#
+#
+# Cleaning and melting data for GG#
+supData=data.frame(supData)#
+supData$Precision=num(supData$Precision); supData$Recall=num(supData$Recall)#
+supData$Fscore=num(supData$Fscore); supData$Accuracy=num(supData$Accuracy)#
+ggData=melt(supData)#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Fscore']='F-Score'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Precision','Recall','F-Score','Accuracy'))#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# Plotting#
+tmp=ggplot(ggData, aes(x=factor(Variable),y=value,fill=Method))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('')#
+tmp=tmp+facet_wrap(~variable)#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+setwd(pathTex)#
+tikz(file='aggStats.tex', height=5, width=7, standAlone=F)#
+tmp#
+dev.off()#
+##### End Aggregate measures ######
+#
+##### Descriptive measures ######
+setwd(pathData)#
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+ggData$variable[ggData$variable=='Test']='Test\\qquad\\qquad'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Train\\qquad\\qquad','Test\\qquad\\qquad'))#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp#
+setwd(pathTex)#
+tikz(file='descStats.tex', height=5, width=7, standAlone=F)#
+tmp#
+dev.off()#
+##### End Descriptive measures
+rm(list=ls())#
+if(Sys.info()["user"]=="janus829"){#
+	pathData='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'#
+	pathTex='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'#
+}#
+#
+# Helpful libaries and functions#
+require(reshape)#
+require(ggplot2)#
+theme_set(theme_bw())#
+require(tikzDevice)#
+#
+char=function(x){as.character(x)}#
+num=function(x){as.numeric(char(x))}#
+extractNum=function(x){num(strsplit(char(x),':')[[1]][2])}#
+#
+##### Aggregate measures ######
+# Pulling data from textfiles#
+setwd(pathData)#
+files=list.files()[1:4]#
+#
+supData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=2, ncol=6, dimnames=list(NULL,#
+	c('Variable','Method','Precision','Recall','Fscore','Accuracy')))#
+	results[1,]=c( variable, 'Naive Bayes\\qquad\\qquad',#
+		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )#
+	results[2,]=c( variable, 'SVM',#
+		unlist(lapply(18:21, function(x) FUN=extractNum(text[x,]))) )#
+	# Organize#
+	supData=rbind(supData, results)#
+	print(paste0(texfile, ' added to data'))	#
+}#
+#
+# Cleaning and melting data for GG#
+supData=data.frame(supData)#
+supData$Precision=num(supData$Precision); supData$Recall=num(supData$Recall)#
+supData$Fscore=num(supData$Fscore); supData$Accuracy=num(supData$Accuracy)#
+ggData=melt(supData)#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Fscore']='F-Score'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Precision','Recall','F-Score','Accuracy'))#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+# Plotting#
+tmp=ggplot(ggData, aes(x=factor(Variable),y=value,fill=Method))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('')#
+tmp=tmp+facet_wrap(~variable)#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank()#
+	)#
+tmp#
+setwd(pathTex)#
+tikz(file='aggStats.tex', height=5, width=7, standAlone=F)#
+tmp#
+dev.off()#
+##### End Aggregate measures ######
+#
+##### Descriptive measures ######
+setwd(pathData)#
+descData=NULL#
+for(texfile in files){#
+	# Open file#
+	text = read.table(texfile,sep="\n", strip.white=TRUE)	#
+	variable=strsplit(texfile,'_')[[1]][1]#
+	# Pull out data#
+	results=matrix(NA, nrow=1, ncol=3, dimnames=list(NULL,#
+	c('Variable','Train','Test')))#
+	results[1,]=c( variable, extractNum(text[3,]), extractNum(text[6,]) )#
+	# Organize#
+	descData=rbind(descData, results)#
+	print(paste0(texfile, ' added to desc data'))		#
+}#
+#
+# Cleaning and melting data for GG#
+descData=data.frame(descData)#
+descData$Train=num(descData$Train); descData$Test=num(descData$Test)#
+ggData=melt(descData)#
+#
+ggData$Variable=char(ggData$Variable)#
+ggData$Variable[ggData$Variable=='democ']='Democracy'#
+ggData$Variable[ggData$Variable=='military']='Military'#
+ggData$Variable[ggData$Variable=='monarchy']='Monarchy'#
+ggData$Variable[ggData$Variable=='party']='One-Party'#
+#
+ggData$variable=char(ggData$variable)#
+ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'#
+ggData$variable=factor(ggData$variable, #
+	levels=c('Train\\qquad\\qquad','Test'))#
+#
+# Plotting #
+tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))#
+tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")#
+tmp=tmp+xlab('')+ylab('Proportion of Cases')#
+tmp=tmp+theme(#
+	legend.position='top', #
+	axis.text.x = element_text(angle = 45, hjust = 1),#
+	axis.ticks=element_blank(), #
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),#
+	panel.border = element_blank(), axis.line = element_line(color = 'black')#
+	)#
+tmp#
+setwd(pathTex)#
+tikz(file='descStats.tex', height=5, width=7, standAlone=F)#
+tmp#
+dev.off()#
+##### End Descriptive measures

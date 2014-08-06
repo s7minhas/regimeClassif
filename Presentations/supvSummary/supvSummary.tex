@@ -2,34 +2,13 @@
 % NOTE: as of 17 Sept 2012, this compiles in xelatex
 
 \documentclass{beamer}
-% \usetheme{Madrid} % My favorite!
-% \usetheme{Antibes}
-% \usetheme{Bergen} % This template has nagivation on the left
-% \usetheme{Berkeley} % Nice details
-%\usetheme{Berlin}
-% \usetheme{Boadilla} % Pretty neat, soft color.
-% \usetheme{Copenhagen} % sim to default, pretty sure Sunshine uses this
-% \usetheme{Darmstadt} % not so good
-% \usetheme{Dresden} % sim to Berlin
-% \usetheme{default} 
-% \usetheme{Frankfurt} % Similar to the default 
-% \usetheme{Goettingen} % Navigation on right
-% \usetheme{Hannover} % Navigation on left, soft color
-% \usetheme{Ilmenau}
-% \usetheme{Juanlespins} % don't have this .sty
-% \usetheme{Madrid}
-% \usetheme{Malmoe} % pretty good. No stuff on top, sim to Warsaw on bottom
-% \usetheme{Marburg} % Nice Navigation on right
-% \usetheme{Montpellier} % yuck
-% \usetheme{Paloalto} % don't have this .sty
-% \usetheme{Pittsburg} % don't have this .sty
-% \usetheme{Rochester} % very plain
-%\usetheme{Singapore} % similar to default
-\usetheme{Warsaw}
-%with an extra region at the top.
-%\usecolortheme{seahorse} % Simple and clean template
-% Uncomment the following line if you want %
-%page numbers and using Warsaw theme%
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\slideentry}{\ifnum#2>0}{\ifnum2>0}{}{\@error{unable to patch}}
+\makeatother
+
+\usetheme{Frankfurt}
+
 %\setbeamertemplate{footline}[page number]
 %\setbeamercovered{transparent}
 \setbeamercovered{invisible}
@@ -65,7 +44,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[Regime Classification \hspace{14em} \insertframenumber/
-\inserttotalframenumber]{Classifying Regimes through SVM}
+\inserttotalframenumber]{Probabilistic Measures of \\ Regime Type}
 \author{Shahryar Minhas}
 \institute[Duke University]
 {
@@ -85,17 +64,19 @@ Duke University
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Overview}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
 \frametitle{Goal}
 
-Develop probabilistic measures of:
+Create country/year probabilistic measures of archetypical regime types, specifically:
 
 \begin{itemize}
 	\item Democracy
+	\item Militaristic	
 	\item Monarchical
-	\item Military
-	\item Party
+	\item One-Party
 \end{itemize}
 
 \end{frame}
@@ -103,75 +84,261 @@ Develop probabilistic measures of:
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Textual Data}
-\scriptsize{
-	\begin{itemize}
-		\item 
-		\item 
-	\end{itemize}
-	}
-\end{frame}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}
-\frametitle{Supervised Approach}
+\frametitle{Method: Supervised Approaches}
 
 \begin{itemize}
-	\item Naive Bayes
+	\item Bernoulli Naive Bayes
 	\item Support Vector Machines (SVM)
 \end{itemize}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\section{Data}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Labeled Data}
+\frametitle{Textual Data}
 
 \begin{itemize}
-	\item Democracy = 1 if
-	\begin{itemize}
-		\item Polity = 10
-		\item FH = Free
-	\end{itemize}
-	\item Monarchical
-	\begin{itemize}
-		\item
-		\item
-	\end{itemize}
-	\item Military
+	\item Scraped all country level reports for 1999-2013 from: 
 		\begin{itemize}
-		\item
-		\item
-	\end{itemize}
-	\item Party
+			\item State Department Human Right Reports
+			\item Freedom House Freedom in the World Reports
+		\end{itemize}
+	\item Cleaning textual data:
 		\begin{itemize}
-		\item
-		\item
+			\item Removed numbers, punctuation, and stopwords
+			\item Tokenized results
+			\item Lemmatized tokens to group together inflected forms
+		\end{itemize}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Datasets used for Labels}
+
+\begin{itemize}
+	\item Marshall et al. 2014 (Polity)
+	\item Freedom House 2014 (FH)
+	\item Geddes et al. 2014 (GWF)
+	\item Hadenius et al. 2012 (ADR)
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Label Rules}
+
+\begin{block}{Democracy}
+If Polity equals 10 and FH equals Free then we set Democracy for country-year equal to one otherwise zero
+\end{block}
+
+\begin{block}{Military, Monarchy, \& Party}
+If GWF and ADR dataset agree on coding for country-year then variable equals one otherwise zero
+\end{block}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Empirics}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Cross-Validation Strategy}
+
+\begin{block}{Democracy}
+\begin{itemize}
+	\item Training dataset: 1,557 cases from 1999-2008 
+	\item Test dataset: 707 cases from 2009-2013
+\end{itemize}
+\end{block}
+
+\begin{block}{Military, Monarchy, \& Party}
+\begin{itemize}
+	\item Training dataset: 1,138 cases from 1999-2006 
+	\item Test dataset: 583 cases from 2007-2010
+	\item Shorter timeline because GWF and ADR datasets end at 2010
+\end{itemize}
+\end{block}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Label Distributions}
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{1\textwidth}{!}{\input{descStats.tex}}	
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Features for Supervised Models}
+
+\begin{itemize}
+	\item Vectorized tokens from combined State and FH reports for a given country-year
+	\item Experimented with additional features but supervised models with just vectorized tokens performed the best (in terms of precision, recall and accuracy), see below for other features attempted:
+	\begin{itemize}
+		\item Word count of combined tokens
+		\item Posterior topic predictions from an unsupervised LDA
 	\end{itemize}
 \end{itemize}
 
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% \begin{itemize}
-% \frametitle{Results}
+\section{Results}
 
-% \begin{table}[ht]
-% \centering
-% \begin{tabular}{lcccc}
-% \hline\hline
-% ~ & Precision & Recall & F-score & Accuracy \\
-% Naive Bayes &  &  &  &  & \\
-% SVM &  &  &  &  & \\
-% \hline\hline
-% \end{tabular}
-% \end{table}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Out-of-Sample Performance}
 
-% \end{itemize}
-% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{figure}[ht]
+	\centering
+	\resizebox{1\textwidth}{!}{\input{aggStats.tex}}	
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Performance by Class for Democracy}
+
+\text{\textbf{Naive Bayes}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~& Precision & Recall & F-score & Support \\
+Not Democracy & 0.96 & 0.90 & 0.93 & 563 \\
+Democracy & 0.68 & 0.85 & 0.76 & 144
+\end{tabular}
+\end{table}
+
+\text{\textbf{SVM}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~& Precision & Recall & F-score & Support \\
+Not Democracy & 0.99 & 0.98 & 0.98 & 563 \\
+Democracy & 0.93 & 0.96 & 0.94 & 144
+\end{tabular}
+\end{table}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Performance by Class for Military}
+
+\text{\textbf{Naive Bayes}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~& Precision & Recall & F-score & Support \\
+Not Military & 0.99 & 0.99 & 0.99 & 574 \\
+Military & 0.57 & 0.44 & 0.50 & 9
+\end{tabular}
+\end{table}
+
+\text{\textbf{SVM}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~& Precision & Recall & F-score & Support \\
+Not Military & 0.99 & 1.00 & 1.00 & 574 \\
+Military & 1.00 & 0.67 & 0.80 & 9
+\end{tabular}
+\end{table}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Performance by Class for Monarchy}
+
+\text{\textbf{Naive Bayes}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~& Precision & Recall & F-score & Support \\
+Not Monarchy & 0.97 & 1.00 & 0.99 & 557 \\
+Monarchy & 1.00 & 0.38 & 0.56 & 26
+\end{tabular}
+\end{table}
+
+\text{\textbf{SVM}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~& Precision & Recall & F-score & Support \\
+Not Monarchy & 1.00 & 1.00 & 1.00 & 557 \\
+Monarchy & 0.93 & 1.00 & 0.96 & 26
+\end{tabular}
+\end{table}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Performance by Class for One-Party}
+
+\text{\textbf{Naive Bayes}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~& Precision & Recall & F-score & Support \\
+Not One-Party & 0.98 & 0.99 & 0.99 & 555 \\
+One-Party & 0.83 & 0.54 & 0.65 & 28
+\end{tabular}
+\end{table}
+
+\text{\textbf{SVM}}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~& Precision & Recall & F-score & Support \\
+Not One-Party & 1.00 & 1.00 & 1.00 & 555 \\
+One-Party & 1.00 & 0.93 & 0.96 & 28
+\end{tabular}
+\end{table}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Next Steps}
+
+\begin{itemize}
+	\item Incorporate additional textual data from Human Rights Watch
+	\item Compare performance of SVM with supervised LDAs
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % End of slides
 \end{document} 

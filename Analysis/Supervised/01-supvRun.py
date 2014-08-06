@@ -79,7 +79,10 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 
 	##### Performance stats
 	os.chdir(baseDrop+'/Results/Supervised')
-	outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
+	if addWrdCnt:
+		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'_xtraFt'+'.txt'
+	else:
+		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
 	orig_stdout = sys.stdout	
 	out=open(outName, 'w')
 	sys.stdout=out
@@ -100,26 +103,26 @@ runAnalysis(
 	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
 	labelFilename='demData_99-13.csv', labelCol=3, labelName='democ',
-	addWrdCnt=False
+	addWrdCnt=True
 	)
 
 runAnalysis(
 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
 	labelFilename='mmpData_99-10.csv', labelCol=3, labelName='monarchy',
-	addWrdCnt=False
+	addWrdCnt=True
 	)
 
 runAnalysis(
 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
 	labelFilename='mmpData_99-10.csv', labelCol=4, labelName='military',
-	addWrdCnt=False
+	addWrdCnt=True
 	)
 
 runAnalysis(
 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
 	labelFilename='mmpData_99-10.csv', labelCol=5, labelName='party',
-	addWrdCnt=False
+	addWrdCnt=True
 	)

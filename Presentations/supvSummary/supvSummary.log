@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.1415926-2.3-0.9997.5 (TeX Live 2011) (format=xelatex 2011.7.3)  6 AUG 2014 02:23
+This is XeTeX, Version 3.1415926-2.3-0.9997.5 (TeX Live 2011) (format=xelatex 2011.7.3)  6 AUG 2014 05:29
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -708,22 +708,27 @@ Package: beamerinnerthemedefault 2010/06/17  (rcs-revision d02a7cf4d8ae)
 emedefault.sty
 Package: beamerouterthemedefault 2010/06/17  (rcs-revision d02a7cf4d8ae)
 )))
-(/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/themes/theme/beamerthemeWa
-rsaw.sty
-Package: beamerthemeWarsaw 2010/06/17  (rcs-revision d02a7cf4d8ae)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2011/01/03 v2.1 e-TeX tools for LaTeX
 
+(/usr/local/texlive/2011/texmf-dist/tex/latex/etex-pkg/etex.sty
+Package: etex 1998/03/26 v2.0 eTeX basic definition package (PEB)
+\et@xins=\count156
+)
+\etb@tempcnta=\count157
+)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/themes/theme/beamerthemeFr
+ankfurt.sty
+Package: beamerthemeFrankfurt 2010/06/17  (rcs-revision d02a7cf4d8ae)
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/themes/outer/beamerouterth
+emesmoothbars.sty
+Package: beamerouterthemesmoothbars 2010/06/17  (rcs-revision d02a7cf4d8ae)
+)
 (/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/themes/inner/beamerinnerth
 emerounded.sty
 Package: beamerinnerthemerounded 2010/06/17  (rcs-revision d02a7cf4d8ae)
 )
-(/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/themes/outer/beamerouterth
-emeshadow.sty
-Package: beamerouterthemeshadow 2010/06/17  (rcs-revision d02a7cf4d8ae)
-
-(/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/themes/outer/beamerouterth
-emesplit.sty
-Package: beamerouterthemesplit 2010/06/17  (rcs-revision d02a7cf4d8ae)
-))
 (/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/themes/color/beamercolorth
 emeorchid.sty
 Package: beamercolorthemeorchid 2010/06/17  (rcs-revision d02a7cf4d8ae)
@@ -750,7 +755,7 @@ Package: caption3 2010/01/14 v3.1m caption3 kernel (AR)
 \caption@parindent=\dimen187
 \caption@hangindent=\dimen188
 )
-\c@ContinuedFloat=\count156
+\c@ContinuedFloat=\count158
 Package caption Info: beamer document class.
 Package caption Info: hyperref package is loaded.
 
@@ -761,16 +766,16 @@ See the caption package documentation for explanation.
 
 ) (/usr/local/texlive/2011/texmf-dist/tex/latex/subfig/subfig.sty
 Package: subfig 2005/06/28 ver: 1.3 subfig package
-\c@KVtest=\count157
+\c@KVtest=\count159
 \sf@farskip=\skip57
 \sf@captopadj=\dimen189
 \sf@capskip=\skip58
 \sf@nearskip=\skip59
-\c@subfigure=\count158
-\c@subfigure@save=\count159
-\c@depth=\count160
-\c@subtable=\count161
-\c@subtable@save=\count162
+\c@subfigure=\count160
+\c@subfigure@save=\count161
+\c@depth=\count162
+\c@subtable=\count163
+\c@subtable@save=\count164
 \sf@top=\skip60
 \sf@bottom=\skip61
 )
@@ -814,7 +819,7 @@ Package: tikz 2010/10/13 v2.10 (rcs-revision 1.76)
 (/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothan
 dlers.code.tex
 File: pgflibraryplothandlers.code.tex 2010/05/31 v2.10 (rcs-revision 1.15)
-\pgf@plot@mark@count=\count163
+\pgf@plot@mark@count=\count165
 \pgfplotmarksize=\dimen194
 )
 \tikz@lastx=\dimen195
@@ -825,19 +830,19 @@ File: pgflibraryplothandlers.code.tex 2010/05/31 v2.10 (rcs-revision 1.15)
 \tikzsiblingdistance=\dimen200
 \tikz@figbox=\box55
 \tikz@tempbox=\box56
-\tikztreelevel=\count164
-\tikznumberofchildren=\count165
-\tikznumberofcurrentchild=\count166
-\tikz@fig@count=\count167
+\tikztreelevel=\count166
+\tikznumberofchildren=\count167
+\tikznumberofcurrentchild=\count168
+\tikz@fig@count=\count169
 
 (/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.cod
 e.tex
 File: pgfmodulematrix.code.tex 2010/08/24  (rcs-revision 1.4)
-\pgfmatrixcurrentrow=\count168
-\pgfmatrixcurrentcolumn=\count169
-\pgf@matrix@numberofcolumns=\count170
+\pgfmatrixcurrentrow=\count170
+\pgfmatrixcurrentcolumn=\count171
+\pgf@matrix@numberofcolumns=\count172
 )
-\tikz@expandcount=\count171
+\tikz@expandcount=\count173
 
 (/usr/local/texlive/2011/texmf-dist/tex/generic/pgf/frontendlayer/tikz/librarie
 s/tikzlibrarytopaths.code.tex
@@ -845,22 +850,22 @@ File: tikzlibrarytopaths.code.tex 2008/06/17 v2.10 (rcs-revision 1.2)
 ))) (./supvSummary.aux)
 \openout1 = `supvSummary.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 80.
-LaTeX Font Info:    ... okay on input line 80.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 59.
+LaTeX Font Info:    ... okay on input line 59.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: xetex
@@ -898,7 +903,7 @@ LaTeX Font Info:    ... okay on input line 80.
 
 ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box57
-Package hyperref Info: Link coloring OFF on input line 80.
+Package hyperref Info: Link coloring OFF on input line 59.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
@@ -906,58 +911,58 @@ Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 (/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count172
+\c@section@level=\count174
 )
-LaTeX Info: Redefining \ref on input line 80.
-LaTeX Info: Redefining \pageref on input line 80.
-LaTeX Info: Redefining \nameref on input line 80.
+LaTeX Info: Redefining \ref on input line 59.
+LaTeX Info: Redefining \pageref on input line 59.
+LaTeX Info: Redefining \nameref on input line 59.
 
 (./supvSummary.out) (./supvSummary.out)
 \@outlinefile=\write5
 \openout5 = `supvSummary.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 80.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 59.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 80.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 59.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 80.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 80.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 59.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 80.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 80.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 80.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 59.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 80.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 80.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 80.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 59.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 80.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 80.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 80.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 59.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 80.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 80.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 59.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 80.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 59.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 80.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 80.
+(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 80.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 80.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 80.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 59.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 80.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 59.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/beamer/translator/dicts/translato
 r-basic-dictionary/translator-basic-dictionary-English.dict
@@ -985,13 +990,13 @@ Dictionary: translator-theorem-dictionary, Language: English
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption3 Info: subfig package 1.2 or 1.3 is loaded.
-LaTeX Info: Redefining \subref on input line 80.
+LaTeX Info: Redefining \subref on input line 59.
 Package caption Info: End \AtBeginDocument code.
 
 (./supvSummary.nav)
 
 LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
-(Font)              size <5> substituted on input line 85.
+(Font)              size <5> substituted on input line 64.
 
 [1
 
@@ -1003,6 +1008,44 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 
 ] [5
 
+] [6
+
+] [7
+
+] (./descStats.tex)
+Overfull \vbox (3.84459pt too high) detected at line 182
+ []
+
+[8
+
+] [9
+
+] (./aggStats.tex)
+Overfull \vbox (3.84459pt too high) detected at line 212
+ []
+
+[10
+
+]
+LaTeX Font Info:    Try loading font information for U+msa on input line 241.
+ (/usr/local/texlive/2011/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2009/06/22 v3.00 AMS symbols A
+)
+LaTeX Font Info:    Try loading font information for U+msb on input line 241.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2009/06/22 v3.00 AMS symbols B
+) [11
+
+] [12
+
+]
+[13
+
+] [14
+
+] [15
+
 ]
 \tf@nav=\write6
 \openout6 = `supvSummary.nav'.
@@ -1013,25 +1056,25 @@ LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <4> not available
 \tf@snm=\write8
 \openout8 = `supvSummary.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 177.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 177.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 344.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 344.
  (./supvSummary.aux)
-Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 177.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 177.
+Package atveryend Info: Empty hook `AtVeryEndDocument' on input line 344.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 344.
 
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.0pt have occurred.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 177.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 344.
  ) 
 Here is how much of TeX's memory you used:
- 19708 strings out of 494150
- 369042 string characters out of 3152950
- 440875 words of memory out of 3000000
- 22555 multiletter control sequences out of 15000+200000
- 6108 words of font info for 22 fonts, out of 3000000 for 9000
+ 20309 strings out of 494150
+ 377254 string characters out of 3152950
+ 495134 words of memory out of 3000000
+ 23127 multiletter control sequences out of 15000+200000
+ 10857 words of font info for 40 fonts, out of 3000000 for 9000
  1018 hyphenation exceptions out of 8191
- 49i,16n,57p,417b,532s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 49i,20n,59p,1173b,730s stack positions out of 5000i,500n,10000p,200000b,50000s
 
-Output written on supvSummary.pdf (5 pages).
+Output written on supvSummary.pdf (15 pages).

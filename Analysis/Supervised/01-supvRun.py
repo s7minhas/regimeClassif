@@ -88,7 +88,7 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	print 'Test Data Rows: ' + str(xTest.shape[0]) + '\n'	
 	prStats('Naive Bayes', yTest, yPredNB)
 	prStats('SVM', yTest, yPredSVM)
-	prStats('Logit', yTest, yPredLogit)
+	# prStats('Logit', yTest, yPredLogit)
 	f.close()
 	sys.stdout = orig_stdout
 	##### 

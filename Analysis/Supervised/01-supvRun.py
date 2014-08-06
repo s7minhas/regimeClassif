@@ -85,10 +85,10 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	sys.stdout=out
 	print '\nTrain Data from: ' + trainFilename
 	print '\t\tTrain Data Cases: ' + str(xTrain.shape[0])
-	print '\t\tMean of y in train: ' + round(describe(yTrain)[2],3) + '\n'
+	print '\t\tMean of y in train: ' + str(round(describe(yTrain)[2],3)) + '\n'
 	print 'Test Data from: ' + testFilename
 	print '\t\tTest Data Cases: ' + str(xTest.shape[0])	
-	print '\t\tMean of y in test: ' + round(describe(yTest)[2],3) + '\n'
+	print '\t\tMean of y in test: ' + str(round(describe(yTest)[2],3)) + '\n'
 	prStats('Naive Bayes', yTest, yPredNB)
 	prStats('SVM', yTest, yPredSVM)
 	# prStats('Logit', yTest, yPredLogit)

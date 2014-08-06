@@ -64,8 +64,8 @@
 % \setmathsfont(Digits,Latin,Greek){Gill Sans}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[SBGCOP Paper Extension \hspace{14em} \insertframenumber/
-\inserttotalframenumber]{Imputing Values within an MCMC}
+\title[Regime Classification \hspace{14em} \insertframenumber/
+\inserttotalframenumber]{Classifying Regimes through SVM}
 \author{Shahryar Minhas}
 \institute[Duke University]
 {
@@ -87,7 +87,23 @@ Duke University
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Data Summary}
+\frametitle{Goal}
+
+Develop probabilistic measures of:
+
+\begin{itemize}
+	\item Democracy
+	\item Monarchical
+	\item Military
+	\item Party
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Textual Data}
 \scriptsize{
 	\begin{itemize}
 		\item 
@@ -99,9 +115,62 @@ Duke University
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{frame}
-\frametitle{Bernoulli Naive Bayes}
+\frametitle{Supervised Approach}
+
+\begin{itemize}
+	\item Naive Bayes
+	\item Support Vector Machines (SVM)
+\end{itemize}
 
 \end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Labeled Data}
+
+\begin{itemize}
+	\item Democracy = 1 if
+	\begin{itemize}
+		\item Polity = 10
+		\item FH = Free
+	\end{itemize}
+	\item Monarchical
+	\begin{itemize}
+		\item
+		\item
+	\end{itemize}
+	\item Military
+		\begin{itemize}
+		\item
+		\item
+	\end{itemize}
+	\item Party
+		\begin{itemize}
+		\item
+		\item
+	\end{itemize}
+\end{itemize}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{itemize}
+\frametitle{Results}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccc}
+\hline\hline
+~ & Precision & Recall & F-score & Accuracy \\
+Naive Bayes &  &  &  &  & \\
+SVM &  &  &  &  & \\
+\hline\hline
+\end{tabular}
+\end{table}
+
+\end{itemize}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % End of slides

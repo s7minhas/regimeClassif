@@ -75,7 +75,7 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 
 	from sklearn.svm import SVC
 	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
-	yProbSVM1_2 = [x[1] for x in svmClass.predict_proba(xTest)]
+	yProbSVM1_2 = [x[1] for x in svmClass_2.predict_proba(xTest)]
 	yPredSVM_2 = svmClass.predict(xTest)
 	##### 
 

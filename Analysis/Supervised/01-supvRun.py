@@ -72,6 +72,11 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	svmClass = LinearSVC().fit(xTrain, yTrain)
 	yConfSVM = list(svmClass.decision_function(xTest))
 	yPredSVM = svmClass.predict(xTest)
+
+	from sklearn.svm import SVC
+	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
+	yProbSVM1_2 = [x[1] for x in svmClass.predict_proba(xTest)]
+	yPredSVM_2 = svmClass.predict(xTest)
 	##### 
 
 	##### Run logistic regression
@@ -98,6 +103,7 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	prStats('Naive Bayes', yTest, yPredNB)
 	prStats('SVM', yTest, yPredSVM)
 	# prStats('Logit', yTest, yPredLogit)
+	prStats('SVM 2', yTest, yPredSVM_2)
 	out.close()
 	sys.stdout = orig_stdout
 	#####
@@ -123,13 +129,15 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	confSVM=np.array( [[x] for x in flatten([filler, yConfSVM]) ] )
 	probLog=np.array( [[x] for x in flatten([filler, yProbLogit1]) ] )
 	predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )
+	probSVM_2=np.array( [[x] for x in flatten([filler, yProbSVM1_2]) ] )
+	predSVM_2=np.array( [[x] for x in flatten([filler, list(yPredSVM_2)]) ] )
 
 	output=np.hstack((
 		np.vstack((trainCntry,testCntry)),
 		np.vstack((trainYr,testYr)),
 		vDat, 
 		np.vstack((trainLab, testLab)),
-		np.hstack((probNB,predNB,confSVM,probLog,predSVM))
+		np.hstack((probNB,predNB,confSVM,probLog,predSVM,probSVM_2,predSVM_2))
 		))
 
 	os.chdir(baseDrop+'/Results/Supervised')

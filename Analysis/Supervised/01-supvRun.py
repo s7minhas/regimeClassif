@@ -8,6 +8,7 @@ from scipy.stats import describe
 
 from sklearn.naive_bayes import BernoulliNB
 from sklearn.svm import LinearSVC
+from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 
 from sklearn.metrics import precision_score as getPrec
@@ -73,10 +74,8 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	yConfSVM = list(svmClass.decision_function(xTest))
 	yPredSVM = svmClass.predict(xTest)
 
-	from sklearn.svm import SVC
 	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
-	yProbSVM1_2 = [x[1] for x in svmClass_2.predict_proba(xTest)]
-	yPredSVM_2 = svmClass.predict(xTest)
+	yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
 	##### 
 
 	##### Run logistic regression
@@ -103,7 +102,6 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	prStats('Naive Bayes', yTest, yPredNB)
 	prStats('SVM', yTest, yPredSVM)
 	# prStats('Logit', yTest, yPredLogit)
-	prStats('SVM 2', yTest, yPredSVM_2)
 	out.close()
 	sys.stdout = orig_stdout
 	#####
@@ -127,23 +125,21 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	probNB=np.array( [[x] for x in flatten([filler, yProbNB1]) ] )
 	predNB=np.array( [[x] for x in flatten([filler, list(yPredNB)]) ] )
 	confSVM=np.array( [[x] for x in flatten([filler, yConfSVM]) ] )
-	probLog=np.array( [[x] for x in flatten([filler, yProbLogit1]) ] )
+	probSVM=np.array( [[x] for x in flatten([filler, yProbSVM1]) ] )	
 	predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )
-	probSVM_2=np.array( [[x] for x in flatten([filler, yProbSVM1_2]) ] )
-	predSVM_2=np.array( [[x] for x in flatten([filler, list(yPredSVM_2)]) ] )
 
 	output=np.hstack((
 		np.vstack((trainCntry,testCntry)),
 		np.vstack((trainYr,testYr)),
 		vDat, 
 		np.vstack((trainLab, testLab)),
-		np.hstack((probNB,predNB,confSVM,probLog,predSVM,probSVM_2,predSVM_2))
+		np.hstack((probNB,predNB,confSVM,probSVM,predSVM))
 		))
 
 	os.chdir(baseDrop+'/Results/Supervised')
 	outCSV=outName.replace('.txt','.csv')
 	with open(outCSV,'wb') as f:
-		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probLog,predSVM,probSVM_2,predSVM_2\n')
+		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probSVM,predSVM\n')
 		np.savetxt(f,output, delimiter=',',fmt="%s")
 #####
 

@@ -17,7 +17,12 @@ extractNum=function(x){num(strsplit(char(x),':')[[1]][2])}
 ##### Aggregate measures #####
 # Pulling data from textfiles
 setwd(pathData)
-files=list.files()[1:4]
+files=NULL
+for(f in list.files()){
+	if(substr(f,nchar(f)-3,nchar(f))=='.txt'){
+		files=append(files,f)
+	}
+}
 
 supData=NULL
 for(texfile in files){

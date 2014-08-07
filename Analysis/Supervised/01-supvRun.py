@@ -64,16 +64,19 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 
 	#### Run Naive Bayes
 	nb_classifier = BernoulliNB().fit(xTrain, yTrain)
+	yProbNB1 = [x[1] for x in nb_classifier.predict_proba(xTest)]
 	yPredNB = nb_classifier.predict(xTest)
 	##### 
 
 	#### Run SVM with linear kernel
 	svmClass = LinearSVC().fit(xTrain, yTrain)
+	yConfSVM = list(svmClass.decision_function(xTest))
 	yPredSVM = svmClass.predict(xTest)
 	##### 
 
 	##### Run logistic regression
 	maxentClass = LogisticRegression().fit(xTrain, yTrain)
+	yProbLogit1 = [x[1] for x in maxentClass.predict_proba(xTest)]
 	yPredLogit = maxentClass.predict(xTest)
 	##### 
 
@@ -97,32 +100,69 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	# prStats('Logit', yTest, yPredLogit)
 	out.close()
 	sys.stdout = orig_stdout
-	##### 
+	#####
+
+	##### Print data with prediction
+	trainCntry=np.array( [[x.split('_')[0].replace(',','')] 
+		for x in list(trainData[:,0])] )
+	trainYr=np.array( [[x.split('_')[1]] for x in list(trainData[ :,0 ]) ] )
+	testCntry=np.array( [[x.split('_')[0].replace(',','')] 
+		for x in list(testData[:,0])] )
+	testYr=np.array( [[x.split('_')[1]] for x in list(testData[ :,0 ]) ] )
+
+	vDat=np.array( [ [x] for x in flatten([
+			['train']*trainData.shape[0], 
+			['test']*testData.shape[0] ]) ] )
+
+	trainLab=np.array( [[x] for x in list(trainData[ :,labelCol ])] )
+	testLab=np.array( [[x] for x in list(testData[ :,labelCol ])] )
+
+	filler=[-9999]*trainData.shape[0]
+	probNB=np.array( [[x] for x in flatten([filler, yProbNB1]) ] )
+	predNB=np.array( [[x] for x in flatten([filler, list(yPredNB)]) ] )
+	confSVM=np.array( [[x] for x in flatten([filler, yConfSVM]) ] )
+	probLog=np.array( [[x] for x in flatten([filler, yProbLogit1]) ] )
+	predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )
+
+	output=np.hstack((
+		np.vstack((trainCntry,testCntry)),
+		np.vstack((trainYr,testYr)),
+		vDat, 
+		np.vstack((trainLab, testLab)),
+		np.hstack((probNB,predNB,confSVM,probLog,predSVM))
+		))
+
+	os.chdir(baseDrop+'/Results/Supervised')
+	outCSV=outName.replace('.txt','.csv')
+	with open(outCSV,'wb') as f:
+		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probLog,predSVM\n')
+		np.savetxt(f,output, delimiter=',',fmt="%s")
+#####
 
 runAnalysis(
 	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
 	labelFilename='demData_99-13.csv', labelCol=3, labelName='democ',
-	addWrdCnt=True
+	addWrdCnt=False
 	)
 
 runAnalysis(
 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
 	labelFilename='mmpData_99-10.csv', labelCol=3, labelName='monarchy',
-	addWrdCnt=True
+	addWrdCnt=False
 	)
 
 runAnalysis(
 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
 	labelFilename='mmpData_99-10.csv', labelCol=4, labelName='military',
-	addWrdCnt=True
+	addWrdCnt=False
 	)
 
 runAnalysis(
 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
 	labelFilename='mmpData_99-10.csv', labelCol=5, labelName='party',
-	addWrdCnt=True
+	addWrdCnt=False
 	)

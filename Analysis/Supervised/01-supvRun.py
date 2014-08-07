@@ -143,7 +143,7 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	os.chdir(baseDrop+'/Results/Supervised')
 	outCSV=outName.replace('.txt','.csv')
 	with open(outCSV,'wb') as f:
-		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probLog,predSVM\n')
+		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probLog,predSVM,probSVM_2,predSVM_2\n')
 		np.savetxt(f,output, delimiter=',',fmt="%s")
 #####
 

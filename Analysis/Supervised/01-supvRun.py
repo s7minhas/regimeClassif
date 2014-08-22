@@ -101,7 +101,7 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	print '\t\tMean of y in test: ' + str(round(describe(yTest)[2],3)) + '\n'
 	prStats('Naive Bayes', yTest, yPredNB)
 	prStats('SVM', yTest, yPredSVM)
-	# prStats('Logit', yTest, yPredLogit)
+	prStats('Logit', yTest, yPredLogit)
 	out.close()
 	sys.stdout = orig_stdout
 	#####
@@ -127,19 +127,20 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	confSVM=np.array( [[x] for x in flatten([filler, yConfSVM]) ] )
 	probSVM=np.array( [[x] for x in flatten([filler, yProbSVM1]) ] )	
 	predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )
+	probLogit=np.array( [[x] for x in flatten([filler, list(yProbLogit1)]) ] )	
 
 	output=np.hstack((
 		np.vstack((trainCntry,testCntry)),
 		np.vstack((trainYr,testYr)),
 		vDat, 
 		np.vstack((trainLab, testLab)),
-		np.hstack((probNB,predNB,confSVM,probSVM,predSVM))
+		np.hstack((probNB,predNB,confSVM,probSVM,predSVM,probLogit))
 		))
 
 	os.chdir(baseDrop+'/Results/Supervised')
 	outCSV=outName.replace('.txt','.csv')
 	with open(outCSV,'wb') as f:
-		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probSVM,predSVM\n')
+		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probSVM,predSVM,probLogit\n')
 		np.savetxt(f,output, delimiter=',',fmt="%s")
 #####
 

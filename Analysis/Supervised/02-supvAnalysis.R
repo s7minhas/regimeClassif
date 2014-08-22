@@ -33,11 +33,14 @@ for(texfile in files){
 	# Pull out data
 	results=matrix(NA, nrow=2, ncol=6, dimnames=list(NULL,
 	c('Variable','Method','Precision','Recall','Fscore','Accuracy')))
-	results[1,]=c( variable, 'Naive Bayes\\qquad\\qquad',
-		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )
-	results[2,]=c( variable, 'SVM',
+# 	results[1,]=c( variable, 'Naive Bayes\\qquad\\qquad',
+# 		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )
+	results[1,]=c( variable, 'SVM',
 		unlist(lapply(18:21, function(x) FUN=extractNum(text[x,]))) )
-	
+# 	results[2,]=c(variable, 'Logit\\qquad\\qquad',
+	results[2,]=c(variable, 'Logit',                
+	  unlist(lapply(28:31, function(x) FUN=extractNum(text[x,]))) )
+  
 	# Organize
 	supData=rbind(supData, results)
 	print(paste0(texfile, ' added to data'))	
@@ -72,10 +75,10 @@ tmp=tmp+theme(
 	panel.grid.major=element_blank(), panel.grid.minor=element_blank()
 	)
 tmp
-setwd(pathTex)
-tikz(file='aggStats.tex', height=5, width=7, standAlone=F)
-tmp
-dev.off()
+# setwd(pathTex)
+# tikz(file='aggStats.tex', height=5, width=7, standAlone=F)
+# tmp
+# dev.off()
 ##### End Aggregate measures #####
 
 ##### Descriptive measures #####

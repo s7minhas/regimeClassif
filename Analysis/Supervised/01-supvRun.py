@@ -1,5 +1,7 @@
 import os
 import sys
+from operator import itemgetter
+
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn import metrics
@@ -61,8 +63,8 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	yTrain=np.array([int(x) for x in list(trainData[:,labelCol])])
 
 	xTest=vectorizer.transform(testData[:,1])
-	wTest=csr_matrix( np.array( list(testData[:,2]) ) ).transpose()
 	if(addWrdCnt):
+		wTest=csr_matrix( np.array( list(testData[:,2]) ) ).transpose()
 		xTest=hstack((xTest, wTest))
 	yTest=np.array([int(x) for x in list(testData[:,labelCol])])
 	##### 
@@ -80,6 +82,14 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 
 	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
 	yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
+
+	# Word cloud for SVM (using top 10 terms per label)
+	nTerms=10
+	vocabulary = np.array([t for t, i in sorted(vectorizer.vocabulary_.iteritems(), key=itemgetter(1))])
+
+	for i, label in enumerate(list(yTrain) + list(yTest)):
+		topN = np.argsort(svmClass.coef_[i])[-nTerms:]
+		print "\nThe top %d most informative features for topic code %s: \n%s" % (nTerms, label, " ".join(vocabulary[topN]))
 	##### 
 
 	##### Run logistic regression
@@ -94,7 +104,7 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'_xtraFt'+'.txt'
 	else:
 		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
-	orig_stdout = sys.stdout	
+	orig_stdout = sys.stdout
 	out=open(outName, 'w')
 	sys.stdout=out
 	print '\nTrain Data from: ' + trainFilename

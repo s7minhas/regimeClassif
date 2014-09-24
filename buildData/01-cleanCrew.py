@@ -252,8 +252,12 @@ def saveJSON(data, filename, details=False, newName=False):
 	f.close()
 
 ### Running code
-baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/'
-baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/'
+if os.environ.get('USER')=='janus829':
+	baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
+	baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+elif os.environ.get('USER')=='s7m':
+	baseDrop='/Users/s7m/Dropbox/Research/WardProjects/regimeClassif'
+	baseGit='/Users/s7m/Research/WardProjects/regimeClassif'
 
 # FH (98-14), FHpress (02-13), StateHR (99-13), StateRF (01-12)
 files=[{'name':'FH','years':range(1998,2000)},

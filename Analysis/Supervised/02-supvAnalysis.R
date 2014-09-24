@@ -1,7 +1,12 @@
 rm(list=ls())
 if(Sys.info()["user"]=="janus829"){
-	pathData='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-	pathTex='/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'
+	pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
+	pathTex='~/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'
+}
+
+if(Sys.info()["user"]=="s7m"){
+	pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
+	pathTex='~/Research/WardProjects/regimeClassif/Presentations/supvSummary'
 }
 
 # Helpful libaries and functions

@@ -17,8 +17,12 @@ from sklearn.metrics import f1_score as getF1
 from sklearn.metrics import accuracy_score as getAcc
 from sklearn.metrics import classification_report as classScore
 
-baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
-baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+if os.environ.get('USER')=='janus829':
+	baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
+	baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+elif os.environ.get('USER')=='s7m':
+	baseDrop='/Users/s7m/Dropbox/Research/WardProjects/regimeClassif'
+	baseGit='/Users/s7m/Research/WardProjects/regimeClassif'
 
 os.chdir(baseGit+'/Analysis/Supervised')
 from bldTrTe import *

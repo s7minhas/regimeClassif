@@ -7,8 +7,12 @@ import json
 import csv
 import datetime
 
-baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
-baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+if os.environ.get('USER')=='janus829':
+	baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
+	baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+elif os.environ.get('USER')=='s7m':
+	baseDrop='/Users/s7m/Dropbox/Research/WardProjects/regimeClassif'
+	baseGit='/Users/s7m/Research/WardProjects/regimeClassif'
 
 #### Master function
 def dataForLDA(filename, path, yrs, srcs, roll, rsize):

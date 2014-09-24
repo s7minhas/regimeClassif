@@ -31,7 +31,10 @@ def dlPull(data, key):
 def buildData(textFile, sYr, labelFile):
 	
 	# Base directory
-	baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
+	if os.environ.get('USER')=='janus829':
+		baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
+	elif os.environ.get('USER')=='s7m':
+		baseDrop='/Users/s7m/Dropbox/Research/WardProjects/regimeClassif'
 	
 	#### Make array out of text data
 	os.chdir(baseDrop+'/Data/forSupv')

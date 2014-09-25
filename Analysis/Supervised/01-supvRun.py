@@ -38,59 +38,64 @@ def prStats(modelName, actual, pred):
 	print '\t\t'+modelName+' Class Level:'
 	print classScore(actual, pred)
 
-def runAnalysis(trainFilename, trainYr, testFilename, testYr,
-	labelFilename, labelCol, labelName,
-	addWrdCnt=False):
+trainFilename='train_99-08_Shr-FH_wdow0.json'; trainYr=1999; 
+testFilename='test_09-13_Shr-FH_wdow0.json'; testYr=2009;
+labelFilename='demData_99-13.csv'; labelCol=3; labelName='democ';
+addWrdCnt=False
 
-	#### Load data
-	trainData=buildData(
-		textFile=trainFilename, sYr=trainYr,
-		labelFile=labelFilename)
+# def runAnalysis(trainFilename, trainYr, testFilename, testYr,
+# 	labelFilename, labelCol, labelName,
+# 	addWrdCnt=False):
 
-	testData=buildData(
-		textFile=testFilename, sYr=testYr,
-		labelFile=labelFilename)
-	####
+#### Load data
+trainData=buildData(
+	textFile=trainFilename, sYr=trainYr,
+	labelFile=labelFilename)
 
-	#### Divide into train and test and convert
-	# to appropriate format
-	vectorizer = TfidfVectorizer()
+testData=buildData(
+	textFile=testFilename, sYr=testYr,
+	labelFile=labelFilename)
+####
 
-	xTrain=vectorizer.fit_transform( trainData[:,1] )
-	wTrain=csr_matrix( np.array( list(trainData[:,2]) ) ).transpose()
-	if(addWrdCnt): 
-		xTrain=hstack((xTrain, wTrain))
-	yTrain=np.array([int(x) for x in list(trainData[:,labelCol])])
+#### Divide into train and test and convert
+# to appropriate format
+vectorizer = TfidfVectorizer()
 
-	xTest=vectorizer.transform(testData[:,1])
-	if(addWrdCnt):
-		wTest=csr_matrix( np.array( list(testData[:,2]) ) ).transpose()
-		xTest=hstack((xTest, wTest))
-	yTest=np.array([int(x) for x in list(testData[:,labelCol])])
-	##### 
+xTrain=vectorizer.fit_transform( trainData[:,1] )
+wTrain=csr_matrix( np.array( list(trainData[:,2]) ) ).transpose()
+if(addWrdCnt): 
+	xTrain=hstack((xTrain, wTrain))
+yTrain=np.array([int(x) for x in list(trainData[:,labelCol])])
 
-	#### Run Naive Bayes
-	nb_classifier = BernoulliNB().fit(xTrain, yTrain)
-	yProbNB1 = [x[1] for x in nb_classifier.predict_proba(xTest)]
-	yPredNB = nb_classifier.predict(xTest)
-	##### 
+xTest=vectorizer.transform(testData[:,1])
+if(addWrdCnt):
+	wTest=csr_matrix( np.array( list(testData[:,2]) ) ).transpose()
+	xTest=hstack((xTest, wTest))
+yTest=np.array([int(x) for x in list(testData[:,labelCol])])
+##### 
 
-	#### Run SVM with linear kernel
-	svmClass = LinearSVC().fit(xTrain, yTrain)
-	yConfSVM = list(svmClass.decision_function(xTest))
-	yPredSVM = svmClass.predict(xTest)
+# #### Run Naive Bayes
+# nb_classifier = BernoulliNB().fit(xTrain, yTrain)
+# yProbNB1 = [x[1] for x in nb_classifier.predict_proba(xTest)]
+# yPredNB = nb_classifier.predict(xTest)
+# ##### 
 
-	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
-	yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
+#### Run SVM with linear kernel
+svmClass = LinearSVC().fit(xTrain, yTrain)
+yConfSVM = list(svmClass.decision_function(xTest))
+yPredSVM = svmClass.predict(xTest)
 
-	# Word cloud for SVM (using top 10 terms per label)
-	nTerms=10
-	vocabulary = np.array([t for t, i in sorted(vectorizer.vocabulary_.iteritems(), key=itemgetter(1))])
+# svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
+# yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
 
-	for i, label in enumerate(list(yTrain) + list(yTest)):
-		topN = np.argsort(svmClass.coef_[i])[-nTerms:]
-		print "\nThe top %d most informative features for topic code %s: \n%s" % (nTerms, label, " ".join(vocabulary[topN]))
-	##### 
+# Word cloud for SVM (using top 10 terms per label)
+nTerms=10
+vocabulary = np.array([t for t, i in sorted(vectorizer.vocabulary_.iteritems(), key=itemgetter(1))])
+
+for i, label in enumerate(list(yTrain) + list(yTest)):
+	topN = np.argsort(svmClass.coef_[i])[-nTerms:]
+	print "\nThe top %d most informative features for topic code %s: \n%s" % (nTerms, label, " ".join(vocabulary[topN]))
+##### 
 
 	##### Run logistic regression
 	maxentClass = LogisticRegression().fit(xTrain, yTrain)

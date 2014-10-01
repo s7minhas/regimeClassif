@@ -38,64 +38,65 @@ def prStats(modelName, actual, pred):
 	print '\t\t'+modelName+' Class Level:'
 	print classScore(actual, pred)
 
-trainFilename='train_99-08_Shr-FH_wdow0.json'; trainYr=1999; 
-testFilename='test_09-13_Shr-FH_wdow0.json'; testYr=2009;
-labelFilename='demData_99-13.csv'; labelCol=3; labelName='democ';
-addWrdCnt=False
-
-# def runAnalysis(trainFilename, trainYr, testFilename, testYr,
-# 	labelFilename, labelCol, labelName,
-# 	addWrdCnt=False):
-
-#### Load data
-trainData=buildData(
-	textFile=trainFilename, sYr=trainYr,
-	labelFile=labelFilename)
-
-testData=buildData(
-	textFile=testFilename, sYr=testYr,
-	labelFile=labelFilename)
-####
-
-#### Divide into train and test and convert
-# to appropriate format
-vectorizer = TfidfVectorizer()
-
-xTrain=vectorizer.fit_transform( trainData[:,1] )
-wTrain=csr_matrix( np.array( list(trainData[:,2]) ) ).transpose()
-if(addWrdCnt): 
-	xTrain=hstack((xTrain, wTrain))
-yTrain=np.array([int(x) for x in list(trainData[:,labelCol])])
-
-xTest=vectorizer.transform(testData[:,1])
-if(addWrdCnt):
-	wTest=csr_matrix( np.array( list(testData[:,2]) ) ).transpose()
-	xTest=hstack((xTest, wTest))
-yTest=np.array([int(x) for x in list(testData[:,labelCol])])
-##### 
-
-# #### Run Naive Bayes
-# nb_classifier = BernoulliNB().fit(xTrain, yTrain)
-# yProbNB1 = [x[1] for x in nb_classifier.predict_proba(xTest)]
-# yPredNB = nb_classifier.predict(xTest)
-# ##### 
-
-#### Run SVM with linear kernel
-svmClass = LinearSVC().fit(xTrain, yTrain)
-yConfSVM = list(svmClass.decision_function(xTest))
-yPredSVM = svmClass.predict(xTest)
-
-# svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
-# yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
-
-# Word cloud for SVM (using top 10 terms per label)
-def infFeatures(vectorizer, model, n=20):
+def infFeatures(path, filename, vectorizer, model, n=20):
     fNames = vectorizer.get_feature_names()
     coefsFn = sorted(zip(model.coef_[0], fNames))
-    top = zip(coefsFn[:n], coefsFn[:-(n + 1):-1])
-    for (coef1, fn1), (coef2, fn2) in top:
-        print "\t%.4f\t%-15s\t\t%.4f\t%-15s" % (coef1, fn1, coef2, fn2)
-##### 
+    top = np.array(zip(coefsFn[:n], coefsFn[:-(n + 1):-1]))
+    os.chdir(path)
+    with open(filename,'wb') as f:
+		f.write(b'coef1,ftr1,coef2,ftr2\n')
+		np.savetxt(f,top, delimiter=',',fmt="%s")
+
+# trainFilename='train_99-08_Shr-FH_wdow0.json'; trainYr=1999; 
+# testFilename='test_09-13_Shr-FH_wdow0.json'; testYr=2009;
+# labelFilename='demData_99-13.csv'; labelCol=3; labelName='democ';
+# addWrdCnt=False
+
+def runAnalysis(trainFilename, trainYr, testFilename, testYr,
+	labelFilename, labelCol, labelName,
+	addWrdCnt=False):
+
+	#### Load data
+	trainData=buildData(
+		textFile=trainFilename, sYr=trainYr,
+		labelFile=labelFilename)
+
+	testData=buildData(
+		textFile=testFilename, sYr=testYr,
+		labelFile=labelFilename)
+	####
+
+	#### Divide into train and test and convert
+	# to appropriate format
+	vectorizer = TfidfVectorizer()
+
+	xTrain=vectorizer.fit_transform( trainData[:,1] )
+	wTrain=csr_matrix( np.array( list(trainData[:,2]) ) ).transpose()
+	if(addWrdCnt): 
+		xTrain=hstack((xTrain, wTrain))
+	yTrain=np.array([int(x) for x in list(trainData[:,labelCol])])
+
+	xTest=vectorizer.transform(testData[:,1])
+	if(addWrdCnt):
+		wTest=csr_matrix( np.array( list(testData[:,2]) ) ).transpose()
+		xTest=hstack((xTest, wTest))
+	yTest=np.array([int(x) for x in list(testData[:,labelCol])])
+	##### 
+
+	#### Run Naive Bayes
+	nb_classifier = BernoulliNB().fit(xTrain, yTrain)
+	yProbNB1 = [x[1] for x in nb_classifier.predict_proba(xTest)]
+	yPredNB = nb_classifier.predict(xTest)
+	##### 
+
+	#### Run SVM with linear kernel
+	svmClass = LinearSVC().fit(xTrain, yTrain)
+	yConfSVM = list(svmClass.decision_function(xTest))
+	yPredSVM = svmClass.predict(xTest)
+
+	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
+	yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
+	##### 
 
 	##### Run logistic regression
 	maxentClass = LogisticRegression().fit(xTrain, yTrain)
@@ -161,6 +162,10 @@ def infFeatures(vectorizer, model, n=20):
 	with open(outCSV,'wb') as f:
 		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probSVM,predSVM,probLogit\n')
 		np.savetxt(f,output, delimiter=',',fmt="%s")
+
+	##### Print top features for classes from SVM
+	infFeatures(baseDrop+'/Results/Supervised', 
+		outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 10)
 #####
 
 runAnalysis(

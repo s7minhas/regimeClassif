@@ -172,27 +172,62 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 runAnalysis(
 	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
 	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
-	labelFilename='demData_99-13.csv', labelCol=3, labelName='democ',
+	labelFilename='demData_99-13.csv', labelCol=4, labelName='democ',
 	addWrdCnt=False
 	)
 
 runAnalysis(
-	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
-	labelFilename='mmpData_99-10.csv', labelCol=3, labelName='monarchy',
+	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
+	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
+	labelFilename='demData_99-13.csv', labelCol=5, labelName='polGe10',
 	addWrdCnt=False
 	)
 
 runAnalysis(
-	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
-	labelFilename='mmpData_99-10.csv', labelCol=4, labelName='military',
+	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
+	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
+	labelFilename='demData_99-13.csv', labelCol=6, labelName='polGe9',
 	addWrdCnt=False
 	)
 
 runAnalysis(
-	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
-	labelFilename='mmpData_99-10.csv', labelCol=5, labelName='party',
+	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
+	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
+	labelFilename='demData_99-13.csv', labelCol=7, labelName='polGe8',
 	addWrdCnt=False
 	)
+
+runAnalysis(
+	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
+	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
+	labelFilename='demData_99-13.csv', labelCol=8, labelName='polGe7',
+	addWrdCnt=False
+	)
+
+runAnalysis(
+	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
+	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
+	labelFilename='demData_99-13.csv', labelCol=9, labelName='polGe6',
+	addWrdCnt=False
+	)
+
+# runAnalysis(
+# 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
+# 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
+# 	labelFilename='mmpData_99-10.csv', labelCol=3, labelName='monarchy',
+# 	addWrdCnt=False
+# 	)
+
+# runAnalysis(
+# 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
+# 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
+# 	labelFilename='mmpData_99-10.csv', labelCol=4, labelName='military',
+# 	addWrdCnt=False
+# 	)
+
+# runAnalysis(
+# 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
+# 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
+# 	labelFilename='mmpData_99-10.csv', labelCol=5, labelName='party',
+# 	addWrdCnt=False
+# 	)

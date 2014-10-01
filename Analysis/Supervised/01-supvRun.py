@@ -89,12 +89,12 @@ yPredSVM = svmClass.predict(xTest)
 # yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
 
 # Word cloud for SVM (using top 10 terms per label)
-nTerms=10
-vocabulary = np.array([t for t, i in sorted(vectorizer.vocabulary_.iteritems(), key=itemgetter(1))])
-
-for i, label in enumerate(list(yTrain) + list(yTest)):
-	topN = np.argsort(svmClass.coef_[i])[-nTerms:]
-	print "\nThe top %d most informative features for topic code %s: \n%s" % (nTerms, label, " ".join(vocabulary[topN]))
+def infFeatures(vectorizer, model, n=20):
+    fNames = vectorizer.get_feature_names()
+    coefsFn = sorted(zip(model.coef_[0], fNames))
+    top = zip(coefsFn[:n], coefsFn[:-(n + 1):-1])
+    for (coef1, fn1), (coef2, fn2) in top:
+        print "\t%.4f\t%-15s\t\t%.4f\t%-15s" % (coef1, fn1, coef2, fn2)
 ##### 
 
 	##### Run logistic regression

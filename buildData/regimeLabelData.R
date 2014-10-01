@@ -95,13 +95,12 @@ demData$democ[
 		   demData$polity2==10 ) ] = 1
 
 ### Polity only dem data with different cuts
-demData$pol10=as.numeric(demData$polity2==10)
-demData$pol9=as.numeric(demData$polity2==9)
-demData$pol8=as.numeric(demData$polity2==8)
-demData$pol7=as.numeric(demData$polity2==7)
-demData$pol6=as.numeric(demData$polity2==6)
+demData$polGe10=as.numeric(demData$polity2==10)
+demData$polGe9=as.numeric(demData$polity2>=9)
+demData$polGe8=as.numeric(demData$polity2>=8)
+demData$polGe7=as.numeric(demData$polity2>=7)
+demData$polGe6=as.numeric(demData$polity2>=6)
 summary(demData)
-
 ##### End of Democracy Datasets #####
 #############################################
 
@@ -165,7 +164,7 @@ summaryBy(party ~ year, data=mmpData, FUN=mean)
 ##### Save #####
 setwd(paste0(baseData,'/regimeData'))
 write.csv( demData[,c('cname','year',
-	'democ')], 
+	names(demData)[6:ncol(demData)])], 
 	'demData_99-13.csv')
 write.csv( mmpData[,c('cname','year',
 	'monarchy','military','party')], 

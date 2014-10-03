@@ -33,7 +33,7 @@ addLabelFactor = function(varName, varLabel, var){
 makeTikz = function(plt, fname, path=pathTex, hgt=5, wdh=7, stnds=FALSE){
 	wd=getwd(); setwd(path)
 	tikz(file=fname, height=hgt, width=wdh, standAlone=stnds)
-	plt
+	print(plt)
 	dev.off(); setwd(wd)
 }
 

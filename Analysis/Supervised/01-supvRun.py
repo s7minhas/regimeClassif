@@ -48,11 +48,6 @@ def infFeatures(path, filename, vectorizer, model, n=20):
 		f.write(b'coef1,ftr1,coef2,ftr2\n')
 		np.savetxt(f,top, delimiter=',',fmt="%s")
 
-# trainFilename='train_99-08_Shr-FH_wdow0.json'; trainYr=1999; 
-# testFilename='test_09-13_Shr-FH_wdow0.json'; testYr=2009;
-# labelFilename='demData_99-13.csv'; labelCol=3; labelName='democ';
-# addWrdCnt=False
-
 def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 	labelFilename, labelCol, labelName,
 	addWrdCnt=False):

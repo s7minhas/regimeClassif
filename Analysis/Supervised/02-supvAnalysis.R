@@ -10,14 +10,32 @@ if(Sys.info()["user"]=="s7m"){
 }
 
 # Helpful libaries and functions
-require(reshape)
-require(ggplot2)
+library(reshape)
+library(ggplot2)
 theme_set(theme_bw())
-require(tikzDevice)
+library(tikzDevice)
 
 char=function(x){as.character(x)}
 num=function(x){as.numeric(char(x))}
 extractNum=function(x){num(strsplit(char(x),':')[[1]][2])}
+
+convNumDcol=function(data, vars){
+	for(var in vars){ data[,var]=num(data[,var]) }
+	return( data )
+}
+
+addLabelFactor = function(varName, varLabel, var){
+	var=char(var)
+	for(ii in 1:length(varName)){ var[var==varName[ii]]=varLabel[ii] }
+	return( factor(var, levels=varLabel) )
+}
+
+makeTikz = function(plt, fname, path=pathTex, hgt=5, wdh=7, stnds=FALSE){
+	wd=getwd(); setwd(path)
+	tikz(file=fname, height=hgt, width=wdh, standAlone=stnds)
+	plt
+	dev.off(); setwd(wd)
+}
 
 ##### Aggregate measures #####
 # Pulling data from textfiles
@@ -36,14 +54,13 @@ for(texfile in files){
 	variable=strsplit(texfile,'_')[[1]][1]
 	
 	# Pull out data
-	results=matrix(NA, nrow=2, ncol=6, dimnames=list(NULL,
+	results=matrix(NA, nrow=3, ncol=6, dimnames=list(NULL,
 	c('Variable','Method','Precision','Recall','Fscore','Accuracy')))
-# 	results[1,]=c( variable, 'Naive Bayes\\qquad\\qquad',
-# 		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )
-	results[1,]=c( variable, 'SVM',
+	results[1,]=c( variable, 'Naive Bayes',
+		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )
+	results[2,]=c( variable, 'SVM',
 		unlist(lapply(18:21, function(x) FUN=extractNum(text[x,]))) )
-# 	results[2,]=c(variable, 'Logit\\qquad\\qquad',
-	results[2,]=c(variable, 'Logit',                
+	results[3,]=c(variable, 'Logit',                
 	  unlist(lapply(28:31, function(x) FUN=extractNum(text[x,]))) )
   
 	# Organize
@@ -53,20 +70,14 @@ for(texfile in files){
 
 # Cleaning and melting data for GG
 supData=data.frame(supData)
-supData$Precision=num(supData$Precision); supData$Recall=num(supData$Recall)
-supData$Fscore=num(supData$Fscore); supData$Accuracy=num(supData$Accuracy)
+supData=convNumDcol(supData, names(supData)[3:ncol(supData)])
 ggData=melt(supData)
 
-ggData$variable=char(ggData$variable)
-ggData$variable[ggData$variable=='Fscore']='F-Score'
-ggData$variable=factor(ggData$variable, 
-	levels=c('Precision','Recall','F-Score','Accuracy'))
-
-ggData$Variable=char(ggData$Variable)
-ggData$Variable[ggData$Variable=='democ']='Democracy'
-ggData$Variable[ggData$Variable=='military']='Military'
-ggData$Variable[ggData$Variable=='monarchy']='Monarchy'
-ggData$Variable[ggData$Variable=='party']='One-Party'
+ggData = ggData[which(ggData$Method=='SVM' & ggData$Variable!='democ'),]
+ggData$variable=addLabelFactor(c('Precision','Recall','Fscore','Accuracy'),
+	c('Precision','Recall','F-Score','Accuracy'), ggData$variable)
+ggData$Variable = addLabelFactor(paste0('polGe',6:10),
+	c(paste0('Polity$>=$', 6:9), 'Polity$=$10'), ggData$Variable)
 
 # Plotting
 tmp=ggplot(ggData, aes(x=factor(Variable),y=value,fill=Method))
@@ -74,20 +85,15 @@ tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")
 tmp=tmp+xlab('')+ylab('')
 tmp=tmp+facet_wrap(~variable)
 tmp=tmp+theme(
-	legend.position='top', 
+	legend.position='none', axis.ticks=element_blank(), 
 	axis.text.x = element_text(angle = 45, hjust = 1),
-	axis.ticks=element_blank(), 
 	panel.grid.major=element_blank(), panel.grid.minor=element_blank()
 	)
 tmp
-# setwd(pathTex)
-# tikz(file='aggStats.tex', height=5, width=7, standAlone=F)
-# tmp
-# dev.off()
+makeTikz(tmp, 'aggStats.tex')
 ##### End Aggregate measures #####
 
 ##### Descriptive measures #####
-setwd(pathData)
 descData=NULL
 for(texfile in files){
 	# Open file
@@ -106,34 +112,25 @@ for(texfile in files){
 
 # Cleaning and melting data for GG
 descData=data.frame(descData)
-descData$Train=num(descData$Train); descData$Test=num(descData$Test)
+descData=convNumDcol(descData, c('Train', 'Test'))
 ggData=melt(descData)
 
-ggData$Variable=char(ggData$Variable)
-ggData$Variable[ggData$Variable=='democ']='Democracy'
-ggData$Variable[ggData$Variable=='military']='Military'
-ggData$Variable[ggData$Variable=='monarchy']='Monarchy'
-ggData$Variable[ggData$Variable=='party']='One-Party'
-
-ggData$variable=char(ggData$variable)
-ggData$variable[ggData$variable=='Train']='Train\\qquad\\qquad'
-ggData$variable=factor(ggData$variable, 
-	levels=c('Train\\qquad\\qquad','Test'))
+ggData = ggData[which(ggData$Variable!='democ'),]
+ggData$Variable = addLabelFactor(paste0('polGe',6:10),
+	c(paste0('Polity$>=$', 6:9), 'Polity$=$10'), ggData$Variable)
+ggData$variable = addLabelFactor(c('Train', 'Test'), 
+	c('Train\\qquad\\qquad', 'Test'), ggData$variable)
 
 # Plotting 
 tmp=ggplot(ggData, aes(x=Variable, y=value, fill=variable))
 tmp=tmp+geom_bar(position="dodge",stat="identity")+scale_fill_grey("")
 tmp=tmp+xlab('')+ylab('Proportion of Cases')
 tmp=tmp+theme(
-	legend.position='top', 
+	legend.position='top', axis.ticks=element_blank(), 
 	axis.text.x = element_text(angle = 45, hjust = 1),
-	axis.ticks=element_blank(), 
 	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),
 	panel.border = element_blank(), axis.line = element_line(color = 'black')
 	)
 tmp
-setwd(pathTex)
-tikz(file='descStats.tex', height=5, width=7, standAlone=F)
-tmp
-dev.off()
+makeTikz(tmp, 'descStats.tex')
 ##### End Descriptive measures #####

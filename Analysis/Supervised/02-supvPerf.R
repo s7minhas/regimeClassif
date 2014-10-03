@@ -77,7 +77,7 @@ ggData = ggData[which(ggData$Method=='SVM' & ggData$Variable %in% paste0('polGe'
 ggData$variable=addLabelFactor(c('Precision','Recall','Fscore','Accuracy'),
 	c('Precision','Recall','F-Score','Accuracy'), ggData$variable)
 ggData$Variable = addLabelFactor(paste0('polGe',7:10),
-	c(paste0('Polity$>=$', 7:9), 'Polity$=$10'), ggData$Variable)
+	c(paste0('Polity$\\geq$', 7:9), 'Polity$=$10'), ggData$Variable)
 
 # Plotting
 tmp=ggplot(ggData, aes(x=factor(Variable),y=value,fill=Method))
@@ -117,7 +117,7 @@ ggData=melt(descData)
 
 ggData = ggData[which(ggData$Variable %in% paste0('polGe',7:10)),]
 ggData$Variable = addLabelFactor(paste0('polGe',7:10),
-	c(paste0('Polity$>=$', 7:9), 'Polity$=$10'), ggData$Variable)
+	c(paste0('Polity$\\geq$', 7:9), 'Polity$=$10'), ggData$Variable)
 ggData$variable = addLabelFactor(c('Train', 'Test'), 
 	c('Train\\qquad\\qquad', 'Test'), ggData$variable)
 

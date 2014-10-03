@@ -49,6 +49,15 @@ addLabelFactor = function(varName, varLabel, var){
 	return( factor(var, levels=varLabel) )
 }
 
+getPropCases=function(labels, values){
+	propData=data.frame(tapply(values,labels,FUN=mean),sort(unique(labels)))
+	colnames(propData)=c('actual','var')
+	if(sum(rownames(propData)!=propData$var)>0){print("d'oh")}
+	propData$var = addLabelFactor(paste0('polGe',7:10),
+		c(paste0('Polity$\\geq$', 7:9), 'Polity$=$10'),propData$var)
+	propData
+}
+
 buildDist = function(listData, year='All', var='probSVM', tikzMake=TRUE){
 	data=lapply(listData, function(x){ y=x[,c('year', var)]; y$var=names(x)[4]; y } )
 	data=do.call('rbind', data)
@@ -56,8 +65,9 @@ buildDist = function(listData, year='All', var='probSVM', tikzMake=TRUE){
 	data$var = addLabelFactor(paste0('polGe',7:10),
 		c(paste0('Polity$\\geq$', 7:9), 'Polity$=$10'), data$var)
 	tmp = ggplot(data, aes_string(x=var))
-	tmp = tmp + geom_histogram(color='grey') + facet_wrap(~var)
-	tmp = tmp + xlab('Estimated Probability') + ylab('Frequency')
+	tmp = tmp + geom_histogram(color='grey',aes(y=..count../sum(..count..)))
+	tmp = tmp + facet_wrap(~var) 
+	tmp = tmp + xlab('Estimated Probability') + ylab('Proportion')
 	tmp = tmp + scale_x_continuous(breaks=seq(0,1,.25),limits=c(0,1))
 	tmp=tmp+theme(
 		legend.position='top', axis.ticks=element_blank(), 
@@ -114,6 +124,25 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMak
 # Pulling data from textfiles
 setwd(pathData)
 predData=lapply(paste0(c('polGe'),7:10,'_train99-08_test09-13.csv'),cleanData)
+
+# Distribution of actual data
+actData=lapply(predData, function(x){ y=x[,c(2,4)]; y$var=names(x)[4]; y } )
+actData=lapply(actData, function(x){ names(x)[2]='actual'; x })
+actData=do.call('rbind', actData)
+actData=actData[which(actData$year==2012),]
+ggData=getPropCases(actData$var, actData$actual)
+
+tmp=ggplot(ggData, aes(x=var, y=actual))
+tmp=tmp+geom_bar(position="dodge",stat='identity')+scale_fill_grey("")
+tmp=tmp+xlab('')+ylab('Proportion of Positives')
+tmp=tmp+theme(
+	legend.position='top', axis.ticks=element_blank(), 
+	axis.text.x = element_text(angle = 45, hjust = 1),
+	panel.grid.major=element_blank(), panel.grid.minor=element_blank(),
+	panel.border = element_blank(), axis.line = element_line(color = 'black')
+	)
+tmp
+makePlot(tmp, 'polStats')
 
 # Distribution of predictions
 buildDist(predData, year=2012, tikzMake=TRUE)

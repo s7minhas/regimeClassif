@@ -43,18 +43,27 @@ makePlot = function(plt, fname, path=pathTex, hgt=5, wdh=7, tex=TRUE, stnds=FALS
 	dev.off(); setwd(wd)
 }
 
-buildDist = function(data, year='All', var='probSVM', tikzMake=TRUE){
+addLabelFactor = function(varName, varLabel, var){
+	var=char(var)
+	for(ii in 1:length(varName)){ var[var==varName[ii]]=varLabel[ii] }
+	return( factor(var, levels=varLabel) )
+}
+
+buildDist = function(listData, year='All', var='probSVM', tikzMake=TRUE){
+	data=lapply(listData, function(x){ y=x[,c('year', var)]; y$var=names(x)[4]; y } )
+	data=do.call('rbind', data)
 	if(year!='All'){ data=data[which(data$year==year),] }
+	data$var = addLabelFactor(paste0('polGe',7:10),
+		c(paste0('Polity$\\geq$', 7:9), 'Polity$=$10'), data$var)
 	tmp = ggplot(data, aes_string(x=var))
-	tmp = tmp + geom_histogram(color='grey')
+	tmp = tmp + geom_histogram(color='grey') + facet_wrap(~var)
 	tmp = tmp + xlab('Estimated Probability') + ylab('Frequency')
 	tmp = tmp + scale_x_continuous(breaks=seq(0,1,.25),limits=c(0,1))
 	tmp=tmp+theme(
 		legend.position='top', axis.ticks=element_blank(), 
-		panel.grid.major=element_blank(), panel.grid.minor=element_blank(),
-		panel.border = element_blank(), axis.line = element_line(color = 'black'))	
+		panel.grid.major=element_blank(), panel.grid.minor=element_blank() )	
 	if(tikzMake){ 
-		filename=paste(names(data)[4],year,'bar',sep='_')
+		filename=paste0('probDist_',year)
 		makePlot(tmp, filename) 
 	} else {
 		tmp
@@ -63,7 +72,7 @@ buildDist = function(data, year='All', var='probSVM', tikzMake=TRUE){
 
 sepPlots = function(data, prob, true, tikzMake=TRUE, 
 	sname=paste0(names(data)[4],'_sep'), w=7,h=3, xlabel='', title='', 
-	c0=rgb(189, 201, 225,maxColorValue=255), c1=rgb(4, 90, 141,maxColorValue=255)){
+	c0=brewer.pal(9,'Blues')[3], c1=brewer.pal(9,'Blues')[9]){
 	if(tikzMake){
 		makePlot(plt=separationplot(data[,prob], data[,true], type = "rect", lwd1 = 3,lwd=2,
 			col0 = c0, col1 = c1, xlab = xlabel, heading = title, newplot=!tikzMake),
@@ -95,7 +104,7 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMak
 		panel.border=element_blank())
 	if(pdfMake){ 
 		filename=paste(names(data)[4],year,'map',sep='_')
-		makePlot(tmp, filename, hgt=8, wdh=12, pdf=TRUE) 
+		makePlot(tmp, filename, hgt=4, wdh=6, pdf=TRUE) 
 	} else {
 		tmp
 	}
@@ -104,10 +113,10 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMak
 ##### Analyzing predictions #####
 # Pulling data from textfiles
 setwd(pathData)
-predData=lapply(paste0(c('polGe'),6:10,'_train99-08_test09-13.csv'),cleanData)
+predData=lapply(paste0(c('polGe'),7:10,'_train99-08_test09-13.csv'),cleanData)
 
 # Distribution of predictions
-lapply(predData, function(x) buildDist(data=x, year=2012))
+buildDist(predData, year=2012, tikzMake=TRUE)
 
 # Separation plots
 lapply(predData, function(x) sepPlots(x, 'probSVM', 4, TRUE))

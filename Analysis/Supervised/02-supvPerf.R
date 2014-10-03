@@ -73,11 +73,11 @@ supData=data.frame(supData)
 supData=convNumDcol(supData, names(supData)[3:ncol(supData)])
 ggData=melt(supData)
 
-ggData = ggData[which(ggData$Method=='SVM' & ggData$Variable!='democ'),]
+ggData = ggData[which(ggData$Method=='SVM' & ggData$Variable %in% paste0('polGe',7:10)),]
 ggData$variable=addLabelFactor(c('Precision','Recall','Fscore','Accuracy'),
 	c('Precision','Recall','F-Score','Accuracy'), ggData$variable)
-ggData$Variable = addLabelFactor(paste0('polGe',6:10),
-	c(paste0('Polity$>=$', 6:9), 'Polity$=$10'), ggData$Variable)
+ggData$Variable = addLabelFactor(paste0('polGe',7:10),
+	c(paste0('Polity$>=$', 7:9), 'Polity$=$10'), ggData$Variable)
 
 # Plotting
 tmp=ggplot(ggData, aes(x=factor(Variable),y=value,fill=Method))
@@ -115,9 +115,9 @@ descData=data.frame(descData)
 descData=convNumDcol(descData, c('Train', 'Test'))
 ggData=melt(descData)
 
-ggData = ggData[which(ggData$Variable!='democ'),]
-ggData$Variable = addLabelFactor(paste0('polGe',6:10),
-	c(paste0('Polity$>=$', 6:9), 'Polity$=$10'), ggData$Variable)
+ggData = ggData[which(ggData$Variable %in% paste0('polGe',7:10)),]
+ggData$Variable = addLabelFactor(paste0('polGe',7:10),
+	c(paste0('Polity$>=$', 7:9), 'Polity$=$10'), ggData$Variable)
 ggData$variable = addLabelFactor(c('Train', 'Test'), 
 	c('Train\\qquad\\qquad', 'Test'), ggData$variable)
 

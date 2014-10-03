@@ -1,0 +1,161 @@
+%!TEX TS-program = xelatex
+% NOTE: as of 17 Sept 2012, this compiles in xelatex
+
+\documentclass[10pt]{beamer}
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd{\slideentry}{\ifnum#2>0}{\ifnum2>0}{}{\@error{unable to patch}}
+\makeatother
+
+\usetheme{Frankfurt}
+
+%\setbeamertemplate{footline}[page number]
+%\setbeamercovered{transparent}
+\setbeamercovered{invisible}
+% To remove the navigation symbols from 
+% the bottom of slides%
+\setbeamertemplate{navigation symbols}{} 
+%\setbeamercovered{transparent}
+%\usecolortheme{albatross}
+%\usecolortheme{beetle}
+%\usecolortheme{crane}
+%\usecolortheme{dove}
+%\usecolortheme{fly}
+%\usecolortheme{seagull}
+%\usecolortheme{wolverine}
+%\usecolortheme{beaver} % I like this one
+%
+\usepackage{coordsys} % for number lines
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{caption}
+\usepackage{subfig}
+\usepackage{tikz}
+%\usepackage{bm}         % For typesetting bold math (not \mathbold)
+%\logo{\includegraphics[height=0.6cm]{yourlogo.eps}}
+%
+
+% font customization
+% \usepackage{mathspec}
+% \usepackage{xunicode}
+% \usepackage{xltxtra}
+% \setmainfont{Gill Sans}
+% \setmathsfont(Digits,Latin,Greek){Gill Sans}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[Regime Classification \hspace{14em} \insertframenumber/
+\inserttotalframenumber]{Probabilistic Measures of \\ Regime Type}
+\author{Wardlab}
+\institute[Duke University]
+{
+{\emph{sfm12@duke.edu}} \\
+\medskip
+Duke University 
+}
+\date{\today}
+
+% \graphicspath{{/Users/janus829/Dropbox/Research/wardprojects/regimeclassif/}}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\titlepage
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Label Distributions}
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{1\textwidth}{!}{\input{descStats.tex}}	
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Distributions
+\begin{frame}
+\frametitle{Distribution of SVM Probabilities from 2012 Predictions}
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{1\textwidth}{!}{\input{probDist_2012.tex}}	
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Maps
+\begin{frame}
+\frametitle{Geographic Spread of 2012 Probability Distribution}
+
+\begin{figure}
+	\centering
+	\vspace{-7mm}
+	\begin{tabular}{ll}
+    \hspace{-7mm}	
+    \subfloat[][Polity$\geq$7]{
+		\includegraphics[width=0.5\textwidth]{polGe7_2012_map}
+        \label{fig:map7}} &
+    \subfloat[][Polity$\geq$8]{
+		\includegraphics[width=0.5\textwidth]{polGe8_2012_map}
+        \label{fig:map8}} \\
+	\hspace{-7mm}	
+    \subfloat[][Polity$\geq$9]{
+		\includegraphics[width=0.5\textwidth]{polGe9_2012_map}
+        \label{fig:map9}} &
+    \subfloat[][Polity$=$10]{
+		\includegraphics[width=0.5\textwidth]{polGe10_2012_map}
+        \label{fig:map10}}
+    \end{tabular}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}
+\frametitle{Out-of-Sample Aggregate Performance}
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{1\textwidth}{!}{\input{aggStats.tex}}	
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Separation plots
+\begin{frame}
+\frametitle{Out-of-Sample Separation Plots}
+
+\begin{figure}
+	\centering
+	\begin{tabular}{ll}
+    \hspace{-7mm}	
+    \subfloat[][Polity$\geq$7]{
+		\resizebox{0.5\textwidth}{!}{\input{polGe7_sep.tex}}	
+        \label{fig:sep7}} &
+    \subfloat[][Polity$\geq$8]{
+		\resizebox{0.5\textwidth}{!}{\input{polGe8_sep.tex}}	
+        \label{fig:sep8}} \\
+	\hspace{-7mm}	
+    \subfloat[][Polity$\geq$9]{
+		\resizebox{0.5\textwidth}{!}{\input{polGe9_sep.tex}}	
+        \label{fig:sep9}} &
+    \subfloat[][Polity$=$10]{
+		\resizebox{0.5\textwidth}{!}{\input{polGe10_sep.tex}}	
+        \label{fig:sep10}}
+    \end{tabular}
+\end{figure}
+
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{document}

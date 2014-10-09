@@ -1,4 +1,4 @@
-\beamer@endinputifotherversion {3.33pt}
+\beamer@endinputifotherversion {3.10pt}
 \beamer@sectionintoc {1}{Labeled Data}{2}{0}{1}
 \beamer@sectionintoc {2}{SVM Probability Distribution}{3}{0}{2}
 \beamer@sectionintoc {3}{SVM Performance}{5}{0}{3}

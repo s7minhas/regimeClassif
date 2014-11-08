@@ -2,13 +2,13 @@ rm(list=ls())
 if(Sys.info()["user"]=="janus829"){
 	pathOther='~/Dropbox/Research/WardProjects/regimeClassif/Data/Components'
 	pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-	pathTex='~/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'
+	pathTex='~/Desktop/Research/WardProjects/regimeClassif/Paper/graphics'
 }
 
 if(Sys.info()["user"]=="s7m"){
 	pathOther='~/Dropbox/Research/WardProjects/regimeClassif/Data/Components'
 	pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-	pathTex='~/Research/WardProjects/regimeClassif/Presentations/supvSummary'
+	pathTex='~/Research/WardProjects/regimeClassif/Presentations/graphics'
 }
 
 # Helpful libaries and functions
@@ -125,6 +125,11 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMak
 setwd(pathData)
 predData=lapply(paste0(c('polGe'),7:10,'_train99-08_test09-13.csv'),cleanData)
 
+# Get indiv probs and predicts for each case
+for(ii in rev(1:(length(predData)-1)) ){
+	predData[[ii]][,4:10] = predData[[ii]][,4:10] - predData[[ii+1]][,4:10]
+}
+
 # Distribution of actual data
 actData=lapply(predData, function(x){ y=x[,c(2,4)]; y$var=names(x)[4]; y } )
 actData=lapply(actData, function(x){ names(x)[2]='actual'; x })
@@ -152,3 +157,7 @@ lapply(predData, function(x) sepPlots(x, 'probSVM', 4, TRUE))
 
 # Map
 lapply(predData, function(x) buildMap(x, pdfMake=TRUE))
+
+##### Combining predictions #####
+# Calculate prob scores for pol=x
+

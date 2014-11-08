@@ -1,0 +1,199 @@
+%  Latex Version of MADCOW paper with Jay Ulfelder, Shahryar Minhas, and MDW
+% 25 August 2014 version
+\documentclass[pdftex,12pt,fullpage,oneside]{amsart}
+\usepackage[top=1in,bottom=1in,left=1in,right=1in]{geometry}
+\usepackage{setspace}
+
+\usepackage[pdftex, hyperfootnotes=false, colorlinks=true, citecolor=black, linkcolor=black, urlcolor=black, breaklinks=true]{hyperref}
+\hypersetup{%
+    pdftitle={MADCOW},
+    pdfauthor={Jay Ulfelder, Shahryar Minhas, Michael D. Ward},
+    bookmarksnumbered=true,
+    citebordercolor={1 0 0},
+    }
+% change date format
+\usepackage{datetime}
+\newdateformat{mydate}{\THEDAY~\monthname[\THEMONTH] \THEYEAR}
+% better citation, set punctuation.
+\usepackage{natbib}
+\bibpunct{(}{)}{,}{a}{}{,}
+\usepackage{mathptmx}	% Times serif w. maths
+\usepackage[T1]{fontenc}
+% graphics
+\usepackage{graphicx}
+\usepackage{dcolumn}
+\usepackage{booktabs}
+\usepackage{rotating}
+\newcolumntype{d}{D{.}{.}{-1}}
+\usepackage[format=plain,justification=justified,labelfont=bf]{caption}
+\usepackage{subcaption}
+
+\graphicspath{{graphics/}}
+\usepackage[capposition=top]{floatrow}
+\urlstyle{same}             % URLs are formatted same as text.
+\usepackage[utf8]{inputenc}
+\parindent=1.3cm
+
+\title{Mining Texts to Efficiently Generate Global Data on Political Regime Types}
+\author{Jay Ulfelder, Shahryar Minhas, and Michael D. Ward}
+%\thanks{The research described in this report was sponsored by the Political Instability Task Force (PITF). The PITF is funded by the Central Intelligence Agency. The views expressed herein are the authors' alone and do not represent the views of the US Government. }
+ \date{Presented at the Annual Meeting of the American Political Science Association in Washington, DC. This research was funded in part by NSF Award 1259190, Collaborative Research: Automated Real-time Production of Political Indicators. We thank Philip A. Schrodt for helping to develop this research design and Alex Hanna for comments on an earlier version of this paper. All errors are our own.}
+\footskip = 30pt
+
+\begin{document}
+
+\maketitle
+
+\singlespacing
+\begin{abstract}
+We describe the design and results of an experiment in using text-mining and machine-learning techniques to generate annual measures of national political regime types for all countries worldwide. Valid and reliable measures of country's forms of national government are essential to cross-national and dynamic analysis of many phenomena of great interest to political scientists, including civil war, interstate war, democratization, and coups d'\'{e}tat. Unfortunately, traditional measures of regime type are very expensive to produce, and observations for ambiguous cases are often sharply contested. Our project explores the ability of text-mining and machine-learning tools to generate useful measures of regime type. These measures would explicitly represent uncertainty about cases' membership in various categories and that could be produced and routinely updated at much lower cost than human-coded data. The initial results of our experiment are promising.
+\end{abstract} 
+
+\doublespacing
+
+\section{Introduction}
+
+Time-series cross-sectional data on countries' national political regime types feature prominently in virtually all research on the antecedents and causes of political development and conflict. In the past 25 years, conceptualization and measurement of democracy has become one of a few dominant themes in the subfield of comparative politics, and newer work on variations in forms of autocracy is growing in prominence as well. What's more, these debates over concepts and measures are not simply theoretical; they can have significant effects on research that shapes policy and advocacy as well. For example, myriad studies have shown that national regime type shapes countries' propensity to go to war with each other or their own citizens \cite{hegre:2014}; work by the Political Instability Task Force has shown regime type to be the single most-powerful predictor of onsets of national political crises such as civil wars, coups, and state collapse \cite{goldstone2010global}; and work by numerous scholars suggests that the effects of events like sanctions \cite{geddes:2002,escriba-foch:wright:2010} and social unrest \cite{ulfelder:2005} on the likelihood of authoritarian regime breakdown are conditional on formal and informal institutional features of those regimes.
+
+Unfortunately, existing TSCS data sets generally represent regime types or their component elements with categorical measures that gloss over significant uncertainty about the underlying concepts and their instantiations in specific cases. Scholars have developed various typologies that are grounded in sound theory \cite{boix:etal:2012,cheibub:etal:2010,geddes:1999,hadenius:teorell:2007,marshall:jaggers:2002}. Data sets that operationalize those typologies often agree on the basic categories and main contours of many cases. In practice, though, coding decisions about specific cases can vary significantly and are sometimes sharply contested. For example, all of the data sets that distinguish categorically between democracies and dictatorships agree that Norway is the former and Saudi Arabia the latter, but they diverge on the classification of countries like Russia, Venezuela, and Pakistan. What's more, membership in this ``ambiguous'' set is correlated with many of the things that researchers use the regime-type data to study, so key findings and forecasts are likely to be sensitive to those choices \cite{casper:tufis:2003,wilson:2014}.
+
+The ambiguity of these foundational concepts and the difficulty of observing them in real-world cases combine to produce measurement error. This error can bias statistical estimates, and thus the inferences we draw from them. Findings from studies based on crisp-set, categorical representations of regime type may be sensitive to seemingly small variations in the coding of specific cases \citep{casper:tufis:2003}. Categorical representation of uncertain measures may also mask important features of the data, making it harder to find useful or interesting patterns in them.
+
+Of practical importance, the measures of regime type that are widely used today are expensive to produce. Polity IV is coded by hand, so the data set's producers must spend many hours locating and reviewing relevant documents for upwards of 160 countries \citep{marshall:jaggers:2002}. Freedom House's Freedom in the World depends on repeated surveys of a large number of subject-matter experts. The newly launched Varieties of Democracy project, or V-Dem, does the same \citep{coppedge:etal:2013}. Other widely cited data sets on national political regimes--including the Democracy and Dictatorship Dataset \citep{cheibub:etal:2010} and the Autocratic Regimes Dataset \citep{geddes:etal:2014} -- are not routinely updated, and the high cost of doing so appears to be one reason why. The Unified Democracy Scores (UDS) data set thoughtfully addresses the problem of uncertainty about one crucial regime concept \citep{pemstein:etal:2010}, but it is derived from, and therefore wholly dependent on, the human-coded data sets that are so labor intensive to produce.
+
+The project described in this paper explores ways to use text mining and other natural language processing techniques to generate measures of regime type, which have the added benefit of explicitly representing uncertainty about membership in categories of interest. By relying on texts that are routinely produced and publicly available, we expect to be able to generate probabilistic measures of regime type at much lower cost and, eventually, at much greater frequency. Tremendous growth in global reportage on democracy and human rights in the past 20 years has produced a massive corpus of texts on these topics that is ripe for content analysis. Concurrent improvements in computer software and hardware have made the process of analyzing large bodies of text much more efficient, and the field has matured with the development of a common set of methodologies with well-tested characteristics. Automated coding is completely transparent, so it avoids the unreproducible subjective elements of human coding. Once the source texts have been prepared, recoding to account for new theoretical or technological components can be done relatively quickly and efficiently. Last but not least, innovations in methods for content analysis are helping researchers use those tools to produce more interesting and more useful results, including a number of applications to political texts. These approaches are increasingly being used to generate political event data \cite{dorazio:etal:2014,king:lowe:2003,oconnor:etal:2013} and to measure things like political tensions \cite{chadefaux:2014}, partisan affiliation \citep{slapin:proksch:2010,yu:etal:2008}, and legislative agendas \citep{grimmer:2010}. To our knowledge, though, these techniques have not previously been applied to the task of measuring political regime types over time across many countries.
+
+We start by selecting a corpus of familiar and well-structured texts describing politics and human-rights practices each year in all countries worldwide: the Country Reports on Human Rights Practices published by the U.S. Department of State, and Freedom House's Freedom in the World reports. After pre-processing those texts in a few conventional ways, we dumped the two reports for each country-year into a single bag of words and used text mining to extract features from those bags in the form of vectorized tokens that may be grossly described as word counts. Next, we used those vectorized tokens as inputs to a series of binary classification models representing a few different ideal-typical regime types --democracy, military rule, one-party rule, and monarchy--as observed in few widely used, human-coded data sets. Finally, we applied those classification models to a test set of country-years held out at the start to assess the models' ability to classify regime types in cases they had not previously ``seen.''
+
+Our initial results demonstrate that this strategy works. Our classifiers perform well out of sample, achieving high or very high precision and recall scores in cross-validation on all four of the regime types we have tried to measure so far. The preliminary data produced by these classifiers do not appear to be as useful as we would like them to be, but we don't think that their flaws are a function of the research design. Instead, we think their limitations result primarily from the narrowness of the initial corpus and the strict rules we used to identify regime types in the data on which those classifiers were trained.
+
+\section{Research Design}
+
+For this project's initial iteration, we limited the corpus to annual reports available online from the U.S. Department of State and Freedom House. Both of these series of reports have structures that are explicitly similar and use equivalent concepts and language to describe political practices in the referent countries.
+
+As the State Department notes on its website, its human rights reports ``cover internationally recognized individual, civil, political, and worker rights, as set forth in the Universal Declaration of Human Rights and other international agreements.'' The annual production of State's human rights reports is mandated by law under the Foreign Assistance Act of 1961 and the Trade Act of 1974. All U.N. member states and other countries receiving U.S. assistance must be covered.
+
+In its Freedom in the World reports, the U.S.-based non-governmental organization Freedom House provides summary descriptions of all countries of the world and some disputed territories. Per its website, these descriptions are intended to capture the advance or decline of ``freedom'' in each polity, where the idea of freedom ``is grounded in basic standards of political rights and civil liberties, derived in large measure from relevant portions of the Universal Declaration of Human Rights.'' Freedom House is a non-governmental advocacy group that receives a substantial share of its funding from the U.S. government.
+
+We scraped the State Department's annual reports on countries' human rights practices from 1999 to 2013 and Freedom House's Freedom in the World reports from 1999 to 2014, which cover the period 1998-2013. These are all of the reports in the two series that are currently archived online on the source organizations' web sites.
+
+Once those documents had been ingested, we cleaned the texts and did some simple feature extraction. Specifically, we:
+
+\begin{itemize}
+	\item Removed numbers, punctuation, and stop words;
+	\item Removed proper names and acronyms;
+	\item Tokenized the results; and
+	\item Lemmatized the tokens to group together inflected forms.
+\end{itemize}
+
+Next, we calculated the tf-idf weight for each token and used these values as inputs to binary classification models designed to identify features associated with each of a few regime types suggested by prior theory.\footnote{We also tried using unsupervised LDA (topic modeling) to extract features from the text at this stage, but regime classification models trained on the posterior topic predictions from LDA did not perform as well as the ones trained on just the vectorized tokens, so we are focusing for now on the latter.}  Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. For our first pass at the problem, we focused on four regime types: (1) Democracy, (2) Military rule, (3) One-party rule, and (4) Monarchy.
+
+In principle, these categories are mutually exclusive. In practice, however, regime type is inherently uncertain, and any given regime may exhibit features of more than one of these ideal types at any time. Consistent with that idea, we decided to treat each of these archetypes not as different sections of a single plane but rather as distinct dimensions in a multi-dimensional regime space, and therefore train separate models for each category.
+
+To train our regime classification models, we used pre-existing, human-coded data on national political regimes from a few widely-used sources: Polity; Freedom House; Geddes, Wright, and Franz (2014); and Hadenius and Teorell (2007; see also Wahman Teorell and Hadenius 2013). \nocite* For our democracy model, we created a binary indicator that equals one if that country-year's Polity score is ten and zero otherwise. For our models of military rule, one-party rule, and monarchy, we coded our binary indicators as one if both GWF and HT identified a country-year as belonging to that category and only that category and zero otherwise. In other words, we only considered a regime to be sufficiently representative of each of those authoritarian archetypes if both sources agreed that it belonged in that category and only that category. The same logic drove our decision to set the standard for our democracy model so high. Conceptually, we want to learn from the cases of whose status we are confident and then leave it to the models to tell us how closely the more ambiguous cases approximate those archetypes.
+
+To objectively estimate the performance of these classification models, we need to cross-validate them -- in other words, to apply them to a test set they haven't seen before and compare the resulting estimates to observed values. To do this, we split our data into training and test sets by year. For the democracy model, we have ``ground truth'' data from Polity through 2013, so we made 1999-2008 (n = 1,557) the training set and 2009-2013 (n = 707) the test set. For the three authoritarian archetypes, we only have ``ground truth'' data from GWF and HT through 2010, so we made 1999-2006 (n = 1,138) the training set and 2007-2010 (n = 583) the test set. 
+
+We tried three binary classifiers, two that are widely used in the machine learning community--Bernoulli na\:{a}ve Bayes and support vector machines (SVM)--and one parametric statistical model, logistic regression (logit). Between the two machine learning approaches, SVM consistently outperformed na\:{a}ve  Bayes, so we only discuss SVM and logit here. 
+
+\section{Methods}
+
+Add description of SVM procedure...
+
+Separates hyperplane
+
+Footnote about trying a variety of other approaches...
+
+\section{Results}
+
+The histograms in Figures 1A and 1B, on the following two pages, summarize the distribution of the out-of-sample predicted probabilities from SVM and logistic regression, respectively, for each of the four regime types we have explored so far.  The plots for the SVM estimates show sharp differentiation among cases, especially for the three authoritarian dimensions. Nearly all cases score very close to 0 or 1, producing bimodal distributions with steep peaks and few observations in between them. By contrast, the plots for the predicted probabilities from logistic regression are all unimodal, with a peak close to 0, maximum values much lower than 1, and thicker tails than the SVM output. 
+
+If we compare these predicted probabilities to the observed values in the test set, we see that these classifiers are doing a very good job discriminating between 1s and 0s on the observed values for all four of the regime types. The column chart in Figure 2 summarizes the out-of-sample accuracy of SVM and logistic regression for each of the four types. SVM consistently outperforms logistic regression and produces extremely good results overall, albeit with some variation across the four types. For the three authoritarian types, precision (the proportion of cases classified as positive that actually belong there) was better than recall (the proportion of positive cases that were correctly classified), but that pattern is reversed for democracy. Logistic regression does noticeably poorer for all four types than SVM, but still not terribly.
+
+\begin{figure}[!h]
+\includegraphics[]{figure1a}
+\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+\end{figure}
+
+ \begin{figure}[!h]
+\includegraphics[]{figure1b}
+\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Logistic Regression Models}
+\end{figure}
+
+Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in Figure 3 reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
+
+\begin{figure}
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{sepdem}
+                \caption{Democracy}
+                \label{fig:sepdem}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{sepmonarchy}
+                \caption{Monarchy}
+                \label{fig:sepmon}
+        \end{subfigure}%
+        \\
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{sepmilrule}
+                \caption{Military Rule}
+                \label{fig:sepmilrule}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{seponeparty}
+                \caption{One Party Rule}
+                \label{fig:seponeparty}
+        \end{subfigure}%
+\caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Four Regime Types}
+\end{figure}
+
+Figure 4, on the following two pages, uses heat maps to show variance in the SVM confidence scores from the most recent year available for all four regime dimensions: 2012 for democracy and 2010 for the three authoritarian forms. These confidence scores indicate the distance and direction of each case from the hyperplane used to classify the set of observations into 0s and 1s. The probabilities used in the earlier summaries are derived from them, but we choose to map the raw confidence scores because they exhibit more variance than the probabilities and are therefore easier to visualize in this form.
+
+\begin{figure}[!t]
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{map1}
+                \caption{Democracy}
+                \label{fig:mapdem}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{map2}
+                \caption{Monarchy}
+                \label{fig:mapmon}
+        \end{subfigure}%
+        \\
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{map3}
+                \caption{Military Rule}
+                \label{fig:mapmilrule}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.5\textwidth}
+                \includegraphics[width=\textwidth]{map4}
+                \caption{One Party Rule}
+                \label{fig:maponeparty}
+        \end{subfigure}%
+\caption{Heat Maps of Out-of-Sample Confidence Scores from Support Vector Machines (SVM) of Four Regime Types.}
+\end{figure}
+
+On the whole, cases fall out as we would expect them to. The results seem valid on their face. For example, the democracy classifier confidently identifies Western Europe, Canada, Australia, and New Zealand as democracies; shows interesting variations in Eastern Europe and Latin America; and confidently identifies nearly all of the rest of the world as non-democracies (defined for this task as a Polity score of 10). Meanwhile, the monarchy model correctly identifies most of the countries of the Arabian Peninsula, Jordan, and Morocco as monarchies and the rest of the world as not. The military rule classifier sees Myanmar, Pakistan, and (more surprisingly) Algeria as likely cases in 2010, and is less certain about the absence of military rule in several West African and Middle Eastern countries than in the rest of the world. The map of results from the one-party rule classifier is probably the least informative because it is missing data for a few critical cases, including China and North Korea. Still, it seems to do well with the rest of the world, including confident identification of one-party regimes in Syria, Vietnam, Laos, Turkmenistan, and Uzbekistan and midrange values for Iran, Kazakhstan, Libya, Eritrea, and Myanmar.
+
+\section{Conclusion}
+
+The results described here demonstrate that it is possible to generate useful fuzzy-set measures of political regime type from publicly available texts at relatively low cost. An initial application using features derived from a small and corpus produced out-of-sample estimates that closely match observed data on several very different regime types.
+
+The out-of-sample classification accuracy of our models is very good, but that doesn't mean we are satisfied with the output and ready to move to data production. We have two main concerns about the results of this initial implementation. First, the texts included in the relatively small corpus we have assembled so far only cover a narrow set of human-rights practices and political procedures. These practices and procedures are all fundamental to how we conceive and observe political regime type, but they aren't the only things that are.
+
+To address this issue in future iterations, we plan to expand the corpus to include annual or occasional reports that discuss a broader range of features in each country's national politics. Eventually, we hope to add news stories to the mix. If we can develop models that perform well on an amalgamation of occasional reports and news stories, we will be able to implement this process in near-real time, constantly updating probabilistic measures of regime type for all countries of the world at very low cost.
+
+Second, the stringent criteria we used to observe each regime type in constructing the binary indicators on which the classifiers are trained also appear to be shaping the results in undesirable ways. We started this project with a belief that membership in these regime categories is inherently fuzzy, and we are trying to build a process that uses text mining to estimate degrees of membership in those fuzzy sets. If set membership is inherently ambiguous in a fair number of cases, then our approximation of a membership function should be bimodal, but not too neatly so. Most cases most of the time can be placed confidently at one end of the range of degrees of membership or the other, but there is considerable uncertainty at any moment in time about a non-trivial number of cases, and our estimates should reflect that fact.
+
+If that's right, then our initial estimates are probably too tidy, and we suspect that the stringent operationalization of each regime type in the training data is partly to blame.  To address this problem in future iterations, we hope to experiment with two alternatives. First, we may lower the bar for observed membership in each category in the training data. For example, we could lower the Polity threshold for observing democracy from 10 to 8 or 6. For the authoritarian regime types, we could include hybrid cases instead of restricting the training data to instances where both source data sets concur on pure types. For example, instead of only coding regimes as 1 for military rule when both GWF and HT agree that a case belongs in that set and only that set, we could code regimes as 1 on military rule when either source identifies them as having that feature, whether pure or hybrid.
+
+Second and more ambitious, we could use Bayesian measurement error models to derive continuous measures of cases' degree of membership in each regime category from multiple data sets and then use those continuous measures as the targets in our supervised learning stage. This is the technique that \citet{pemstein:etal:2010} use to derive the Unified Democracy Scores from scalar measures of regime type, but it can be generalized to situations in which the observations are categorical or binary as well. In the special case that we have no prior belief about regime type independent of the observed data and we believe the sources are equally reliable, we could simply use the unweighted average of the observed ``votes.'' By making uncertainty about category membership more explicit in the training data, we should be able to develop models that are (properly) less confident in their readings of the relevant texts as well.
+
+Those are the main ways we plan to try to improve the work described here, but they aren't the only ones. In addition to the machine learning and logistic regression models that we have already used, we plan to try supervised topic modeling via LDA as another classification strategy for all of the regime types. Last but not least, we also plan soon to add two other regime types to the mix--personal rule and collapsed states--and then to replicate the process described here on them.
+
+\bibliographystyle{apsr}
+\bibliography{MADCOWregime}
+
+\end{document}
+\bye

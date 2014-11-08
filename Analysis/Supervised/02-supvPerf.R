@@ -41,7 +41,8 @@ makeTikz = function(plt, fname, path=pathTex, hgt=5, wdh=7, stnds=FALSE){
 # Pulling data from textfiles
 setwd(pathData)
 files=NULL
-for(f in list.files()){
+dirFiles=list.files()[grepl('polGe',list.files())]
+for(f in dirFiles){
 	if(substr(f,nchar(f)-3,nchar(f))=='.txt'){
 		files=append(files,f)
 	}

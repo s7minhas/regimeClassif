@@ -48,8 +48,20 @@ def runLDAs(filename, nTopics=12, save=True,
 
 		# incorporate varying grams
 		if gram>1:
-			reports = [' '.join(x) for x in reports]
+			import nltk
+			from nltk.collocations import *
+			if gram==2:
+				ngramMeasures = nltk.collocations.BigramAssocMeasures()
+				ngramFinder = BigramCollocationFinder
+			if gram==3:
+				ngramMeasures = nltk.collocations.TrigramAssocMeasures()
+				ngramFinder = TrigramCollocationFinder
 			
+			repGrams = [ngramFinder.from_words(story) for story in reports]
+			grams = [x.ngram_fd.items() for x in repGrams]
+
+
+
 
 
 

@@ -46,6 +46,13 @@ def runLDAs(filename, nTopics=12, save=True,
 		if removeWords:
 			reports = remWrd(reports, rWrds, keepWrds=False)
 
+		# incorporate varying grams
+		if gram>1:
+			reports = [' '.join(x) for x in reports]
+			
+
+
+
 		# Setting up for LDA
 		dictionary = corpora.Dictionary(reports)
 		corpus = [dictionary.doc2bow(story) for story in reports]
@@ -189,8 +196,13 @@ def saveDictToCSV(filename, data, keys):
 	f.close()
 
 ### Running code
-baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
-baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+if os.environ.get('USER')=='janus829':
+	baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
+	baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+
+if os.environ.get('USER')=='s7m':
+	baseDrop='/Users/s7m/Dropbox/Research/WardProjects/regimeClassif'
+	baseGit='/Users/s7m/Research/WardProjects/regimeClassif'
 
 uselessWrds=[]
 numTopics=3

@@ -8,12 +8,15 @@ import csv
 from gensim import corpora, models, similarities
 from operator import itemgetter
 import datetime
+import nltk
+from nltk.collocations import *
 
 #### Master function
-def runLDAs(filename, nTopics=12, save=True, 
+def runLDAs(filename, gram=3, nTopics=3, save=True, 
 	addClean=False, removeWords=False, rWrds=[]):
 	"""Runs LDA, saves results, and contains 
 	options to  perform additional cleaning """
+
 	os.chdir(baseDrop+'/Data/forLDA')
 	print '\nLoading data...\n'
 	data=loadJSON(filename)
@@ -48,22 +51,14 @@ def runLDAs(filename, nTopics=12, save=True,
 
 		# incorporate varying grams
 		if gram>1:
-			import nltk
-			from nltk.collocations import *
 			if gram==2:
 				ngramMeasures = nltk.collocations.BigramAssocMeasures()
 				ngramFinder = BigramCollocationFinder
 			if gram==3:
 				ngramMeasures = nltk.collocations.TrigramAssocMeasures()
 				ngramFinder = TrigramCollocationFinder
-			
-			repGrams = [ngramFinder.from_words(story) for story in reports]
-			grams = [x.ngram_fd.items() for x in repGrams]
 
-
-
-
-
+			reports = [ngramGet(story, ngramFinder) for story in reports]
 
 		# Setting up for LDA
 		dictionary = corpora.Dictionary(reports)
@@ -195,6 +190,13 @@ def infqWrdStries(stories):
 	print('\t\t\tRemoved words occurring infrequently across stories...')
 	return storiesFin
 
+def ngramGet(story, gramFinder):
+	ngramObj = gramFinder.from_words(story)
+	
+	ngramItems = ngramObj.ngram_fd.items()
+	ngrams = [' '.join(x[0]) for x in ngramItems]
+	return ngrams
+
 def cleanName(name, add, ext='.csv'):
 	name2=re.sub('.json',ext,name)
 	return re.sub('data',add,name2)
@@ -217,44 +219,20 @@ if os.environ.get('USER')=='s7m':
 	baseGit='/Users/s7m/Research/WardProjects/regimeClassif'
 
 uselessWrds=[]
-numTopics=3
+numTopics=10
 
-runLDAs(filename='data_99-12_Shr-FH_wdow0.json', 
-	nTopics=numTopics, 
-	save=True, addClean=False, 
-	removeWords=False, rWrds=uselessWrds)
+runLDAs(filename='data_99-12_Shr-FH_wdow0.json')
 
-runLDAs(filename='data_02-12_All_wdow0.json', 
-	nTopics=numTopics, 
-	save=True, addClean=False, 
-	removeWords=False, rWrds=uselessWrds)
+runLDAs(filename='data_02-12_All_wdow0.json')
 
-runLDAs(filename='data_99-12_Shr-FH_wdow1.json', 
-	nTopics=numTopics, 
-	save=True, addClean=False, 
-	removeWords=False, rWrds=uselessWrds)
+runLDAs(filename='data_99-12_Shr-FH_wdow1.json')
 
-runLDAs(filename='data_02-12_All_wdow1.json', 
-	nTopics=numTopics, 
-	save=True, addClean=False, 
-	removeWords=False, rWrds=uselessWrds)
+runLDAs(filename='data_02-12_All_wdow1.json')
 
-runLDAs(filename='data_99-12_Shr-FH_wdow2.json', 
-	nTopics=numTopics, 
-	save=True, addClean=False, 
-	removeWords=False, rWrds=uselessWrds)
+runLDAs(filename='data_99-12_Shr-FH_wdow2.json')
 
-runLDAs(filename='data_02-12_All_wdow2.json', 
-	nTopics=numTopics, 
-	save=True, addClean=False, 
-	removeWords=False, rWrds=uselessWrds)
+runLDAs(filename='data_02-12_All_wdow2.json')
 
-runLDAs(filename='data_99-12_Shr-FH_wdow3.json', 
-	nTopics=numTopics, 
-	save=True, addClean=False, 
-	removeWords=False, rWrds=uselessWrds)
+runLDAs(filename='data_99-12_Shr-FH_wdow3.json')
 
-runLDAs(filename='data_02-12_All_wdow3.json', 
-	nTopics=numTopics, 
-	save=True, addClean=False, 
-	removeWords=False, rWrds=uselessWrds)
+runLDAs(filename='data_02-12_All_wdow3.json')

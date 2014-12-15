@@ -48,9 +48,8 @@ def infFeatures(path, filename, vectorizer, model, n=20):
 		f.write(b'coef1,ftr1,coef2,ftr2\n')
 		np.savetxt(f,top, delimiter=',',fmt="%s")
 
-def runAnalysis(trainFilename, trainYr, testFilename, testYr,
-	labelFilename, labelCol, labelName,
-	addWrdCnt=False):
+def runAnalysis(trainFilename, testFilename, labelFilename,
+	labelCol, labelName, grams=(2,2), addWrdCnt=False):
 
 	#### Load data
 	trainData=buildData(
@@ -64,7 +63,7 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 
 	#### Divide into train and test and convert
 	# to appropriate format
-	vectorizer = TfidfVectorizer()
+	vectorizer = TfidfVectorizer(ngram_range=grams)
 
 	xTrain=vectorizer.fit_transform( trainData[:,1] )
 	wTrain=csr_matrix( np.array( list(trainData[:,2]) ) ).transpose()
@@ -165,64 +164,64 @@ def runAnalysis(trainFilename, trainYr, testFilename, testYr,
 #####
 
 runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
-	labelFilename='demData_99-13.csv', labelCol=4, labelName='democ',
-	addWrdCnt=False
+	trainFilename='train_99-08_Shr-FH_wdow0.json',
+	testFilename='test_09-13_Shr-FH_wdow0.json',
+	labelFilename='demData_99-13.csv', 
+	labelCol=4, labelName='democ'
 	)
 
 runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
-	labelFilename='demData_99-13.csv', labelCol=5, labelName='polGe10',
-	addWrdCnt=False
+	trainFilename='train_99-08_Shr-FH_wdow0.json',
+	testFilename='test_09-13_Shr-FH_wdow0.json',
+	labelFilename='demData_99-13.csv', 
+	labelCol=5, labelName='polGe10'
 	)
 
 runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
-	labelFilename='demData_99-13.csv', labelCol=6, labelName='polGe9',
-	addWrdCnt=False
+	trainFilename='train_99-08_Shr-FH_wdow0.json',
+	testFilename='test_09-13_Shr-FH_wdow0.json',
+	labelFilename='demData_99-13.csv', 
+	labelCol=6, labelName='polGe9'
 	)
 
 runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
-	labelFilename='demData_99-13.csv', labelCol=7, labelName='polGe8',
-	addWrdCnt=False
+	trainFilename='train_99-08_Shr-FH_wdow0.json',
+	testFilename='test_09-13_Shr-FH_wdow0.json',
+	labelFilename='demData_99-13.csv', 
+	labelCol=7, labelName='polGe8'
 	)
 
 runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
-	labelFilename='demData_99-13.csv', labelCol=8, labelName='polGe7',
-	addWrdCnt=False
+	trainFilename='train_99-08_Shr-FH_wdow0.json',
+	testFilename='test_09-13_Shr-FH_wdow0.json',
+	labelFilename='demData_99-13.csv', 
+	labelCol=8, labelName='polGe7'
 	)
 
 runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json', trainYr=1999, 
-	testFilename='test_09-13_Shr-FH_wdow0.json', testYr=2009,
-	labelFilename='demData_99-13.csv', labelCol=9, labelName='polGe6',
-	addWrdCnt=False
+	trainFilename='train_99-08_Shr-FH_wdow0.json',
+	testFilename='test_09-13_Shr-FH_wdow0.json',
+	labelFilename='demData_99-13.csv', 
+	labelCol=9, labelName='polGe6'
 	)
 
-# runAnalysis(
-# 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
-# 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
-# 	labelFilename='mmpData_99-10.csv', labelCol=3, labelName='monarchy',
-# 	addWrdCnt=False
-# 	)
+runAnalysis(
+	trainFilename='train_99-06_Shr-FH_wdow0.json',
+	testFilename='test_07-10_Shr-FH_wdow0.json',
+	labelFilename='mmpData_99-10.csv', 
+	testYr=2007, labelCol=3, labelName='monarchy'
+	)
 
-# runAnalysis(
-# 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
-# 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
-# 	labelFilename='mmpData_99-10.csv', labelCol=4, labelName='military',
-# 	addWrdCnt=False
-# 	)
+runAnalysis(
+	trainFilename='train_99-06_Shr-FH_wdow0.json',
+	testFilename='test_07-10_Shr-FH_wdow0.json',
+	labelFilename='mmpData_99-10.csv', 
+	testYr=2007, labelCol=4, labelName='military'
+	)
 
-# runAnalysis(
-# 	trainFilename='train_99-06_Shr-FH_wdow0.json', trainYr=1999, 
-# 	testFilename='test_07-10_Shr-FH_wdow0.json', testYr=2007,
-# 	labelFilename='mmpData_99-10.csv', labelCol=5, labelName='party',
-# 	addWrdCnt=False
-# 	)
+runAnalysis(
+	trainFilename='train_99-06_Shr-FH_wdow0.json',
+	testFilename='test_07-10_Shr-FH_wdow0.json',
+	labelFilename='mmpData_99-10.csv', 
+	testYr=2007, labelCol=5, labelName='party'
+	)

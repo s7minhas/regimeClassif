@@ -97,7 +97,7 @@ def runLDAs(filename, gram=3, nTopics=3, save=True,
 	
 	if save:
 		print('\t\tWriting results to CSV...')
-		os.chdir(baseDrop+'/Results')
+		os.chdir(baseDrop+'/Results/LDA')
 		TPCDAT=flatten(TPCDAT)
 		STRYDAT=flatten(STRYDAT)
 		saveDictToCSV( cleanName(filename, 'tpcs'), TPCDAT, 
@@ -192,7 +192,7 @@ def infqWrdStries(stories):
 
 def ngramGet(story, gramFinder):
 	ngramObj = gramFinder.from_words(story)
-	
+
 	ngramItems = ngramObj.ngram_fd.items()
 	ngrams = [' '.join(x[0]) for x in ngramItems]
 	return ngrams

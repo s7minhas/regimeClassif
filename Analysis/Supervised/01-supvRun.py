@@ -49,7 +49,8 @@ def infFeatures(path, filename, vectorizer, model, n=20):
 		np.savetxt(f,top, delimiter=',',fmt="%s")
 
 def runAnalysis(trainFilename, testFilename, labelFilename,
-	labelCol, labelName, grams=(2,2), addWrdCnt=False):
+	labelCol, labelName, 
+	trainYr=1999, testYr=2009, grams=(3,3), addWrdCnt=False):
 
 	#### Load data
 	trainData=buildData(

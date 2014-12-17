@@ -153,14 +153,14 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 		np.hstack((probNB,predNB,confSVM,probSVM,predSVM,probLogit))
 		))
 
-	os.chdir(baseDrop+'/Results/Supervised')
+	os.chdir(baseDrop+'/Results/Supervised/trigrams')
 	outCSV=outName.replace('.txt','.csv')
 	with open(outCSV,'wb') as f:
 		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probSVM,predSVM,probLogit\n')
 		np.savetxt(f,output, delimiter=',',fmt="%s")
 
 	##### Print top features for classes from SVM
-	infFeatures(baseDrop+'/Results/Supervised', 
+	infFeatures(baseDrop+'/Results/Supervised/trigrams', 
 		outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 10)
 #####
 

@@ -3,7 +3,7 @@
 
 # Clear workspace and set path
 rm(list=ls())
-baseData='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif/Data'
+baseData='~/Dropbox/Research/WardProjects/regimeClassif/Data'
 
 # Helpful functions
 library(foreign)
@@ -14,6 +14,7 @@ num=function(x){as.numeric(char(x))}
 ### Cntries in JSON texts
 setwd(paste0(baseData, '/Components'))
 cntries=char(read.csv('cntriesForAnalysis.csv', header=F)[,1])
+cntries=toupper(cntries)
 
 # Generate consistent country names and subset data
 # to relevant period of analysis
@@ -21,6 +22,7 @@ prepData=function(data, cvar, yvar, repError,
 	yrS, yrE, detail, keepvars, removeNAs, duplCheck){
 	data=data[which(data[,yvar] %in% yrS:yrE),]
 	cname=countrycode(data[,cvar],'country.name','country.name')
+	cname=toupper(cname)
 	data=cbind(data, cname=cname)	
 	if(sum(is.na(cname))>0 & repError){
 		cat('Unrecognized country names:\n')
@@ -95,12 +97,19 @@ demData$democ[
 		   demData$polity2==10 ) ] = 1
 
 ### Polity only dem data with different cuts
-demData$polGe10=as.numeric(demData$polity2==10)
-demData$polGe9=as.numeric(demData$polity2>=9)
-demData$polGe8=as.numeric(demData$polity2>=8)
-demData$polGe7=as.numeric(demData$polity2>=7)
-demData$polGe6=as.numeric(demData$polity2>=6)
+demData$polGe10=num(demData$polity2==10)
+demData$polGe9=num(demData$polity2>=9)
+demData$polGe8=num(demData$polity2>=8)
+demData$polGe7=num(demData$polity2>=7)
+demData$polGe6=num(demData$polity2>=6)
 summary(demData)
+
+### Create polity cats
+demData$polCat=NA
+demData$polCat[demData$polity2>=6]=4
+demData$polCat[demData$polity2>=1 & demData$polity2<6]=3
+demData$polCat[demData$polity2<=0 & demData$polity2>-6]=2
+demData$polCat[demData$polity2<=-6]=1
 ##### End of Democracy Datasets #####
 #############################################
 

@@ -158,6 +158,3 @@ lapply(predData, function(x) sepPlots(x, 'probSVM', 4, TRUE))
 # Map
 lapply(predData, function(x) buildMap(x, pdfMake=TRUE))
 
-##### Combining predictions #####
-# Calculate prob scores for pol=x
-

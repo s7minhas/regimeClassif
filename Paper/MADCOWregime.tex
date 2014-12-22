@@ -26,7 +26,9 @@
 \usepackage{rotating}
 \newcolumntype{d}{D{.}{.}{-1}}
 \usepackage[format=plain,justification=justified,labelfont=bf]{caption}
-\usepackage{subcaption}
+\usepackage{subfig}
+\usepackage{tikz}
+\usepackage{multirow}
 
 \graphicspath{{graphics/}}
 \usepackage[capposition=top]{floatrow}
@@ -122,59 +124,94 @@ If we compare these predicted probabilities to the observed values in the test s
 
 Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in Figure 3 reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
 
-\begin{figure}
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{sepdem}
-                \caption{Democracy}
-                \label{fig:sepdem}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{sepmonarchy}
-                \caption{Monarchy}
-                \label{fig:sepmon}
-        \end{subfigure}%
-        \\
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{sepmilrule}
-                \caption{Military Rule}
-                \label{fig:sepmilrule}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{seponeparty}
-                \caption{One Party Rule}
-                \label{fig:seponeparty}
-        \end{subfigure}%
+\begin{figure}[ht]
+	\begin{tabular}{ll}
+		\hspace{-7mm}
+		\subfloat[][Democracy]{
+			\includegraphics[width=.5\textwidth]{sepdem}
+			\label{fig:sepdem} } & 
+		\subfloat[][Monarchy]{
+			\includegraphics[width=.5\textwidth]{sepmonarchy}
+			\label{fig:sepmon}} \\
+		\subfloat[][Military Rule]{
+			\includegraphics[width=.5\textwidth]{sepmilrule}
+			\label{fig:sepmilrule}} & 
+		\subfloat[][One Party Rule]{
+			\includegraphics[width=.5\textwidth]{seponeparty}
+			\label{fig:seponeparty}}
+	\end{tabular}
 \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Four Regime Types}
 \end{figure}
 
 Figure 4, on the following two pages, uses heat maps to show variance in the SVM confidence scores from the most recent year available for all four regime dimensions: 2012 for democracy and 2010 for the three authoritarian forms. These confidence scores indicate the distance and direction of each case from the hyperplane used to classify the set of observations into 0s and 1s. The probabilities used in the earlier summaries are derived from them, but we choose to map the raw confidence scores because they exhibit more variance than the probabilities and are therefore easier to visualize in this form.
 
 \begin{figure}[!t]
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{map1}
-                \caption{Democracy}
-                \label{fig:mapdem}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{map2}
-                \caption{Monarchy}
-                \label{fig:mapmon}
-        \end{subfigure}%
-        \\
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{map3}
-                \caption{Military Rule}
-                \label{fig:mapmilrule}
-        \end{subfigure}%
-        \begin{subfigure}[b]{0.5\textwidth}
-                \includegraphics[width=\textwidth]{map4}
-                \caption{One Party Rule}
-                \label{fig:maponeparty}
-        \end{subfigure}%
+	\begin{tabular}{ll}
+		\hspace{-7mm}
+		\subfloat[][Democracy]{
+			\includegraphics[width=.5\textwidth]{map1}
+			\label{fig:mapdem}} &
+		\subfloat[][Monarchy]{
+			\includegraphics[width=.5\textwidth]{map2}
+			\label{fig:mapmon}} \\
+		\subfloat[][Military Rule]{
+			\includegraphics[width=.5\textwidth]{map3}
+			\label{fig:mapmilrule}} &
+		\subfloat[][One Party Rule]{
+			\includegraphics[width=.5\textwidth]{map4}
+			\label{fig:maponeparty}}
+	\end{tabular}
 \caption{Heat Maps of Out-of-Sample Confidence Scores from Support Vector Machines (SVM) of Four Regime Types.}
 \end{figure}
 
 On the whole, cases fall out as we would expect them to. The results seem valid on their face. For example, the democracy classifier confidently identifies Western Europe, Canada, Australia, and New Zealand as democracies; shows interesting variations in Eastern Europe and Latin America; and confidently identifies nearly all of the rest of the world as non-democracies (defined for this task as a Polity score of 10). Meanwhile, the monarchy model correctly identifies most of the countries of the Arabian Peninsula, Jordan, and Morocco as monarchies and the rest of the world as not. The military rule classifier sees Myanmar, Pakistan, and (more surprisingly) Algeria as likely cases in 2010, and is less certain about the absence of military rule in several West African and Middle Eastern countries than in the rest of the world. The map of results from the one-party rule classifier is probably the least informative because it is missing data for a few critical cases, including China and North Korea. Still, it seems to do well with the rest of the world, including confident identification of one-party regimes in Syria, Vietnam, Laos, Turkmenistan, and Uzbekistan and midrange values for Iran, Kazakhstan, Libya, Eritrea, and Myanmar.
+
+separation plots
+
+\begin{figure}
+	\centering
+	\begin{tabular}{ll}
+    \hspace{-7mm}	
+    \subfloat[][Polity$=$7]{
+		\resizebox{0.5\textwidth}{!}{\input{graphics/polGe7_sep.tex}}	
+        \label{fig:sep7}} &
+    \subfloat[][Polity$=$8]{
+		\resizebox{0.5\textwidth}{!}{\input{graphics/polGe8_sep.tex}}	
+        \label{fig:sep8}} \\
+	\hspace{-7mm}	
+    \subfloat[][Polity$=$9]{
+		\resizebox{0.5\textwidth}{!}{\input{graphics/polGe9_sep.tex}}	
+        \label{fig:sep9}} &
+    \subfloat[][Polity$=$10]{
+		\resizebox{0.5\textwidth}{!}{\input{graphics/polGe10_sep.tex}}	
+        \label{fig:sep10}}
+    \end{tabular}
+    \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
+\end{figure}
+
+maps
+
+\begin{figure}
+	\centering
+	\vspace{-7mm}
+	\begin{tabular}{ll}
+    \hspace{-7mm}	
+    \subfloat[][Polity$=$7]{
+		\includegraphics[width=0.5\textwidth]{polGe7_2012_map}
+        \label{fig:map7}} &
+    \subfloat[][Polity$=$8]{
+		\includegraphics[width=0.5\textwidth]{polGe8_2012_map}
+        \label{fig:map8}} \\
+	\hspace{-7mm}	
+    \subfloat[][Polity$=$9]{
+		\includegraphics[width=0.5\textwidth]{polGe9_2012_map}
+        \label{fig:map9}} &
+    \subfloat[][Polity$=$10]{
+		\includegraphics[width=0.5\textwidth]{polGe10_2012_map}
+        \label{fig:map10}}
+    \end{tabular}
+    \caption{Heat Maps of Out-of-Sample Predicted Probabilities from Support Vector Machines (SVM) of Four Regime Types.}
+\end{figure}
 
 \section{Conclusion}
 

@@ -53,8 +53,8 @@ getPropCases=function(labels, values){
 	propData=data.frame(tapply(values,labels,FUN=mean),sort(unique(labels)))
 	colnames(propData)=c('actual','var')
 	if(sum(rownames(propData)!=propData$var)>0){print("d'oh")}
-	propData$var = addLabelFactor(paste0('polGe',7:10),
-		c(paste0('Polity$\\geq$', 7:9), 'Polity$=$10'),propData$var)
+	propData$var = addLabelFactor(paste0('polGe',6:10),
+		c(paste0('Polity$=$', 6:9), 'Polity$=$10'),propData$var)
 	propData
 }
 
@@ -62,8 +62,8 @@ buildDist = function(listData, year='All', var='probSVM', tikzMake=TRUE){
 	data=lapply(listData, function(x){ y=x[,c('year', var)]; y$var=names(x)[4]; y } )
 	data=do.call('rbind', data)
 	if(year!='All'){ data=data[which(data$year==year),] }
-	data$var = addLabelFactor(paste0('polGe',7:10),
-		c(paste0('Polity$\\geq$', 7:9), 'Polity$=$10'), data$var)
+	data$var = addLabelFactor(paste0('polGe',6:10),
+		c(paste0('Polity$\\geq$', 6:9), 'Polity$=$10'), data$var)
 	tmp = ggplot(data, aes_string(x=var))
 	tmp = tmp + geom_histogram(color='grey',aes(y=..count../sum(..count..)))
 	tmp = tmp + facet_wrap(~var) 
@@ -122,8 +122,8 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMak
 
 ##### Analyzing predictions #####
 # Pulling data from textfiles
-setwd(pathData)
-predData=lapply(paste0(c('polGe'),7:10,'_train99-08_test09-13.csv'),cleanData)
+setwd(paste0(pathData, '/trigrams'))
+predData=lapply(paste0(c('polGe'),6:10,'_train99-08_test09-13.csv'),cleanData)
 
 # Get indiv probs and predicts for each case
 for(ii in rev(1:(length(predData)-1)) ){

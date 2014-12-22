@@ -39,7 +39,7 @@ makeTikz = function(plt, fname, path=pathTex, hgt=5, wdh=7, stnds=FALSE){
 
 ##### Aggregate measures #####
 # Pulling data from textfiles
-setwd(pathData)
+setwd(paste0(pathData, '/trigrams'))
 files=NULL
 dirFiles=list.files()[grepl('polGe',list.files())]
 for(f in dirFiles){

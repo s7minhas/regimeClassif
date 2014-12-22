@@ -29,6 +29,7 @@
 \usepackage{subfig}
 \usepackage{tikz}
 \usepackage{multirow}
+\usepackage{placeins}
 
 \graphicspath{{graphics/}}
 \usepackage[capposition=top]{floatrow}
@@ -126,7 +127,6 @@ Separation plots are also useful for visualizing the discriminatory power of the
 
 \begin{figure}[ht]
 	\begin{tabular}{ll}
-		\hspace{-7mm}
 		\subfloat[][Democracy]{
 			\includegraphics[width=.5\textwidth]{sepdem}
 			\label{fig:sepdem} } & 
@@ -147,7 +147,6 @@ Figure 4, on the following two pages, uses heat maps to show variance in the SVM
 
 \begin{figure}[!t]
 	\begin{tabular}{ll}
-		\hspace{-7mm}
 		\subfloat[][Democracy]{
 			\includegraphics[width=.5\textwidth]{map1}
 			\label{fig:mapdem}} &
@@ -166,9 +165,13 @@ Figure 4, on the following two pages, uses heat maps to show variance in the SVM
 
 On the whole, cases fall out as we would expect them to. The results seem valid on their face. For example, the democracy classifier confidently identifies Western Europe, Canada, Australia, and New Zealand as democracies; shows interesting variations in Eastern Europe and Latin America; and confidently identifies nearly all of the rest of the world as non-democracies (defined for this task as a Polity score of 10). Meanwhile, the monarchy model correctly identifies most of the countries of the Arabian Peninsula, Jordan, and Morocco as monarchies and the rest of the world as not. The military rule classifier sees Myanmar, Pakistan, and (more surprisingly) Algeria as likely cases in 2010, and is less certain about the absence of military rule in several West African and Middle Eastern countries than in the rest of the world. The map of results from the one-party rule classifier is probably the least informative because it is missing data for a few critical cases, including China and North Korea. Still, it seems to do well with the rest of the world, including confident identification of one-party regimes in Syria, Vietnam, Laos, Turkmenistan, and Uzbekistan and midrange values for Iran, Kazakhstan, Libya, Eritrea, and Myanmar.
 
+overall performance
+
+
+
 separation plots
 
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\begin{tabular}{ll}
     \hspace{-7mm}	
@@ -188,10 +191,11 @@ separation plots
     \end{tabular}
     \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
 \end{figure}
+\FloatBarrier
 
 maps
 
-\begin{figure}
+\begin{figure}[ht]
 	\centering
 	\vspace{-7mm}
 	\begin{tabular}{ll}
@@ -212,6 +216,7 @@ maps
     \end{tabular}
     \caption{Heat Maps of Out-of-Sample Predicted Probabilities from Support Vector Machines (SVM) of Four Regime Types.}
 \end{figure}
+\FloatBarrier
 
 \section{Conclusion}
 

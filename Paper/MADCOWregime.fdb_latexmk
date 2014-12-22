@@ -1,12 +1,13 @@
 # Fdb version 3
-["bibtex MADCOWregime"] 1419269112 "MADCOWregime.aux" "MADCOWregime.bbl" "MADCOWregime" 1419269118
+["bibtex MADCOWregime"] 1419269112 "MADCOWregime.aux" "MADCOWregime.bbl" "MADCOWregime" 1419269169
   "/usr/local/texlive/2014/texmf-dist/bibtex/bst/harvard/apsr.bst" 1136766823 25357 c990a86d1a60aa9370f76a9507b609ec ""
-  "MADCOWregime.aux" 1419269117 7360 a1a887c9275449c1db6084e703bd4105 ""
+  "MADCOWregime.aux" 1419269168 7360 a1a887c9275449c1db6084e703bd4105 ""
   "MADCOWregime.bcf" 0 -1 0 ""
   "MADCOWregime.bib" 1409076264 9487 5505a0bd0fa7571737253a093f02dbba ""
   (generated)
+  "MADCOWregime.blg"
   "MADCOWregime.bbl"
-["pdflatex"] 1419269112 "MADCOWregime.tex" "MADCOWregime.pdf" "MADCOWregime" 1419269118
+["pdflatex"] 1419269163 "MADCOWregime.tex" "MADCOWregime.pdf" "MADCOWregime" 1419269169
   "/usr/local/texlive/2014/texmf-dist/tex/context/base/supp-pdf.mkii" 1337017135 71627 94eb9990bed73c364d7f53f960cc8c5b ""
   "/usr/local/texlive/2014/texmf-dist/tex/generic/ifxetex/ifxetex.sty" 1284331290 1458 43ab4710dc82f3edeabecd0d099626b2 ""
   "/usr/local/texlive/2014/texmf-dist/tex/generic/oberdiek/gettitlestring.sty" 1303254447 8237 52810bdb4db2270e717422560a104aea ""
@@ -140,10 +141,10 @@
   "/usr/local/texlive/2014/texmf-dist/tex/latex/tools/dcolumn.sty" 1399675188 2545 faee134d2bce001a1a0956c5f7aa3eff ""
   "/usr/local/texlive/2014/texmf-dist/tex/latex/url/url.sty" 1388531844 12796 8edb7d69a20b857904dd0ea757c14ec9 ""
   "/usr/local/texlive/2014/texmf-dist/tex/latex/xcolor/xcolor.sty" 1169481954 55224 a43bab84e0ac5e6efcaf9a98bde73a94 ""
-  "MADCOWregime.aux" 1419269117 7360 a1a887c9275449c1db6084e703bd4105 ""
+  "MADCOWregime.aux" 1419269168 7360 a1a887c9275449c1db6084e703bd4105 ""
   "MADCOWregime.bbl" 1419269112 6766 48ef42f8292bf8182bf890cbe5a7a0ff "bibtex MADCOWregime"
-  "MADCOWregime.out" 1419269117 287 8225922446abd68404a4f0cbdc7059c9 ""
-  "MADCOWregime.tex" 1419269098 27793 601115fe8eb879e5e0b2b39d77cfcd5c ""
+  "MADCOWregime.out" 1419269168 287 8225922446abd68404a4f0cbdc7059c9 ""
+  "MADCOWregime.tex" 1419269162 27761 7b602eeaeadf7eb0cc0f5169521d7e51 ""
   "graphics/figure1a.pdf" 1409076819 29041 69223e1e5b6b23926277005aaec8313d ""
   "graphics/figure1b.pdf" 1409076858 35384 370f03213c8a34eca45d7534e4b90922 ""
   "graphics/map1.png" 1409076991 129355 076d97e9a98b0fb45c163b0c9451b789 ""

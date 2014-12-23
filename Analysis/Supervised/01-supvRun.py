@@ -175,35 +175,7 @@ runAnalysis(
 	trainFilename='train_99-08_Shr-FH_wdow0.json',
 	testFilename='test_09-13_Shr-FH_wdow0.json',
 	labelFilename='demData_99-13.csv', 
-	labelCol=5, labelName='polGe10'
-	)
-
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=6, labelName='polGe9'
-	)
-
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=7, labelName='polGe8'
-	)
-
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=8, labelName='polGe7'
-	)
-
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=9, labelName='polGe6'
+	labelCol=10, labelName='polCat'
 	)
 
 runAnalysis(

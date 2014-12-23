@@ -97,11 +97,11 @@ demData$democ[
 		   demData$polity2==10 ) ] = 1
 
 ### Polity only dem data with different cuts
-demData$polGe10=num(demData$polity2==10)
-demData$polGe9=num(demData$polity2>=9)
-demData$polGe8=num(demData$polity2>=8)
-demData$polGe7=num(demData$polity2>=7)
-demData$polGe6=num(demData$polity2>=6)
+demData$polGe10=as.numeric(demData$polity2==10)
+demData$polGe9=as.numeric(demData$polity2>=9)
+demData$polGe8=as.numeric(demData$polity2>=8)
+demData$polGe7=as.numeric(demData$polity2>=7)
+demData$polGe6=as.numeric(demData$polity2>=6)
 summary(demData)
 
 ### Create polity cats
@@ -158,6 +158,21 @@ mmpData$party[
 		   mmpData$onep==1 ) ] = 1
 ##### End of Mon,Mil,Party Datasets #####
 #############################################
+
+#############################################
+## Ugh last minute fixes
+congoRep=toupper(countrycode('Republic of Congo', 'country.name', 'country.name'))
+nKorea=toupper(countrycode('Korea, North', 'country.name', 'country.name'))
+
+demData$cname[demData$country=='Congo (Brazzaville)']=congoRep
+demData$cname[demData$country=='North Korea']=nKorea
+demData$cname[demData$country=='South Sudan']='SOUTH SUDAN'
+demData$id = paste0(demData$cname, demData$year)
+
+mmpData$cname[mmpData$gwf_country=='Congo-Brz']=congoRep
+mmpData$id = paste0(mmpData$cname, mmpData$year)
+#############################################
+
 
 #############################################
 ##### Examine by-year dist of labels #####

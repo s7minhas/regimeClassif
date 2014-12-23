@@ -46,13 +46,26 @@ prepData=function(data, cvar, yvar, repError,
 	}
  }
 
+# Check for dupes in column of dataframe
+dupeCheck=function(x){table(x$id)[table(x$id)>1]}
+
+# Annoying countrycode cases
+congoRep=toupper(countrycode('Republic of Congo', 'country.name', 'country.name'))
+congoDem=toupper(countrycode('Democratic Republic of Congo', 'country.name', 'country.name'))
+nKorea=toupper(countrycode('Korea, North', 'country.name', 'country.name'))
+sKorea=toupper(countrycode('Korea, South', 'country.name', 'country.name'))
+
 #############################################
 ##### Start Democracy Datasets #####
 ### DD (ends at 2008)
 setwd(paste0(baseData,'/regimeData/DD'))
 dd=read.csv('dd.csv')
+dd$ctryname=char(dd$ctryname)
+dd$ctryname[dd$ctryname=='Congo (Brazzaville, Republic of Congo)']=congoRep
+dd$ctryname[dd$ctryname=='North Korea']=nKorea
 ddFin=prepData(dd, 'ctryname', 'year', TRUE, 
 	1999, 2010, TRUE, c('democracy'), TRUE, TRUE)
+dupeCheck(ddFin)
 
 ### BMR (ends at 2007)
 setwd(paste0(baseData,'/regimeData/BMR'))
@@ -66,30 +79,43 @@ bmr$country[bmr$country=='SAMOA, W']='SAMOA'
 bmr$country[bmr$country=='PAPUA N.GUINEA']='PAPUA New GUINEA'
 bmrFin=prepData(bmr, 'country', 'year', TRUE, 
 	1999, 2010, TRUE, c('democracy'), TRUE, TRUE)
+dupeCheck(bmrFin)
 
 ### FH (ends at 2013)
 setwd(paste0(baseData,'/regimeData/Other'))
 fh=read.csv('fhdata.csv')
 fh$country=char(fh$country)
-fh$country[fh$country=='Congo (Kinshasa)']='Democratic Republic of Congo'
+fh$country[fh$country=='Congo (Kinshasa)']=congoDem
+fh$country[fh$country=='Congo (Brazzaville)']=congoRep
+fh$country[fh$country=='North Korea']=nKorea
 fhFin=prepData(fh, 'country', 'year', TRUE,
 	1999, 2013, TRUE, c('Status'), TRUE, TRUE)
+fhFin$cname=char(fhFin$cname)
+fhFin$cname[fhFin$country=='South Sudan']='SOUTH SUDAN'
+fhFin$id=paste0(fhFin$cname, fhFin$year)
+dupeCheck(fhFin)
 
 ### Polity (ends at 2013)
 pol=read.csv('p4v2013.csv')
 pol$country=char(pol$country)
 pol$country[pol$country=='UAE']='United Arab Emirates'
-pol$country[pol$country=='Congo Kinshasa']='Democratic Republic of Congo'
+pol$country[pol$country=='Congo Brazzaville']=congoRep
+pol$country[pol$country=='Congo Kinshasa']=congoDem
 polFin=prepData(pol, 'country', 'year', TRUE,
 	1999, 2013, TRUE, c('polity2'), TRUE, TRUE)
+polFin$cname=char(polFin$cname)
+polFin$cname[polFin$country=='South Sudan']='SOUTH SUDAN'
+polFin$id=paste0(polFin$cname, polFin$year)
 polFin$drop=0
 if(polFin['16484',1]=='SERBIA2006'){polFin['16484','drop']=1}
 if(polFin['13905',1]=='SUDAN2011'){polFin['13905','drop']=1}
 polFin=polFin[which(polFin$drop==0),1:(ncol(polFin)-1)]
+dupeCheck(polFin)
 
 ### Create democracy label
 lapply(list(fhFin,polFin),function(x) FUN=dim(x))
 demData=merge(fhFin, polFin[,c(1,5)], by='id')
+dupeCheck(demData)
 
 demData$democ=0
 demData$democ[
@@ -121,11 +147,13 @@ ard=read.csv('ard.csv')
 ard=ard[which(!is.na(ard$cowcode)),]
 ard$country=char(ard$country)
 ard$country[ard$country=='Yugoslavia, FR (Serbia/Montenegro)']='Serbia'
+ard$country[ard$country=='Congo, Rep.(Brazzaville)']=congoRep
 ardFin=prepData(ard, 'country', 'year', TRUE, 
 	1999, 2010, TRUE, c('mon','mil','onep'), TRUE, TRUE)
 ardFin$drop=0
 if(ardFin['6511',1]=='SERBIA2006'){ardFin['6511','drop']=1}
 ardFin=ardFin[which(ardFin$drop==0),1:(ncol(ardFin)-1)]
+dupeCheck(ardFin)
 
 ### GWF (ends at 2010)
 setwd(paste0(baseData,'/regimeData/GWF'))
@@ -133,14 +161,17 @@ gwf=read.dta('GWF_AllPoliticalRegimes.dta')
 gwf$gwf_country=char(gwf$gwf_country)
 gwf$gwf_country[gwf$gwf_country=='Luxemburg']='Luxembourg'
 gwf$gwf_country[gwf$gwf_country=='UAE']='United Arab Emirates'
-gwf$gwf_country[gwf$gwf_country=='Congo/Zaire']='Democratic Republic of Congo'
+gwf$gwf_country[gwf$gwf_country=='Congo/Zaire']=congoDem
+gwf$gwf_country[gwf$gwf_country=='Congo-Brz']=congoRep
 gwfFin=prepData(gwf, 'gwf_country', 'year', TRUE, 
 	1999, 2010, TRUE, c('gwf_monarchy','gwf_military','gwf_party'), 
 	TRUE, TRUE)
+dupeCheck(gwfFin)
 
 ### Create mon,mil,party labels
 lapply(list(ardFin,gwfFin),function(x) FUN=dim(x))
 mmpData=merge(gwfFin, ardFin[,c(1,5:7)], by='id')
+dupeCheck(mmpData)
 
 mmpData$monarchy=0
 mmpData$monarchy[
@@ -158,21 +189,6 @@ mmpData$party[
 		   mmpData$onep==1 ) ] = 1
 ##### End of Mon,Mil,Party Datasets #####
 #############################################
-
-#############################################
-## Ugh last minute fixes
-congoRep=toupper(countrycode('Republic of Congo', 'country.name', 'country.name'))
-nKorea=toupper(countrycode('Korea, North', 'country.name', 'country.name'))
-
-demData$cname[demData$country=='Congo (Brazzaville)']=congoRep
-demData$cname[demData$country=='North Korea']=nKorea
-demData$cname[demData$country=='South Sudan']='SOUTH SUDAN'
-demData$id = paste0(demData$cname, demData$year)
-
-mmpData$cname[mmpData$gwf_country=='Congo-Brz']=congoRep
-mmpData$id = paste0(mmpData$cname, mmpData$year)
-#############################################
-
 
 #############################################
 ##### Examine by-year dist of labels #####

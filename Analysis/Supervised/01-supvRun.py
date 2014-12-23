@@ -40,12 +40,15 @@ def prStats(modelName, actual, pred):
 	print classScore(actual, pred)
 
 def infFeatures(path, filename, vectorizer, model, n=20):
-    fNames = vectorizer.get_feature_names()
-    coefsFn = sorted(zip(model.coef_[0], fNames))
-    top = np.array(zip(coefsFn[:n], coefsFn[:-(n + 1):-1]))
-    os.chdir(path)
-    with open(filename,'wb') as f:
-		f.write(b'coef1,ftr1,coef2,ftr2\n')
+	fNames = vectorizer.get_feature_names()
+	fNames = np.array( [[x] for x in fNames] )
+	coefs = model.coef_.transpose()
+	top = np.hstack((coefs, fNames))
+	cols = ['coef'+str(x) for x in range(1,top.shape[1])]
+	cols = ','.join(cols) + ',ftr\n'
+	os.chdir(path)
+	with open(filename,'wb') as f:
+		f.write(b''+cols)
 		np.savetxt(f,top, delimiter=',',fmt="%s")
 
 def runAnalysis(trainFilename, testFilename, labelFilename,
@@ -79,47 +82,33 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	yTest=np.array([int(x) for x in list(testData[:,labelCol])])
 	##### 
 
-	#### Run Naive Bayes
-	nb_classifier = BernoulliNB().fit(xTrain, yTrain)
-	yProbNB1 = [x[1] for x in nb_classifier.predict_proba(xTest)]
-	yPredNB = nb_classifier.predict(xTest)
-	##### 
-
 	#### Run SVM with linear kernel
 	svmClass = LinearSVC().fit(xTrain, yTrain)
 	yConfSVM = list(svmClass.decision_function(xTest))
 	yPredSVM = svmClass.predict(xTest)
 
 	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
-	yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
-	##### 
-
-	##### Run logistic regression
-	maxentClass = LogisticRegression().fit(xTrain, yTrain)
-	yProbLogit1 = [x[1] for x in maxentClass.predict_proba(xTest)]
-	yPredLogit = maxentClass.predict(xTest)
+	yProbSVM = svmClass_2.predict_proba(xTest)
 	##### 
 
 	##### Performance stats
-	os.chdir(baseDrop+'/Results/Supervised')
-	if addWrdCnt:
-		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'_xtraFt'+'.txt'
-	else:
-		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
-	orig_stdout = sys.stdout
-	out=open(outName, 'w')
-	sys.stdout=out
+	# os.chdir(baseDrop+'/Results/Supervised/trigrams')
+	# if addWrdCnt:
+	# 	outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'_xtraFt'+'.txt'
+	# else:
+	# 	outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
+	# orig_stdout = sys.stdout
+	# out=open(outName, 'w')
+	# sys.stdout=out
 	print '\nTrain Data from: ' + trainFilename
 	print '\t\tTrain Data Cases: ' + str(xTrain.shape[0])
 	print '\t\tMean of y in train: ' + str(round(describe(yTrain)[2],3)) + '\n'
 	print 'Test Data from: ' + testFilename
 	print '\t\tTest Data Cases: ' + str(xTest.shape[0])	
 	print '\t\tMean of y in test: ' + str(round(describe(yTest)[2],3)) + '\n'
-	prStats('Naive Bayes', yTest, yPredNB)
 	prStats('SVM', yTest, yPredSVM)
-	prStats('Logit', yTest, yPredLogit)
-	out.close()
-	sys.stdout = orig_stdout
+	# out.close()
+	# sys.stdout = orig_stdout
 	#####
 
 	##### Print data with prediction
@@ -138,30 +127,33 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	testLab=np.array( [[x] for x in list(testData[ :,labelCol ])] )
 
 	filler=[-9999]*trainData.shape[0]
-	probNB=np.array( [[x] for x in flatten([filler, yProbNB1]) ] )
-	predNB=np.array( [[x] for x in flatten([filler, list(yPredNB)]) ] )
-	confSVM=np.array( [[x] for x in flatten([filler, yConfSVM]) ] )
-	probSVM=np.array( [[x] for x in flatten([filler, yProbSVM1]) ] )	
 	predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )
-	probLogit=np.array( [[x] for x in flatten([filler, list(yProbLogit1)]) ] )	
-
+	if labelName != 'polCat':
+		yProbSVM1 = [x[1] for x in yProbSVM]
+		probSVM=np.array( [[x] for x in flatten([filler, yProbSVM1]) ] )
+		confSVM=np.array( [[x] for x in flatten([filler, yConfSVM]) ] )	
+	if labelName == 'polCat':
+		probSVM=[','.join(['%s' % x for x in row]) for row in yProbSVM]
+		probSVM=np.array( [[x] for x in flatten([filler, probSVM]) ] )
+		confSVM=[','.join(['%s' % x for x in sublist]) for sublist in yConfSVM]
+		confSVM=np.array( [[x] for x in flatten([filler, confSVM]) ] )
 	output=np.hstack((
 		np.vstack((trainCntry,testCntry)),
 		np.vstack((trainYr,testYr)),
 		vDat, 
 		np.vstack((trainLab, testLab)),
-		np.hstack((probNB,predNB,confSVM,probSVM,predSVM,probLogit))
+		npf.hstack((confSVM,probSVM,predSVM))
 		))
 
 	os.chdir(baseDrop+'/Results/Supervised/trigrams')
 	outCSV=outName.replace('.txt','.csv')
 	with open(outCSV,'wb') as f:
-		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probSVM,predSVM,probLogit\n')
+		f.write(b'country,year,data,'+labelName+',confSVM,probSVM,predSVM\n')
 		np.savetxt(f,output, delimiter=',',fmt="%s")
 
 	##### Print top features for classes from SVM
 	infFeatures(baseDrop+'/Results/Supervised/trigrams', 
-		outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 10)
+		outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 100)
 #####
 
 runAnalysis(
@@ -175,35 +167,7 @@ runAnalysis(
 	trainFilename='train_99-08_Shr-FH_wdow0.json',
 	testFilename='test_09-13_Shr-FH_wdow0.json',
 	labelFilename='demData_99-13.csv', 
-	labelCol=5, labelName='polGe10'
-	)
-
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=6, labelName='polGe9'
-	)
-
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=7, labelName='polGe8'
-	)
-
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=8, labelName='polGe7'
-	)
-
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=9, labelName='polGe6'
+	labelCol=10, labelName='polCat'
 	)
 
 runAnalysis(

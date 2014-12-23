@@ -39,14 +39,9 @@ makeTikz = function(plt, fname, path=pathTex, hgt=5, wdh=7, stnds=FALSE){
 
 ##### Aggregate measures #####
 # Pulling data from textfiles
-setwd(pathData)
+setwd(paste0(pathData, '/trigrams'))
 files=NULL
-dirFiles=list.files()[grepl('polGe',list.files())]
-for(f in dirFiles){
-	if(substr(f,nchar(f)-3,nchar(f))=='.txt'){
-		files=append(files,f)
-	}
-}
+files=list.files()[grepl('.txt',list.files())]
 
 supData=NULL
 for(texfile in files){
@@ -55,14 +50,10 @@ for(texfile in files){
 	variable=strsplit(texfile,'_')[[1]][1]
 	
 	# Pull out data
-	results=matrix(NA, nrow=3, ncol=6, dimnames=list(NULL,
-	c('Variable','Method','Precision','Recall','Fscore','Accuracy')))
-	results[1,]=c( variable, 'Naive Bayes',
+	results=matrix(NA, nrow=1, ncol=6, dimnames=list(NULL,
+		c('Variable','Method','Precision','Recall','Fscore','Accuracy')))
+	results[1,]=c( variable, 'SVM',
 		unlist(lapply(8:11, function(x) FUN=extractNum(text[x,]))) )
-	results[2,]=c( variable, 'SVM',
-		unlist(lapply(18:21, function(x) FUN=extractNum(text[x,]))) )
-	results[3,]=c(variable, 'Logit',                
-	  unlist(lapply(28:31, function(x) FUN=extractNum(text[x,]))) )
   
 	# Organize
 	supData=rbind(supData, results)
@@ -74,9 +65,9 @@ supData=data.frame(supData)
 supData=convNumDcol(supData, names(supData)[3:ncol(supData)])
 ggData=melt(supData)
 
-ggData = ggData[which(ggData$Method=='SVM' & ggData$Variable %in% paste0('polGe',7:10)),]
 ggData$variable=addLabelFactor(c('Precision','Recall','Fscore','Accuracy'),
 	c('Precision','Recall','F-Score','Accuracy'), ggData$variable)
+labelVars=c('democ', '')
 ggData$Variable = addLabelFactor(paste0('polGe',7:10),
 	c(paste0('Polity$\\geq$', 7:9), 'Polity$=$10'), ggData$Variable)
 

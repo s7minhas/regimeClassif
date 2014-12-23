@@ -79,12 +79,6 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	yTest=np.array([int(x) for x in list(testData[:,labelCol])])
 	##### 
 
-	#### Run Naive Bayes
-	nb_classifier = BernoulliNB().fit(xTrain, yTrain)
-	yProbNB1 = [x[1] for x in nb_classifier.predict_proba(xTest)]
-	yPredNB = nb_classifier.predict(xTest)
-	##### 
-
 	#### Run SVM with linear kernel
 	svmClass = LinearSVC().fit(xTrain, yTrain)
 	yConfSVM = list(svmClass.decision_function(xTest))
@@ -92,12 +86,6 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 
 	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
 	yProbSVM1 = [x[1] for x in svmClass_2.predict_proba(xTest)]
-	##### 
-
-	##### Run logistic regression
-	maxentClass = LogisticRegression().fit(xTrain, yTrain)
-	yProbLogit1 = [x[1] for x in maxentClass.predict_proba(xTest)]
-	yPredLogit = maxentClass.predict(xTest)
 	##### 
 
 	##### Performance stats
@@ -115,9 +103,7 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	print 'Test Data from: ' + testFilename
 	print '\t\tTest Data Cases: ' + str(xTest.shape[0])	
 	print '\t\tMean of y in test: ' + str(round(describe(yTest)[2],3)) + '\n'
-	prStats('Naive Bayes', yTest, yPredNB)
 	prStats('SVM', yTest, yPredSVM)
-	prStats('Logit', yTest, yPredLogit)
 	out.close()
 	sys.stdout = orig_stdout
 	#####
@@ -138,25 +124,21 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	testLab=np.array( [[x] for x in list(testData[ :,labelCol ])] )
 
 	filler=[-9999]*trainData.shape[0]
-	probNB=np.array( [[x] for x in flatten([filler, yProbNB1]) ] )
-	predNB=np.array( [[x] for x in flatten([filler, list(yPredNB)]) ] )
 	confSVM=np.array( [[x] for x in flatten([filler, yConfSVM]) ] )
 	probSVM=np.array( [[x] for x in flatten([filler, yProbSVM1]) ] )	
-	predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )
-	probLogit=np.array( [[x] for x in flatten([filler, list(yProbLogit1)]) ] )	
 
 	output=np.hstack((
 		np.vstack((trainCntry,testCntry)),
 		np.vstack((trainYr,testYr)),
 		vDat, 
 		np.vstack((trainLab, testLab)),
-		np.hstack((probNB,predNB,confSVM,probSVM,predSVM,probLogit))
+		np.hstack((confSVM,probSVM,predSVM))
 		))
 
 	os.chdir(baseDrop+'/Results/Supervised/trigrams')
 	outCSV=outName.replace('.txt','.csv')
 	with open(outCSV,'wb') as f:
-		f.write(b'country,year,data,'+labelName+',probNB,predNB,confSVM,probSVM,predSVM,probLogit\n')
+		f.write(b'country,year,data,'+labelName+',confSVM,probSVM,predSVM\n')
 		np.savetxt(f,output, delimiter=',',fmt="%s")
 
 	##### Print top features for classes from SVM

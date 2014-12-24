@@ -41,15 +41,21 @@ def prStats(modelName, actual, pred):
 
 def infFeatures(path, filename, vectorizer, model, n=20):
 	fNames = vectorizer.get_feature_names()
-	fNames = np.array( [[x] for x in fNames] )
 	coefs = model.coef_.transpose()
-	top = np.hstack((coefs, fNames))
-	cols = ['coef'+str(x) for x in range(1,top.shape[1])]
-	cols = ','.join(cols) + ',ftr\n'
+	coefData=np.random.random_integers(0,100,n*2).reshape(n*2,1)
+	for lab in range(0, coefs.shape[1]):
+		coefsFtr = sorted(zip(coefs[:,lab], fNames))
+		posCoefsFtr = [[x[0], x[1], 'pos'] for x in coefsFtr[:-(n + 1):-1]]
+		negCoefsFtr = [[x[0], x[1], 'neg'] for x in coefsFtr[:n]]
+		coefsFtr = np.vstack((posCoefsFtr, negCoefsFtr))
+		coefData = np.append(coefData, coefsFtr, axis=1)
+	coefData = coefData[:,1:]
+	cols = ['coef'+str(x)+',ftr'+str(x)+',sign'+str(x) for x in range(1,coefs.shape[1]+1)]
+	cols = ','.join(cols) + '\n'
 	os.chdir(path)
-	with open(filename,'wb') as f:
+	with open(filename,'wb') as f: 
 		f.write(b''+cols)
-		np.savetxt(f,top, delimiter=',',fmt="%s")
+		np.savetxt(f,coefData, delimiter=',',fmt="%s")
 
 def runAnalysis(trainFilename, testFilename, labelFilename,
 	labelCol, labelName, 
@@ -92,14 +98,14 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	##### 
 
 	##### Performance stats
-	# os.chdir(baseDrop+'/Results/Supervised/trigrams')
-	# if addWrdCnt:
-	# 	outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'_xtraFt'+'.txt'
-	# else:
-	# 	outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
-	# orig_stdout = sys.stdout
-	# out=open(outName, 'w')
-	# sys.stdout=out
+	os.chdir(baseDrop+'/Results/Supervised/trigrams')
+	if addWrdCnt:
+		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'_xtraFt'+'.txt'
+	else:
+		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
+	orig_stdout = sys.stdout
+	out=open(outName, 'w')
+	sys.stdout=out
 	print '\nTrain Data from: ' + trainFilename
 	print '\t\tTrain Data Cases: ' + str(xTrain.shape[0])
 	print '\t\tMean of y in train: ' + str(round(describe(yTrain)[2],3)) + '\n'
@@ -107,8 +113,8 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	print '\t\tTest Data Cases: ' + str(xTest.shape[0])	
 	print '\t\tMean of y in test: ' + str(round(describe(yTest)[2],3)) + '\n'
 	prStats('SVM', yTest, yPredSVM)
-	# out.close()
-	# sys.stdout = orig_stdout
+	out.close()
+	sys.stdout = orig_stdout
 	#####
 
 	##### Print data with prediction
@@ -136,13 +142,13 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 		probSVM=[','.join(['%s' % x for x in row]) for row in yProbSVM]
 		probSVM=np.array( [[x] for x in flatten([filler, probSVM]) ] )
 		confSVM=[','.join(['%s' % x for x in sublist]) for sublist in yConfSVM]
-		confSVM=np.array( [[x] for x in flatten([filler, confSVM]) ] )
+		confSVM=np.array( [[x] for x in flatten([filler, confSVM]) ] )	
 	output=np.hstack((
 		np.vstack((trainCntry,testCntry)),
 		np.vstack((trainYr,testYr)),
 		vDat, 
 		np.vstack((trainLab, testLab)),
-		npf.hstack((confSVM,probSVM,predSVM))
+		np.hstack((confSVM,probSVM,predSVM))
 		))
 
 	os.chdir(baseDrop+'/Results/Supervised/trigrams')
@@ -153,7 +159,7 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 
 	##### Print top features for classes from SVM
 	infFeatures(baseDrop+'/Results/Supervised/trigrams', 
-		outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 100)
+		outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 500)
 #####
 
 runAnalysis(

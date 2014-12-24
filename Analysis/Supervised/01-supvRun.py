@@ -1,6 +1,7 @@
 import os
 import sys
 from operator import itemgetter
+from joblib import Parallel, delayed
 
 import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
@@ -139,9 +140,9 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 		probSVM=np.array( [[x] for x in flatten([filler, yProbSVM1]) ] )
 		confSVM=np.array( [[x] for x in flatten([filler, yConfSVM]) ] )	
 	if labelName == 'polCat':
-		probSVM=[','.join(['%s' % x for x in row]) for row in yProbSVM]
+		probSVM=[';'.join(['%s' % x for x in row]) for row in yProbSVM]
 		probSVM=np.array( [[x] for x in flatten([filler, probSVM]) ] )
-		confSVM=[','.join(['%s' % x for x in sublist]) for sublist in yConfSVM]
+		confSVM=[';'.join(['%s' % x for x in sublist]) for sublist in yConfSVM]
 		confSVM=np.array( [[x] for x in flatten([filler, confSVM]) ] )	
 	output=np.hstack((
 		np.vstack((trainCntry,testCntry)),
@@ -162,37 +163,40 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 		outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 500)
 #####
 
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=4, labelName='democ'
-	)
+# Set up function inputs for parallized run
+demTrainFile='train_99-08_Shr-FH_wdow0.json'
+demTestFile='test_09-13_Shr-FH_wdow0.json'
+demLabelFile='demData_99-13.csv'
+demTestYear=2009
+demLabelCol1=4
+demLabelName1='democ'
+demLabelCol2=10
+demLabelName2='polCat'
 
-runAnalysis(
-	trainFilename='train_99-08_Shr-FH_wdow0.json',
-	testFilename='test_09-13_Shr-FH_wdow0.json',
-	labelFilename='demData_99-13.csv', 
-	labelCol=10, labelName='polCat'
-	)
+mmpTrainFile='train_99-06_Shr-FH_wdow0.json'
+mmpTestFile='test_07-10_Shr-FH_wdow0.json'
+mmpLabelFile='mmpData_99-10.csv'
+mmpTestYear=2007
+mmpLabelCol1=3
+mmpLabelName1='monarchy'
+mmpLabelCol2=4
+mmpLabelName2='military'
+mmpLabelCol3=5
+mmpLabelName3='party'
 
-runAnalysis(
-	trainFilename='train_99-06_Shr-FH_wdow0.json',
-	testFilename='test_07-10_Shr-FH_wdow0.json',
-	labelFilename='mmpData_99-10.csv', 
-	testYr=2007, labelCol=3, labelName='monarchy'
-	)
+params=[
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol1, demLabelName1),
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol2, demLabelName2),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol1, mmpLabelName1),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol2, mmpLabelName2),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol3, mmpLabelName3)
+	]
 
-runAnalysis(
-	trainFilename='train_99-06_Shr-FH_wdow0.json',
-	testFilename='test_07-10_Shr-FH_wdow0.json',
-	labelFilename='mmpData_99-10.csv', 
-	testYr=2007, labelCol=4, labelName='military'
-	)
-
-runAnalysis(
-	trainFilename='train_99-06_Shr-FH_wdow0.json',
-	testFilename='test_07-10_Shr-FH_wdow0.json',
-	labelFilename='mmpData_99-10.csv', 
-	testYr=2007, labelCol=5, labelName='party'
+# Run analysis
+numCores=5
+results = Parallel(n_jobs = numCores)(
+	delayed(runAnalysis)(
+		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
+		testYr=x[3], labelCol=x[4], labelName=x[5]  ) 
+	for x in params
 	)

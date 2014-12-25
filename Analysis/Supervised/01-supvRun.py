@@ -219,6 +219,7 @@ results = Parallel(n_jobs=numCores, verbose=100)(
 		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
 		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(1,1)  ) 
 	for x in params
+<<<<<<< HEAD
 	)
 
 

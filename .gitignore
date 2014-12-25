@@ -17,5 +17,8 @@
 *.rda
 *.Rdata
 *.pyc
-.DS_Store*
-.Rapp.history*
+*.DS_Store
+*.Rapp.history
+*.lb
+*.fdb_latexmk
+*.

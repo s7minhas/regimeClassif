@@ -8,6 +8,7 @@ baseData='~/Dropbox/Research/WardProjects/regimeClassif/Data'
 # Helpful functions
 library(foreign)
 library(countrycode)
+library(Hmisc)
 char=function(x){as.character(x)}
 num=function(x){as.numeric(char(x))}
 
@@ -131,11 +132,18 @@ demData$polGe6=as.numeric(demData$polity2>=6)
 summary(demData)
 
 ### Create polity cats
-demData$polCat=NA
-demData$polCat[demData$polity2>=6]=4
-demData$polCat[demData$polity2>=1 & demData$polity2<6]=3
-demData$polCat[demData$polity2<=0 & demData$polity2>-6]=2
-demData$polCat[demData$polity2<=-6]=1
+demData$polCat4=NA
+demData$polCat4[demData$polity2>=6]=4
+demData$polCat4[demData$polity2>=1 & demData$polity2<6]=3
+demData$polCat4[demData$polity2<=0 & demData$polity2>-6]=2
+demData$polCat4[demData$polity2<=-6]=1
+table(demData$polity2, demData$polCat4)
+
+demData$polCat3=cut(demData$polity2, 3, include.lowest=TRUE, labels=1:3)
+table(demData$polity2, demData$polCat3)
+
+demData$polCat7=cut(demData$polity2, 7, include.lowest=TRUE, labels=1:7)
+table(demData$polity2, demData$polCat7)
 ##### End of Democracy Datasets #####
 #############################################
 

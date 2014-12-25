@@ -70,7 +70,7 @@ We start by selecting a corpus of familiar and well-structured texts describing 
 
 Our initial results demonstrate that this strategy works. Our classifiers perform well out of sample, achieving high or very high precision and recall scores in cross-validation on all four of the regime types we have tried to measure so far. The preliminary data produced by these classifiers do not appear to be as useful as we would like them to be, but we don't think that their flaws are a function of the research design. Instead, we think their limitations result primarily from the narrowness of the initial corpus and the strict rules we used to identify regime types in the data on which those classifiers were trained.
 
-\section{Research Design}
+\section{Raw Data}
 
 For this project's initial iteration, we limited the corpus to annual reports available online from the U.S. Department of State and Freedom House. Both of these series of reports have structures that are explicitly similar and use equivalent concepts and language to describe political practices in the referent countries.
 
@@ -79,6 +79,10 @@ As the State Department notes on its website, its human rights reports ``cover i
 In its Freedom in the World reports, the U.S.-based non-governmental organization Freedom House provides summary descriptions of all countries of the world and some disputed territories. Per its website, these descriptions are intended to capture the advance or decline of ``freedom'' in each polity, where the idea of freedom ``is grounded in basic standards of political rights and civil liberties, derived in large measure from relevant portions of the Universal Declaration of Human Rights.'' Freedom House is a non-governmental advocacy group that receives a substantial share of its funding from the U.S. government.
 
 We scraped the State Department's annual reports on countries' human rights practices from 1999 to 2013 and Freedom House's Freedom in the World reports from 1999 to 2014, which cover the period 1998-2013. These are all of the reports in the two series that are currently archived online on the source organizations' web sites.
+
+** Here add some plots showing the kind of information contained in these corpora. Maybe show word clouds for two different cases, Iran and United Kingdom. What I would hope to see are distinctions in how prisoners, legal systems, or just human rights are described in both countries. To do this I should be able to just use the text array I feed into the supervised SVM analysis. 
+
+\section{Preparing Texts}
 
 Once those documents had been ingested, we cleaned the texts and did some simple feature extraction. Specifically, we:
 
@@ -95,9 +99,15 @@ In principle, these categories are mutually exclusive. In practice, however, reg
 
 To train our regime classification models, we used pre-existing, human-coded data on national political regimes from a few widely-used sources: Polity; Freedom House; Geddes, Wright, and Franz (2014); and Hadenius and Teorell (2007; see also Wahman Teorell and Hadenius 2013). \nocite* For our democracy model, we created a binary indicator that equals one if that country-year's Polity score is ten and zero otherwise. For our models of military rule, one-party rule, and monarchy, we coded our binary indicators as one if both GWF and HT identified a country-year as belonging to that category and only that category and zero otherwise. In other words, we only considered a regime to be sufficiently representative of each of those authoritarian archetypes if both sources agreed that it belonged in that category and only that category. The same logic drove our decision to set the standard for our democracy model so high. Conceptually, we want to learn from the cases of whose status we are confident and then leave it to the models to tell us how closely the more ambiguous cases approximate those archetypes.
 
+** Need to add description of polity-categorical variable
+
+** Show some descriptive statistics here comparing label distributions in the train and test samples. 
+
 To objectively estimate the performance of these classification models, we need to cross-validate them -- in other words, to apply them to a test set they haven't seen before and compare the resulting estimates to observed values. To do this, we split our data into training and test sets by year. For the democracy model, we have ``ground truth'' data from Polity through 2013, so we made 1999-2008 (n = 1,557) the training set and 2009-2013 (n = 707) the test set. For the three authoritarian archetypes, we only have ``ground truth'' data from GWF and HT through 2010, so we made 1999-2006 (n = 1,138) the training set and 2007-2010 (n = 583) the test set. 
 
 We tried three binary classifiers, two that are widely used in the machine learning community--Bernoulli na\:{a}ve Bayes and support vector machines (SVM)--and one parametric statistical model, logistic regression (logit). Between the two machine learning approaches, SVM consistently outperformed na\:{a}ve  Bayes, so we only discuss SVM and logit here. 
+
+** Recenter our discussion around SVM and move references to other models into footnotes. 
 
 \section{Methods}
 
@@ -105,9 +115,17 @@ Add description of SVM procedure...
 
 Separates hyperplane
 
-Footnote about trying a variety of other approaches...
+Check out previous pieces on what we are able to do with SVM...specifically the piece by Schrodt
 
 \section{Results}
+
+** Review probabilistic measures created
+
+** Start this section with overview of out-of-sample performance
+
+** Separation plots, bar plots of aggregate statistics
+
+** Then go into features that predict classes again using word clouds
 
 The histograms in Figures 1A and 1B, on the following two pages, summarize the distribution of the out-of-sample predicted probabilities from SVM and logistic regression, respectively, for each of the four regime types we have explored so far.  The plots for the SVM estimates show sharp differentiation among cases, especially for the three authoritarian dimensions. Nearly all cases score very close to 0 or 1, producing bimodal distributions with steep peaks and few observations in between them. By contrast, the plots for the predicted probabilities from logistic regression are all unimodal, with a peak close to 0, maximum values much lower than 1, and thicker tails than the SVM output. 
 

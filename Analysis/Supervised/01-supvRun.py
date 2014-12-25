@@ -152,10 +152,10 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	trainLab=np.array( [[x] for x in list(trainData[ :,labelCol ])] )
 	testLab=np.array( [[x] for x in list(testData[ :,labelCol ])] )
 
-	if labelName == 'polCat':
+	if labelName[0:6] == 'polCat':
 		probSVM=[';'.join(['%s' % x for x in row]) for row in yProbSVM]
 		confSVM=[';'.join(['%s' % x for x in sublist]) for sublist in yConfSVM]
-	if labelName != 'polCat':
+	if labelName[0:6] != 'polCat':
 		probSVM = [x[1] for x in yProbSVM]
 		confSVM = yConfSVM
 
@@ -208,25 +208,14 @@ mmpLabelName2='military'
 mmpLabelCol3=5
 mmpLabelName3='party'
 
-# params=[
-# 	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol1, demLabelName1),
-# 	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol2, demLabelName2),
-# 	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3),
-# 	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol4, demLabelName4),
-# 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol1, mmpLabelName1),
-# 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol2, mmpLabelName2),
-# 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol3, mmpLabelName3)
-# 	]
-
 params=[
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3, (1,1)),
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3, (2,2)),	
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3, (3,3)),
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3, (4,4)),		
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3, (1,2)),
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3, (1,3)),	
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3, (1,4)),
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3, (1,5))
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol1, demLabelName1),
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol2, demLabelName2),
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3),
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol4, demLabelName4),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol1, mmpLabelName1),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol2, mmpLabelName2),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol3, mmpLabelName3)
 	]
 
 # Run analysis
@@ -234,6 +223,6 @@ numCores=multiprocessing.cpu_count()
 results = Parallel(n_jobs=numCores, verbose=100)(
 	delayed(runAnalysis)(
 		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=x[6]  ) 
+		testYr=x[3], labelCol=x[4], labelName=x[5] ) 
 	for x in params
 	)

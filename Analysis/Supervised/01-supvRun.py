@@ -64,10 +64,6 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 		gramDir='grams'+str(grams[1])
 	if grams[1]!=grams[0]:
 		gramDir='grams'+str(grams[0])+'_'+str(grams[1])
-
-	# Create directory
-	if not os.path.exists(baseDrop+'/Results/Supervised/'+gramDir):
-	    os.makedirs(baseDrop+'/Results/Supervised/'+gramDir)
 	###
 
 	#### Load data
@@ -155,7 +151,7 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 
 	trainLab=np.array( [[x] for x in list(trainData[ :,labelCol ])] )
 	testLab=np.array( [[x] for x in list(testData[ :,labelCol ])] )
-	
+
 	if labelName == 'polCat':
 		probSVM=[';'.join(['%s' % x for x in row]) for row in yProbSVM]
 		confSVM=[';'.join(['%s' % x for x in sublist]) for sublist in yConfSVM]
@@ -167,7 +163,7 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )	
 	probSVM=np.array( [[x] for x in flatten([filler, probSVM]) ] )
 	confSVM=np.array( [[x] for x in flatten([filler, confSVM]) ] )	
-	
+
 	output=np.hstack((
 		np.vstack((trainCntry,testCntry)),
 		np.vstack((trainYr,testYr)),
@@ -221,70 +217,6 @@ numCores=multiprocessing.cpu_count()
 results = Parallel(n_jobs=numCores, verbose=100)(
 	delayed(runAnalysis)(
 		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(1,1)  ) 
-	for x in params
-	)
-
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(2,2)  ) 
-	for x in params
-	)
-
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(3,3)  ) 
-	for x in params
-	)
-
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(4,4)  ) 
-	for x in params
-	)
-
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(5,5)  ) 
-	for x in params
-	)
-
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(1,2)  ) 
-	for x in params
-	)
-
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(1,3)  ) 
-	for x in params
-	)
-
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
 		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(1,4)  ) 
-	for x in params
-	)
-
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5], grams=(1,5)  ) 
 	for x in params
 	)

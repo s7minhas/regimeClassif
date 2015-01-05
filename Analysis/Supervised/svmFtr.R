@@ -13,10 +13,12 @@ if(Sys.info()["user"]=="s7m"){
 library(ggplot2)
 library(reshape2)
 library(grid)
+library(wordcloud)
 
 # Helpful functions
 char=function(x){as.character(x)}
 num=function(x){as.numeric(char(x))}
+substrRight=function(x, n){ substr(x, nchar(x)-n+1, nchar(x))}
 
 convNumDcol=function(data, vars){
 	for(var in vars){ data[,var]=num(data[,var]) }
@@ -33,7 +35,7 @@ grams=c(1:4, '1_2', '1_3', '1_4', '1_5')
 ## democ , military, polCat_, polCat3_
 cats=c(3, 7, '')
 
-gram=grams[1]
+gram=grams[3]
 cat=cats[1]
 
 setwd(paste0(pathData, '/grams', gram))
@@ -41,14 +43,19 @@ list.files()
 
 ftrFile=paste0('polCat', cat, '_train99-08_test09-13._wrdFtr.csv')
 ftrData=read.csv( ftrFile, header=TRUE )
-head(ftrData)
 
 # Word clouds of positive and negative words
-## 
-library(wordcloud)
-
-wrds1Pos=ftrData[which(ftrData$sign1=='pos'), 'ftr1']
-wrds1PosFreq=ftrData[which(ftrData$sign1=='pos'), 'coef1']
+getWords=function(data, sign){
+	coefs=unique(substrRight(names(data), 1))
+	lapply(coefs, function(coef){
+		slice = data[which(data[,paste0('sign', coef)]== sign), ]
+		slice[,c(paste0('ftr', coef), paste0('coef', coef))]
+		})
+}
 
 par(mfrow=c(2,2))
-wordcloud(wrds1Pos, wrds1PosFreq)
+lapply(getWords(ftrData, 'pos'), function(x){
+	coefCut=quantile(x[,2], .25)
+	x=x[which(x[,2] >= coefCut),]
+	wordcloud(x[,1], x[,2])	
+	})

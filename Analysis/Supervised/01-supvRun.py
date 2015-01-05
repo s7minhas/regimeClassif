@@ -56,7 +56,7 @@ def infFeatures(path, filename, vectorizer, model, n=20):
 
 def runAnalysis(trainFilename, testFilename, labelFilename,
 	labelCol, labelName, 
-	trainYr=1999, testYr=2009, grams=(3,3), 
+	trainYr=1999, testYr=2009, grams=(2,5), 
 	addWrdCnt=False, addCntry=False):
 
 	### Incorporate gram specific path 
@@ -188,31 +188,24 @@ demTrainFile='train_99-08_Shr-FH_wdow0.json'
 demTestFile='test_09-13_Shr-FH_wdow0.json'
 demLabelFile='demData_99-13.csv'
 demTestYear=2009
-demLabelCol1=4
-demLabelName1='democ'
-demLabelCol2=10
-demLabelName2='polCat'
-demLabelCol3=11
-demLabelName3='polCat3'
-demLabelCol4=12
-demLabelName4='polCat7'
+demLabelCol1=4; demLabelName1='democ'
+demLabelCol2=10; demLabelName2='polCat'
+demLabelCol3=11; demLabelName3='polCat3'
+demLabelCol3=12; demLabelName3='polCat7'
 
 mmpTrainFile='train_99-06_Shr-FH_wdow0.json'
 mmpTestFile='test_07-10_Shr-FH_wdow0.json'
 mmpLabelFile='mmpData_99-10.csv'
 mmpTestYear=2007
-mmpLabelCol1=3
-mmpLabelName1='monarchy'
-mmpLabelCol2=4
-mmpLabelName2='military'
-mmpLabelCol3=5
-mmpLabelName3='party'
+mmpLabelCol1=3; mmpLabelName1='monarchy'
+mmpLabelCol2=4; mmpLabelName2='military'
+mmpLabelCol3=5; mmpLabelName3='party'
 
 params=[
 	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol1, demLabelName1),
 	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol2, demLabelName2),
 	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3),
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol4, demLabelName4),
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol4, demLabelName4),	
 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol1, mmpLabelName1),
 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol2, mmpLabelName2),
 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol3, mmpLabelName3)

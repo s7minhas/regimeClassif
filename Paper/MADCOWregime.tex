@@ -68,7 +68,7 @@ The project described in this paper explores ways to use text mining and other n
 
 We start by selecting a corpus of familiar and well-structured texts describing politics and human-rights practices each year in all countries worldwide: the Country Reports on Human Rights Practices published by the U.S. Department of State, and Freedom House's Freedom in the World reports. After pre-processing those texts in a few conventional ways, we dumped the two reports for each country-year into a single bag of words and used text mining to extract features from those bags in the form of vectorized tokens that may be grossly described as word counts. Next, we used those vectorized tokens as inputs to a series of binary classification models representing a few different ideal-typical regime types --democracy, military rule, one-party rule, and monarchy--as observed in few widely used, human-coded data sets. Finally, we applied those classification models to a test set of country-years held out at the start to assess the models' ability to classify regime types in cases they had not previously ``seen.''
 
-Our initial results demonstrate that this strategy works. Our classifiers perform well out of sample, achieving high or very high precision and recall scores in cross-validation on all four of the regime types we have tried to measure so far. The preliminary data produced by these classifiers do not appear to be as useful as we would like them to be, but we don't think that their flaws are a function of the research design. Instead, we think their limitations result primarily from the narrowness of the initial corpus and the strict rules we used to identify regime types in the data on which those classifiers were trained.
+Our initial results demonstrate that this strategy works. Our classifiers perform well out of sample, achieving high or very high precision and recall scores in cross-validation on all four of the regime types we have tried to measure so far. 
 
 \section{Raw Data}
 
@@ -79,8 +79,6 @@ As the State Department notes on its website, its human rights reports ``cover i
 In its Freedom in the World reports, the U.S.-based non-governmental organization Freedom House provides summary descriptions of all countries of the world and some disputed territories. Per its website, these descriptions are intended to capture the advance or decline of ``freedom'' in each polity, where the idea of freedom ``is grounded in basic standards of political rights and civil liberties, derived in large measure from relevant portions of the Universal Declaration of Human Rights.'' Freedom House is a non-governmental advocacy group that receives a substantial share of its funding from the U.S. government.
 
 We scraped the State Department's annual reports on countries' human rights practices from 1999 to 2013 and Freedom House's Freedom in the World reports from 1999 to 2014, which cover the period 1998-2013. These are all of the reports in the two series that are currently archived online on the source organizations' web sites.
-
-** Here add some plots showing the kind of information contained in these corpora. Maybe show word clouds for two different cases, Iran and United Kingdom. What I would hope to see are distinctions in how prisoners, legal systems, or just human rights are described in both countries. To do this I should be able to just use the text array I feed into the supervised SVM analysis. 
 
 \section{Preparing Texts}
 
@@ -93,7 +91,7 @@ Once those documents had been ingested, we cleaned the texts and did some simple
 	\item Lemmatized the tokens to group together inflected forms.
 \end{itemize}
 
-Next, we calculated the tf-idf weight for each token and used these values as inputs to binary classification models designed to identify features associated with each of a few regime types suggested by prior theory.\footnote{We also tried using unsupervised LDA (topic modeling) to extract features from the text at this stage, but regime classification models trained on the posterior topic predictions from LDA did not perform as well as the ones trained on just the vectorized tokens, so we are focusing for now on the latter.}  Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. For our first pass at the problem, we focused on four regime types: (1) Democracy, (2) Military rule, (3) One-party rule, and (4) Monarchy.
+Next, we calculated the tf-idf weight for each token and used these values as inputs to binary classification models designed to identify features associated with each of a few regime types suggested by prior theory.\footnote{We also tried using unsupervised LDA (topic modeling) to extract features from the text at this stage, but regime classification models trained on the posterior topic predictions from LDA did not perform as well as the ones trained on just the vectorized tokens, so we are focusing for now on the latter.}  Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. We focus on four regime types: (1) Democracy, (2) Military rule, (3) One-party rule, and (4) Monarchy.
 
 In principle, these categories are mutually exclusive. In practice, however, regime type is inherently uncertain, and any given regime may exhibit features of more than one of these ideal types at any time. Consistent with that idea, we decided to treat each of these archetypes not as different sections of a single plane but rather as distinct dimensions in a multi-dimensional regime space, and therefore train separate models for each category.
 
@@ -111,11 +109,7 @@ We tried three binary classifiers, two that are widely used in the machine learn
 
 \section{Methods}
 
-Add description of SVM procedure...
-
-Separates hyperplane
-
-Check out previous pieces on what we are able to do with SVM...specifically the piece by Schrodt
+Support Vector Machine is a supervised learning technique from the field of machine learning applicable to both classification and regression. The standard SVM takes a set of input data and predicts for each given input which of two possible classes. Support vector machines are learning systems that use hypothesis space of linear function in a high dimensional feature space, trained with a learning algorithm from optimization theory that implements a learning bias determine from statistical learning theory. 
 
 \section{Results}
 

@@ -1,15 +1,8 @@
 rm(list=ls())
-if(Sys.info()["user"]=="janus829"){
-	pathOther='~/Dropbox/Research/WardProjects/regimeClassif/Data/Components'
-	pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-	pathTex='~/Desktop/Research/WardProjects/regimeClassif/Paper/graphics'
-}
-
-if(Sys.info()["user"]=="s7m"){
-	pathOther='~/Dropbox/Research/WardProjects/regimeClassif/Data/Components'
-	pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-	pathTex='~/Research/WardProjects/regimeClassif/Presentations/graphics'
-}
+set.seed(6886)
+pathOther='~/Dropbox/Research/WardProjects/regimeClassif/Data/Components'
+pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
+pathTex='~/Research/WardProjects/regimeClassif/Presentations/supvSummary'
 
 # Helpful libaries and functions
 setwd(pathOther); load('panel.rda')

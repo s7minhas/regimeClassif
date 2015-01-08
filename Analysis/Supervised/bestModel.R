@@ -1,13 +1,7 @@
 rm(list=ls())
-if(Sys.info()["user"]=="janus829"){
-	pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-	pathTex='~/Desktop/Research/WardProjects/regimeClassif/Presentations/supvSummary'
-}
-
-if(Sys.info()["user"]=="s7m"){
-	pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-	pathTex='~/Research/WardProjects/regimeClassif/Presentations/supvSummary'
-}
+set.seed(6886)
+pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
+pathTex='~/Research/WardProjects/regimeClassif/Presentations/supvSummary'
 
 # Libraries
 library(ggplot2)

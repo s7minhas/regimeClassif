@@ -18,7 +18,7 @@ from sklearn.metrics import classification_report as classScore
 
 if os.environ.get('USER')=='janus829':
 	baseDrop='/Users/janus829/Dropbox/Research/WardProjects/regimeClassif'
-	baseGit='/Users/janus829/Desktop/Research/WardProjects/regimeClassif'
+	baseGit='/Users/janus829/Research/WardProjects/regimeClassif'
 
 if os.environ.get('USER')=='s7m':
 	baseDrop='/Users/s7m/Dropbox/Research/WardProjects/regimeClassif'
@@ -191,7 +191,7 @@ demTestYear=2009
 demLabelCol1=4; demLabelName1='democ'
 demLabelCol2=10; demLabelName2='polCat'
 demLabelCol3=11; demLabelName3='polCat3'
-demLabelCol3=12; demLabelName3='polCat7'
+demLabelCol4=12; demLabelName4='polCat7'
 
 mmpTrainFile='train_99-06_Shr-FH_wdow0.json'
 mmpTestFile='test_07-10_Shr-FH_wdow0.json'

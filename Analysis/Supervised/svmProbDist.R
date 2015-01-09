@@ -6,6 +6,7 @@ pathTex='~/Research/WardProjects/regimeClassif/Paper/graphics'
 
 # Helpful libaries and functions
 load(paste0(pathOther, '/panel.rda'))
+library(doBy)
 library(reshape2)
 library(ggplot2)
 theme_set(theme_bw())
@@ -83,12 +84,12 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMak
 	ggmap=fortify(wmap, region = "CNTRY_NAME")
 	ggmapData=data.frame('id'=unique(ggmap$id))
 	ggmapData$prob = data[,colorVar][match(ggmapData$id, data$CNTRY_NAME)]
+	col=brewer.pal(9, brewCol)[c(3,9)]
 
 	tmp = ggplot(ggmapData, aes(map_id=id, fill=prob))
-	tmp = tmp + geom_map(map=ggmap, linetype=1)
+	tmp = tmp + geom_map(map=ggmap, linetype=1, lwd=.1, color='black')
 	tmp = tmp + expand_limits(x=ggmap$long, y=ggmap$lat)
-	tmp = tmp + scale_fill_continuous('', limits=c(0,1),
-		low=brewer.pal(9,brewCol)[3], high=brewer.pal(9,brewCol)[9])
+	tmp = tmp + scale_fill_continuous('', limits=c(0,1), low=col[1], high=col[2])
 	tmp = tmp + theme(
 		line=element_blank(),title=element_blank(),
 		axis.text.x=element_blank(),axis.text.y=element_blank(),
@@ -101,6 +102,38 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMak
 	} else {
 		tmp
 	}
+}
+
+changeTrack=function(data,adj=.03,brewCol='Blues',showProb=TRUE){
+	byForm=formula(paste0(names(data)[4], '~cname'))
+	byDat=summaryBy(byForm, data=data, FUN=mean, na.rm=TRUE)
+	chngCntries=byDat[which(!byDat[,2] %in% c(0,1)),1]
+
+	# Plot
+	if(length(chngCntries)==0){ 
+		print('No countries with change in test period') 
+	} else {
+		data=data[which(data$cname %in% chngCntries), c(1,2,4,6,7,9)]
+		data=data[data$country != 'south sudan',2:ncol(data)]
+		names(data)[2]='act'
+		col=brewer.pal(9,brewCol)[c(3,9)]
+		ggData=melt(data[,c(1,2,4,5)], id=c('CNTRY_NAME','year'))
+		ggData$value[ggData$variable=='act']=ggData$value[ggData$variable=='act']+adj
+		ggData$value[ggData$variable=='predSVM']=ggData$value[ggData$variable=='predSVM']-adj
+		if(showProb){yBreaks=seq(0,1,.25)} else {yBreaks=c(0,1)}
+	
+		tmp=ggplot(ggData, aes(x=year)) + xlab('') + ylab('')
+		tmp=tmp + scale_y_continuous('', limits=c(0-adj,1+adj), breaks=yBreaks)
+		tmp=tmp + geom_point(aes(color=variable,shape=variable,y=value),size=4)
+		tmp=tmp + scale_color_manual(values=col)
+		if(showProb){tmp=tmp + geom_line(data=data, aes(x=year, y=probSVM), linetype='dashed')}
+		tmp=tmp + facet_wrap(~CNTRY_NAME)
+		tmp=tmp + theme(
+			axis.ticks=element_blank(),
+			panel.grid.minor=element_blank(),
+			legend.title=element_blank(), legend.position='none',
+			axis.title.y=element_text(angle=45) )
+		tmp }
 }
 
 ##### Analyzing predictions #####
@@ -132,13 +165,17 @@ polData=lapply(predData[1:3], function(catData){
 	})
 
 # Distribution of predictions
-buildDist(polData[[1]], tikzMake=TRUE)
-buildDist(binData, tikzMake=TRUE)
+buildDist(polData[[1]], tikzMake=FALSE)
+buildDist(binData, tikzMake=FALSE)
 
 # Separation plots
-lapply(polData[[1]], function(x) sepPlots(x, tikzMake=TRUE))
-lapply(binData, function(x) sepPlots(x, tikzMake=TRUE))
+lapply(polData[[1]], function(x) sepPlots(x, tikzMake=FALSE))
+lapply(binData, function(x) sepPlots(x, tikzMake=FALSE))
 
 # Map
-lapply(polData[[1]], function(x) buildMap(x, pdfMake=TRUE))
-lapply(binData, function(x) buildMap(x, pdfMake=TRUE))
+lapply(polData[[1]], function(x) buildMap(x, pdfMake=FALSE))
+lapply(binData, function(x) buildMap(x, year=2010, pdfMake=FALSE))
+
+# Find all countries where ratings change in test period
+lapply(polData[[1]], function(x) changeTrack(data=x))
+lapply(binData, function(x) changeTrack(data=x))

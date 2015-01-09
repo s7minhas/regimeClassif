@@ -7,6 +7,7 @@ pathTex='~/Research/WardProjects/regimeClassif/Paper/graphics'
 library(ggplot2)
 library(reshape2)
 library(grid)
+library(RColorBrewer)
 
 # Helpful functions
 char=function(x){as.character(x)}
@@ -49,12 +50,11 @@ perfData$cat=mapVar(perfData$cat, vars[sels], varsClean[sels])
 ggData=melt(perfData[,2:ncol(perfData)], id='cat')
 col=brewer.pal(9, 'Blues')[c(3,7)]
 tmp=ggplot(ggData, aes(y=cat, x=variable)) 
-tmp=tmp + ylab('') + xlab('Statistic')
+tmp=tmp + scale_y_discrete('',expand=c(0,0)) + scale_x_discrete('',expand=c(0,0))
 tmp=tmp + geom_tile(aes(fill=value), colour='white')
 tmp=tmp + scale_fill_gradient(low=col[1], high=col[2], limits=c(min(ggData$value),1))
 tmp=tmp + theme(axis.ticks=element_blank(), 
-  legend.position='top', legend.key.width=unit(2,'cm'),
-  legend.title=element_blank(),
+  legend.position='top', legend.key.width=unit(2,'cm'), legend.title=element_blank(),
   panel.border = element_blank(),
   panel.grid.major = element_blank(), panel.grid.minor = element_blank() )
 tmp
@@ -82,12 +82,13 @@ classData$cat=mapVar(classData$cat, vars[sels], varsClean[sels])
 # Plotting
 ggData=melt(classData, id=c('class', 'cat'))
 tmp=ggplot(ggData, aes(y=class, x=variable)) 
-tmp=tmp + ylab('Class') + xlab('Statistic')
-tmp=tmp + scale_y_continuous(breaks=0:max(ggData$class), labels=0:max(ggData$class))
+tmp=tmp + scale_y_continuous('',breaks=0:max(ggData$class), labels=0:max(ggData$class), expand=c(0,0))
+tmp=tmp + scale_x_discrete('', expand=c(0,0))
 tmp=tmp + geom_tile(aes(fill=value), colour='white')
 tmp=tmp + scale_fill_gradient(low=col[1], high=col[2], limits=c(min(ggData$value),1))
-tmp=tmp + facet_wrap(~ cat, scales='free', ncol=2)
+tmp=tmp + facet_wrap(~ cat, scales='free_y', ncol=2)
 tmp=tmp + theme(axis.ticks=element_blank(), 
   legend.position='top', legend.key.width=unit(2,'cm'), legend.title=element_blank(),
+  panel.border = element_blank(),  
   panel.grid.major = element_blank(), panel.grid.minor = element_blank() )
 tmp

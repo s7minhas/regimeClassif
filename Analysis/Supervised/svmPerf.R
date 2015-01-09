@@ -1,38 +1,10 @@
-rm(list=ls())
-set.seed(6886)
-pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-pathTex='~/Research/WardProjects/regimeClassif/Paper/graphics'
-
-# Libraries
-library(ggplot2)
-library(reshape2)
-library(grid)
-library(RColorBrewer)
-
-# Helpful functions
-char=function(x){as.character(x)}
-num=function(x){as.numeric(char(x))}
-convNumDcol=function(data, vars){
-	for(var in vars){ data[,var]=num(data[,var]) }
-	return( data ) }
-mapVar=function(var, old, new){
-	var=char(var)
-	for(ii in 1:length(old)){ var[var==old[ii]]=new[ii] }
-	return ( factor(var, levels=new) ) }
-getFilename=function(gram, cat, path=pathData){
-	fileExt=ifelse(substring(cat, 0, 2) %in% c('de', 'po'),'_train99-08_test09-13.txt','_train99-06_test07-10.txt')		
-	paste0(path, '/grams', gram, '/', cat, fileExt)	}
+# Helpful libaries and functions
+source('~/Research/WardProjects/regimeClassif/Analysis/Supervised/setup.R')
 
 ## Top level performance
-grams=c('2_4', '1_3', '2_3', '3_5', '1_3', '1', '1')
-vars=c('polCat3', 'polCat7', 'polCat', 'democ', 'monarchy', 'party', 'military')
-varsClean=c('Polity (3 Categories)', 'Polity (7 Categories)', 'Polity (4 Categories)', 
-	'Democracy', 'Monarchy', 'Party', 'Military')
-sels=c(1,5:7)
-
 perfData=NULL
 for(ii in sels){
-	texName=getFilename(grams[ii], vars[ii])
+	texName=getFilename(grams[ii], vars[ii], ext='.txt')
 	txt=read.table(texName,sep="\n", strip.white=TRUE)	
 	topLevel=char(txt[8:11,])
 	stats=unlist(lapply(strsplit(topLevel, ': '), function(x) num(x[2])))
@@ -61,7 +33,7 @@ tmp
 
 ## Class level performance
 getClassData=function(gram, cat){
-	texName=getFilename(gram, cat)
+	texName=getFilename(gram, cat, ext='.txt')
 	txt=read.table(texName,sep="\n", strip.white=TRUE)
 	classLevel=lapply(14:(nrow(txt)-1), function(x){
 		splits=strsplit(char(txt[x,]), ' ')[[1]]

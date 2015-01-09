@@ -1,26 +1,5 @@
-rm(list=ls())
-set.seed(6886)
-pathOther='~/Dropbox/Research/WardProjects/regimeClassif/Data/Components'
-pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-pathTex='~/Research/WardProjects/regimeClassif/Paper/graphics'
-
 # Helpful libaries and functions
-load(paste0(pathOther, '/panel.rda'))
-library(doBy)
-library(reshape2)
-library(ggplot2)
-theme_set(theme_bw())
-library(tikzDevice)
-library(countrycode)
-library(cshapes)
-library(grid)
-library(RColorBrewer)
-
-char=function(x){as.character(x)}
-num=function(x){as.numeric(char(x))}
-getFilename=function(gram, cat, path=pathData){
-	fileExt=ifelse(substring(cat, 0, 2) %in% c('de', 'po'),'_train99-08_test09-13.csv','_train99-06_test07-10.csv')		
-	paste0(path, '/grams', gram, '/', cat, fileExt)	}
+source('~/Research/WardProjects/regimeClassif/Analysis/Supervised/setup.R')
 
 cleanData = function(file){
 	data=read.csv(file)
@@ -28,13 +7,6 @@ cleanData = function(file){
 	data$cname = toupper(countrycode(data$country, 'country.name', 'country.name'))
 	data$CNTRY_NAME = panel$CNTRY_NAME[match(data$cname, panel$cname)]
 	return( data )	
-}
-
-makePlot = function(plt, fname, path=pathTex, hgt=5, wdh=7, tex=TRUE, stnds=FALSE, pdf=FALSE){
-	wd=getwd(); setwd(path)
-	if(tex){tikz(file=paste0(fname,'.tex'), height=hgt, width=wdh, standAlone=stnds)}
-	if(pdf){pdf(file=paste0(fname,'.pdf'), height=hgt, width=wdh)}
-	print(plt); dev.off(); setwd(wd)
 }
 
 buildDist = function(listData, year='All', var='probSVM', tikzMake=TRUE){
@@ -137,14 +109,10 @@ changeTrack=function(data,adj=.03,brewCol='Blues',showProb=TRUE){
 }
 
 ##### Analyzing predictions #####
-# Combinations
-grams=c('2_4', '1_3', '2_3', '3_5', '1_3', '1', '1')
-vars=c('polCat3', 'polCat7', 'polCat', 'democ', 'monarchy', 'party', 'military')
-
 # Pulling data from CSVs
 predData=lapply(1:length(grams), function(ii){
 	# Load data
-	texName=getFilename(grams[ii], vars[ii])
+	texName=getFilename(grams[ii], vars[ii], ext='.csv')
 	cleanData(texName) })
 names(predData)=paste0(grams, vars)
 

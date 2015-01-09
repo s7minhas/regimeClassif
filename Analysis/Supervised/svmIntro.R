@@ -1,12 +1,5 @@
-rm(list=ls())
-set.seed(6886)
-pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-pathTex='~/Research/WardProjects/regimeClassif/Presentations/supvSummary'
-
-# Libraries
-library(ggplot2)
-theme_set(theme_bw())
-library(tikzDevice)
+# Helpful libaries and functions
+source('~/Research/WardProjects/regimeClassif/Analysis/Supervised/setup.R')
 
 # Set up plot space
 xDim=c(0,10); yDim=c(0,10); n=15

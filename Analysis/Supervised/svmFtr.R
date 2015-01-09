@@ -1,25 +1,13 @@
-rm(list=ls())
-set.seed(6886)
-pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-pathTex='~/Research/WardProjects/regimeClassif/Paper/graphics'
-
-# Libraries
-library(wordcloud)
-library(RColorBrewer)
-
-# Helpful functions
-getFilename=function(gram, cat, path=pathData){
-	fileExt=ifelse(substring(cat, 0, 2) %in% c('de', 'po'),'_train99-08_test09-13._wrdFtr.csv','_train99-06_test07-10._wrdFtr.csv')		
-	paste0(path, '/grams', gram, '/', cat, fileExt)	}
+# Helpful libaries and functions
+source('~/Research/WardProjects/regimeClassif/Analysis/Supervised/setup.R')
 
 # Generate term matrices
 svmTermSignMatrix=function(gram, var){
 	# Load data
-	ftrFile=getFilename(gram, var)
+	ftrFile=getFilename(gram, var, ext='._wrdFtr.csv')
 	data=read.csv( ftrFile, header=TRUE )
 
 	# Word clouds of positive and negative words
-	substrRight=function(x, n){ substr(x, nchar(x)-n+1, nchar(x))}
 	coefs=unique(substrRight(names(data), 1))
 	
 	# Output
@@ -36,8 +24,6 @@ svmTermSignMatrix=function(gram, var){
 }
 
 # Run function
-grams=c('2_4', '1_3', '2_3', '3_5', '1_3', '1', '1')
-vars=c('polCat3', 'polCat7', 'polCat', 'democ', 'monarchy', 'party', 'military')
 svmMats=lapply(1:length(grams), function(ii){ svmTermSignMatrix(grams[ii], vars[ii]) })
 names(svmMats)=paste0(grams, vars)
 

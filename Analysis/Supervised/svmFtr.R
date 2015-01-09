@@ -1,55 +1,81 @@
 rm(list=ls())
 set.seed(6886)
 pathData='~/Dropbox/Research/WardProjects/regimeClassif/Results/Supervised'
-pathTex='~/Research/WardProjects/regimeClassif/Presentations/supvSummary'
+pathTex='~/Research/WardProjects/regimeClassif/Paper/graphics'
 
 # Libraries
-library(ggplot2)
-library(reshape2)
-library(grid)
 library(wordcloud)
+library(RColorBrewer)
 
 # Helpful functions
-char=function(x){as.character(x)}
-num=function(x){as.numeric(char(x))}
-substrRight=function(x, n){ substr(x, nchar(x)-n+1, nchar(x))}
+getFilename=function(gram, cat, path=pathData){
+	fileExt=ifelse(substring(cat, 0, 2) %in% c('de', 'po'),'_train99-08_test09-13._wrdFtr.csv','_train99-06_test07-10._wrdFtr.csv')		
+	paste0(path, '/grams', gram, '/', cat, fileExt)	}
 
-convNumDcol=function(data, vars){
-	for(var in vars){ data[,var]=num(data[,var]) }
-	return( data )
-}
+# Generate term matrices
+svmTermSignMatrix=function(gram, var){
+	# Load data
+	ftrFile=getFilename(gram, var)
+	data=read.csv( ftrFile, header=TRUE )
 
-# Read in ftr from csv
-setwd(pathData)
-
-## Top level performance
-grams=c(1:4, '1_2', '1_3', '1_4', '1_5')
-
-# Replace cats with just a general call, e.g.
-## democ , military, polCat_, polCat3_
-cats=c(3, 7, '')
-
-gram=grams[3]
-cat=cats[1]
-
-setwd(paste0(pathData, '/grams', gram))
-list.files()
-
-ftrFile=paste0('polCat', cat, '_train99-08_test09-13._wrdFtr.csv')
-ftrData=read.csv( ftrFile, header=TRUE )
-
-# Word clouds of positive and negative words
-getWords=function(data, sign){
+	# Word clouds of positive and negative words
+	substrRight=function(x, n){ substr(x, nchar(x)-n+1, nchar(x))}
 	coefs=unique(substrRight(names(data), 1))
+	
+	# Output
 	lapply(coefs, function(coef){
-		slice = data[which(data[,paste0('sign', coef)]== sign), ]
-		slice[,c(paste0('ftr', coef), paste0('coef', coef))]
+		dat=data[,which(substrRight(names(data), 1) == coef)]
+		posTrms=dat[which(dat[,3]=='pos'),2]
+		negTrms=dat[which(dat[,3]=='neg'),2]
+		tsm=matrix(0, nrow=length(dat[,2]), ncol=2, 
+			dimnames=list(dat[,2],c('Positive', 'Negative')))
+		tsm[match(posTrms, rownames(tsm)),1]=dat[match(posTrms, dat[,2]),1]
+		tsm[match(negTrms, rownames(tsm)),2]=abs(dat[match(negTrms, dat[,2]),1])
+		tsm
 		})
 }
 
-par(mfrow=c(2,2))
-lapply(getWords(ftrData, 'pos'), function(x){
-	coefCut=quantile(x[,2], .25)
-	x=x[which(x[,2] >= coefCut),]
-	wordcloud(x[,1], x[,2])	
-	})
+# Run function
+grams=c('2_4', '1_3', '2_3', '3_5', '1_3', '1', '1')
+vars=c('polCat3', 'polCat7', 'polCat', 'democ', 'monarchy', 'party', 'military')
+svmMats=lapply(1:length(grams), function(ii){ svmTermSignMatrix(grams[ii], vars[ii]) })
+names(svmMats)=paste0(grams, vars)
+
+# Create comparison clouds
+remWords=c('generally respected', 'exit visa', 'government generally',
+	'foreign worker', 'national service', 'right practice',
+	'camel jockey', 'jockey', 'camel', 'percent', 'girl',
+	'number', 'service', 'work', 'beat', 'bull', 'formal',
+	'registration', 'student', 'woman', 'editor', 'use',
+	'domestic', 'servant', 'family', 'seat', 'right', 'ethnic',
+	'office', 'officer', 'area', 'level', 'continued', 'village')
+clean=function(data, words=remWords, mult=5){
+	data=data[which(!rownames(data) %in% words),]
+	return(data*mult)
+}
+
+# polCat
+cloudDat=svmMats$'2_4polCat3'
+cloudDat=lapply(cloudDat, function(x){ clean(x, remWords) })
+
+par(mfrow=c(1,3))
+lapply(cloudDat, function(x){
+	comparison.cloud(x,max.words=100,random.order=TRUE) })
+par(mfrow=c(1,1))
+
+# Military
+par(mfrow=c(1,3))
+cloudDat=svmMats$'1military'[[1]]
+cloudDat=clean(cloudDat, remWords)
+comparison.cloud(cloudDat, max.words=100, random.order=TRUE)
+
+# Monarchy
+cloudDat=svmMats$'1_3monarchy'[[1]]
+cloudDat=clean(cloudDat, remWords)
+comparison.cloud(cloudDat, max.words=100, random.order=TRUE)
+
+# Party
+cloudDat=svmMats$'1party'[[1]]
+cloudDat=clean(cloudDat, remWords)
+comparison.cloud(cloudDat, max.words=100, random.order=TRUE)
+par(mfrow=c(1,1))

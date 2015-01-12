@@ -9,24 +9,20 @@ cleanData = function(file){
 	return( data )	
 }
 
-buildDist = function(listData, year='All', var='probSVM', tikzMake=TRUE){
+buildDist = function(listData, year='All', var='probSVM', catOld=NULL, catNew=NULL, binsize=.1){
 	data=lapply(listData, function(x){ y=x[,c('year', var)]; y$var=names(x)[4]; y } )
 	data=do.call('rbind', data)
+	if(!is.null(catOld)){ data$var=mapVar(data$var, catOld, catNew) }
+
 	if(year!='All'){ data=data[which(data$year==year),] }
 	tmp = ggplot(data, aes_string(x=var))
-	tmp = tmp + geom_histogram(color='grey',aes(y=..count../sum(..count..)))
+	tmp = tmp + geom_histogram(color='grey',binwidth=binsize,aes(y=..count../sum(..count..)))
 	tmp = tmp + facet_wrap(~var) 
 	tmp = tmp + xlab('Estimated Probability') + ylab('Proportion')
 	tmp = tmp + scale_x_continuous(breaks=seq(0,1,.25),limits=c(0,1))
-	tmp=tmp+theme(
+	tmp+theme(
 		legend.position='top', axis.ticks=element_blank(), 
-		panel.grid.major=element_blank(), panel.grid.minor=element_blank() )	
-	if(tikzMake){ 
-		filename=paste0('probDist_',year)
-		makePlot(tmp, filename) 
-	} else {
-		tmp
-	}	
+		panel.grid.major=element_blank(), panel.grid.minor=element_blank() )
 }
 
 sepPlots=function(data, year='All', tikzMake=TRUE, ggalpha=.7){
@@ -39,17 +35,11 @@ sepPlots=function(data, year='All', tikzMake=TRUE, ggalpha=.7){
 	tmp=tmp + scale_color_manual(values=col)
 	tmp=tmp + scale_y_continuous('', breaks=seq(0,1,.25), expand=c(0,0)) 
 	tmp=tmp + scale_x_continuous('', breaks=NULL, expand=c(0,0))
-	tmp=tmp + theme(legend.position="none", axis.ticks=element_blank(),
+	tmp + theme(legend.position="none", axis.ticks=element_blank(),
 	  	panel.background=element_blank(), panel.grid=element_blank())
-	if(tikzMake){ 
-		filename=paste(names(data)[4],year,'sep.tex',sep='_')
-		makePlot(tmp, filename, hgt=3, wdh=7) 
-	} else {
-		tmp
-	}
 }
 
-buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMake=TRUE){
+buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues'){
 	data=data[which(data$year==year),]
 	wmap=cshp(date=as.Date(paste0(year,'-6-30')))
 	gpclibPermit()
@@ -62,50 +52,48 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues', pdfMak
 	tmp = tmp + geom_map(map=ggmap, linetype=1, lwd=.1, color='black')
 	tmp = tmp + expand_limits(x=ggmap$long, y=ggmap$lat)
 	tmp = tmp + scale_fill_continuous('', limits=c(0,1), low=col[1], high=col[2])
-	tmp = tmp + theme(
+	tmp + theme(
 		line=element_blank(),title=element_blank(),
 		axis.text.x=element_blank(),axis.text.y=element_blank(),
 		legend.position='top', legend.key.width=unit(4,"line"),
 		panel.grid.major=element_blank(), panel.grid.minor=element_blank(), 
 		panel.border=element_blank())
-	if(pdfMake){ 
-		filename=paste(names(data)[4],year,'map',sep='_')
-		makePlot(tmp, filename, hgt=4, wdh=6, pdf=TRUE) 
-	} else {
-		tmp
-	}
 }
 
-changeTrack=function(data,adj=.03,brewCol='Blues',showProb=TRUE){
-	byForm=formula(paste0(names(data)[4], '~cname'))
-	byDat=summaryBy(byForm, data=data, FUN=mean, na.rm=TRUE)
-	chngCntries=byDat[which(!byDat[,2] %in% c(0,1)),1]
+changeTrack=function(data,col,plotCntries=NULL,adj=NULL,
+	yLimits=NULL, yBreaks=NULL, yLabels=NULL){
+	
+	if(is.null(plotCntries)){
+		byForm=formula(paste0(names(data)[4], '~cname'))
+		byDat=summaryBy(byForm, data=data, FUN=mean, na.rm=TRUE)
+		plotCntries=byDat[which(!byDat[,2] %in% c(0,1)),1] }
 
 	# Plot
-	if(length(chngCntries)==0){ 
+	if(length(plotCntries)==0){ 
 		print('No countries with change in test period') 
 	} else {
-		data=data[which(data$cname %in% chngCntries), c(1,2,4,6,7,9)]
+		data=data[which(data$cname %in% plotCntries), c(1,2,4,6,7,9)]
 		data=data[data$country != 'south sudan',2:ncol(data)]
 		names(data)[2]='act'
-		col=brewer.pal(9,brewCol)[c(3,9)]
 		ggData=melt(data[,c(1,2,4,5)], id=c('CNTRY_NAME','year'))
-		ggData$value[ggData$variable=='act']=ggData$value[ggData$variable=='act']+adj
-		ggData$value[ggData$variable=='predSVM']=ggData$value[ggData$variable=='predSVM']-adj
-		if(showProb){yBreaks=seq(0,1,.25)} else {yBreaks=c(0,1)}
+		
+		if(!is.null(adj)){
+			ggData$value[ggData$value==1]=ggData$value[ggData$value==1]-adj
+			ggData$value[ggData$value==0]=ggData$value[ggData$value==0]+adj
+			yBreaks=c(0+adj,1-adj) }
+		
+		ggData$variable = mapVar(ggData$variable, c('act', 'predSVM'), c('Actual', 'Predicted'))
 	
 		tmp=ggplot(ggData, aes(x=year)) + xlab('') + ylab('')
-		tmp=tmp + scale_y_continuous('', limits=c(0-adj,1+adj), breaks=yBreaks)
-		tmp=tmp + geom_point(aes(color=variable,shape=variable,y=value),size=4)
-		tmp=tmp + scale_color_manual(values=col)
-		if(showProb){tmp=tmp + geom_line(data=data, aes(x=year, y=probSVM), linetype='dashed')}
+		tmp=tmp + scale_y_continuous('', limits=yLimits, breaks=yBreaks, labels=yLabels)
+		tmp=tmp + geom_point(aes(color=variable,shape=variable,y=value),size=6)
+		tmp=tmp + scale_color_manual(values=col) + scale_shape_manual(values=c(15,17))
 		tmp=tmp + facet_wrap(~CNTRY_NAME)
-		tmp=tmp + theme(
+		tmp + theme(
 			axis.ticks=element_blank(),
-			panel.grid.minor=element_blank(),
-			legend.title=element_blank(), legend.position='none',
-			axis.title.y=element_text(angle=45) )
-		tmp }
+			panel.grid=element_blank(),
+			legend.title=element_blank(), legend.position='top',
+			axis.text.x=element_text(angle=45, hjust=1) ) }
 }
 
 ##### Analyzing predictions #####
@@ -133,17 +121,41 @@ polData=lapply(predData[1:3], function(catData){
 	})
 
 # Distribution of predictions
-buildDist(polData[[1]], tikzMake=FALSE)
-buildDist(binData, tikzMake=FALSE)
+polDist=buildDist(listData=polData[[3]],catOld=polCatName,catNew=polCatClean,binsize=.05)
+makePlot(polDist, 'polCat_probDist')
+binDist=buildDist(listData=binData, binsize=.05)
+makePlot(binDist, 'bin_probDist')
 
 # Separation plots
-lapply(polData[[1]], function(x) sepPlots(x, tikzMake=FALSE))
-lapply(binData, function(x) sepPlots(x, tikzMake=FALSE))
+yearPerf='All'
+lapply(polData[[3]], function(x){
+	polSep=sepPlots(x)
+	filename=paste(names(x)[4],yearPerf,'sep',sep='_')
+	makePlot(polSep, filename, hgt=3, wdh=7) })
+lapply(binData, function(x){
+	binSep=sepPlots(x) 
+	filename=paste(names(x)[4],yearPerf,'sep',sep='_')
+	makePlot(binSep, filename, hgt=3, wdh=7) })
 
 # Map
-lapply(polData[[1]], function(x) buildMap(x, pdfMake=FALSE))
-lapply(binData, function(x) buildMap(x, year=2010, pdfMake=FALSE))
+lapply(polData[[3]], function(x){
+	polMap=buildMap(x, year=2012)
+	filename=paste(names(x)[4],2012,'map',sep='_')
+	makePlot(polMap, filename, hgt=4, wdh=6, pdf=TRUE, tex=FALSE) })
+lapply(binData, function(x){
+	binMap=buildMap(x, year=2010) 
+	filename=paste(names(x)[4],2010,'map',sep='_')
+	makePlot(binMap, filename, hgt=4, wdh=6, pdf=TRUE, tex=FALSE) })
 
 # Find all countries where ratings change in test period
-lapply(polData[[1]], function(x) changeTrack(data=x))
-lapply(binData, function(x) changeTrack(data=x))
+colors=brewer.pal(9,'Blues')[c(5,9)]
+polChng=changeTrack(data=predData[[3]], colors, 
+	c("KYRGYZSTAN","THAILAND","PAKISTAN"),
+	yLimits=c(.8,4.2), yBreaks=1:4, yLabels=1:4)
+makePlot(polChng, 'polCat_perfChange')
+
+lapply(binData, function(x){
+	binChng=changeTrack(x, colors, adj=.25, yLimits=c(0,1), yLabels=c(0,1))
+	if(!is.character(binChng)){
+		filename=paste(names(x)[4],'perfChange',sep='_')
+		makePlot(binChng, filename) } })p

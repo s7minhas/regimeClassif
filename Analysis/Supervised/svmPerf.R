@@ -29,7 +29,7 @@ tmp=tmp + theme(axis.ticks=element_blank(),
   legend.position='top', legend.key.width=unit(2,'cm'), legend.title=element_blank(),
   panel.border = element_blank(),
   panel.grid.major = element_blank(), panel.grid.minor = element_blank() )
-tmp
+makePlot(tmp, 'allAggPerf', tex=FALSE, pdf=TRUE)
 
 ## Class level performance
 getClassData=function(gram, cat){
@@ -46,7 +46,7 @@ getClassData=function(gram, cat){
 }
 
 # Clean for plotting
-classData=lapply(c(1,5:7), function(ii){ getClassData(grams[ii], vars[ii])[,c(1:4, 6)] })
+classData=lapply(sels, function(ii){ getClassData(grams[ii], vars[ii])[,c(1:4, 6)] })
 classData=do.call('rbind', classData)
 names(classData)[2:4]=c('Precision', 'Recall', 'F-1 Score')
 classData$cat=mapVar(classData$cat, vars[sels], varsClean[sels])
@@ -63,4 +63,4 @@ tmp=tmp + theme(axis.ticks=element_blank(),
   legend.position='top', legend.key.width=unit(2,'cm'), legend.title=element_blank(),
   panel.border = element_blank(),  
   panel.grid.major = element_blank(), panel.grid.minor = element_blank() )
-tmp
+makePlot(tmp, 'allClassPerf', tex=FALSE, pdf=TRUE)

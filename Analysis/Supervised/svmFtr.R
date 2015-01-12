@@ -19,8 +19,7 @@ svmTermSignMatrix=function(gram, var){
 			dimnames=list(dat[,2],c('Positive', 'Negative')))
 		tsm[match(posTrms, rownames(tsm)),1]=dat[match(posTrms, dat[,2]),1]
 		tsm[match(negTrms, rownames(tsm)),2]=abs(dat[match(negTrms, dat[,2]),1])
-		tsm
-		})
+		tsm })
 }
 
 # Run function
@@ -28,40 +27,41 @@ svmMats=lapply(1:length(grams), function(ii){ svmTermSignMatrix(grams[ii], vars[
 names(svmMats)=paste0(grams, vars)
 
 # Create comparison clouds
-remWords=c('generally respected', 'exit visa', 'government generally',
-	'foreign worker', 'national service', 'right practice',
-	'camel jockey', 'jockey', 'camel', 'percent', 'girl',
-	'number', 'service', 'work', 'beat', 'bull', 'formal',
-	'registration', 'student', 'woman', 'editor', 'use',
-	'domestic', 'servant', 'family', 'seat', 'right', 'ethnic',
-	'office', 'officer', 'area', 'level', 'continued', 'village')
-clean=function(data, words=remWords, mult=5){
-	data=data[which(!rownames(data) %in% words),]
-	return(data*mult)
-}
-
 # polCat
-cloudDat=svmMats$'2_4polCat3'
-cloudDat=lapply(cloudDat, function(x){ clean(x, remWords) })
+cloudDat=svmMats$'2_3polCat'
+names(cloudDat)=c('-10 to 6', '-5 to 0', '1 to 5', '6 to 10')
+cloudDat[[1]]=clean(cloudDat[[1]], polCat4_cat1Wrds)
+cloudDat[[2]]=clean(cloudDat[[2]], polCat4_cat2Wrds)
+cloudDat[[3]]=clean(cloudDat[[3]], polCat4_cat3Wrds)
+cloudDat[[4]]=clean(cloudDat[[4]], polCat4_cat4Wrds)
 
-par(mfrow=c(1,3))
+pdf(file=paste0(pathTex, '/polCat_wrdCloud.pdf'), height=5, width=7)
+par(mfrow=c(2,2))
 lapply(cloudDat, function(x){
-	comparison.cloud(x,max.words=100,random.order=TRUE) })
+	set.seed(6886)
+	comparison.cloud(x,max.words=100,random.order=FALSE,title.size=1) })
 par(mfrow=c(1,1))
+dev.off()
 
 # Military
+pdf(file=paste0(pathTex, '/bin_wrdCloud.pdf'), height=5, width=7)
 par(mfrow=c(1,3))
 cloudDat=svmMats$'1military'[[1]]
-cloudDat=clean(cloudDat, remWords)
-comparison.cloud(cloudDat, max.words=100, random.order=TRUE)
+cloudDat=clean(cloudDat, remWords, remove=TRUE)
+set.seed(6886)
+comparison.cloud(cloudDat, max.words=100, random.order=TRUE,title.size=1)
 
 # Monarchy
 cloudDat=svmMats$'1_3monarchy'[[1]]
-cloudDat=clean(cloudDat, remWords)
-comparison.cloud(cloudDat, max.words=100, random.order=TRUE)
+cloudDat=clean(cloudDat, remWords, remove=TRUE)
+set.seed(6886)
+comparison.cloud(cloudDat, max.words=100, random.order=TRUE,title.size=1)
 
 # Party
 cloudDat=svmMats$'1party'[[1]]
-cloudDat=clean(cloudDat, remWords)
-comparison.cloud(cloudDat, max.words=100, random.order=TRUE)
+cloudDat=clean(cloudDat, remWords, remove=TRUE)
+set.seed(6886)
+comparison.cloud(cloudDat, max.words=100, random.order=TRUE,title.size=1)
+
+dev.off()
 par(mfrow=c(1,1))

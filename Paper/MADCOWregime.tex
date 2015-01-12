@@ -111,6 +111,12 @@ We tried three binary classifiers, two that are widely used in the machine learn
 
 Support Vector Machine is a supervised learning technique from the field of machine learning applicable to both classification and regression. The standard SVM takes a set of input data and predicts for each given input which of two possible classes. Support vector machines are learning systems that use hypothesis space of linear function in a high dimensional feature space, trained with a learning algorithm from optimization theory that implements a learning bias determine from statistical learning theory. 
 
+\begin{figure}[ht]
+	\centering
+	\resizebox{0.7\textwidth}{!}{\input{graphics/svmIntro.tex}}	
+\end{figure}
+\FloatBarrier
+
 \section{Results}
 
 ** Review probabilistic measures created
@@ -119,120 +125,154 @@ Support Vector Machine is a supervised learning technique from the field of mach
 
 ** Separation plots, bar plots of aggregate statistics
 
-** Provide maps to give some context of how we are classifying countries and keep Jay's comments about it in there
-
-** Then go into features that predict classes again using word clouds
-
-** Discussion of what we are actually capturing here....
-
-The histograms in Figures 1A and 1B, on the following two pages, summarize the distribution of the out-of-sample predicted probabilities from SVM and logistic regression, respectively, for each of the four regime types we have explored so far.  The plots for the SVM estimates show sharp differentiation among cases, especially for the three authoritarian dimensions. Nearly all cases score very close to 0 or 1, producing bimodal distributions with steep peaks and few observations in between them. By contrast, the plots for the predicted probabilities from logistic regression are all unimodal, with a peak close to 0, maximum values much lower than 1, and thicker tails than the SVM output. 
-
-If we compare these predicted probabilities to the observed values in the test set, we see that these classifiers are doing a very good job discriminating between 1s and 0s on the observed values for all four of the regime types. The column chart in Figure 2 summarizes the out-of-sample accuracy of SVM and logistic regression for each of the four types. SVM consistently outperforms logistic regression and produces extremely good results overall, albeit with some variation across the four types. For the three authoritarian types, precision (the proportion of cases classified as positive that actually belong there) was better than recall (the proportion of positive cases that were correctly classified), but that pattern is reversed for democracy. Logistic regression does noticeably poorer for all four types than SVM, but still not terribly.
-
-\begin{figure}[!h]
-\includegraphics[]{figure1a}
-\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+\begin{figure}[ht]
+	\centering
+	% \resizebox{0.7\textwidth}{!}{\input{graphics/allAggPerf.tex}}
+	\includegraphics[width=.7\textwidth]{allAggPerf}	
 \end{figure}
-
- \begin{figure}[!h]
-\includegraphics[]{figure1b}
-\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Logistic Regression Models}
-\end{figure}
-
-Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in Figure 3 reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
+\FloatBarrier
 
 \begin{figure}[ht]
-	\begin{tabular}{ll}
-		\subfloat[][Democracy]{
-			\includegraphics[width=.5\textwidth]{sepdem}
-			\label{fig:sepdem} } & 
-		\subfloat[][Monarchy]{
-			\includegraphics[width=.5\textwidth]{sepmonarchy}
-			\label{fig:sepmon}} \\
-		\subfloat[][Military Rule]{
-			\includegraphics[width=.5\textwidth]{sepmilrule}
-			\label{fig:sepmilrule}} & 
-		\subfloat[][One Party Rule]{
-			\includegraphics[width=.5\textwidth]{seponeparty}
-			\label{fig:seponeparty}}
-	\end{tabular}
-\caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Four Regime Types}
+	\centering
+	% \resizebox{0.7\textwidth}{!}{\input{graphics/allClassPerf.tex}}
+	\includegraphics[width=.7\textwidth]{allClassPerf}		
 \end{figure}
-
-Figure 4, on the following two pages, uses heat maps to show variance in the SVM confidence scores from the most recent year available for all four regime dimensions: 2012 for democracy and 2010 for the three authoritarian forms. These confidence scores indicate the distance and direction of each case from the hyperplane used to classify the set of observations into 0s and 1s. The probabilities used in the earlier summaries are derived from them, but we choose to map the raw confidence scores because they exhibit more variance than the probabilities and are therefore easier to visualize in this form.
-
-\begin{figure}[!t]
-	\begin{tabular}{ll}
-		\subfloat[][Democracy]{
-			\includegraphics[width=.5\textwidth]{map1}
-			\label{fig:mapdem}} &
-		\subfloat[][Monarchy]{
-			\includegraphics[width=.5\textwidth]{map2}
-			\label{fig:mapmon}} \\
-		\subfloat[][Military Rule]{
-			\includegraphics[width=.5\textwidth]{map3}
-			\label{fig:mapmilrule}} &
-		\subfloat[][One Party Rule]{
-			\includegraphics[width=.5\textwidth]{map4}
-			\label{fig:maponeparty}}
-	\end{tabular}
-\caption{Heat Maps of Out-of-Sample Confidence Scores from Support Vector Machines (SVM) of Four Regime Types.}
-\end{figure}
-
-On the whole, cases fall out as we would expect them to. The results seem valid on their face. For example, the democracy classifier confidently identifies Western Europe, Canada, Australia, and New Zealand as democracies; shows interesting variations in Eastern Europe and Latin America; and confidently identifies nearly all of the rest of the world as non-democracies (defined for this task as a Polity score of 10). Meanwhile, the monarchy model correctly identifies most of the countries of the Arabian Peninsula, Jordan, and Morocco as monarchies and the rest of the world as not. The military rule classifier sees Myanmar, Pakistan, and (more surprisingly) Algeria as likely cases in 2010, and is less certain about the absence of military rule in several West African and Middle Eastern countries than in the rest of the world. The map of results from the one-party rule classifier is probably the least informative because it is missing data for a few critical cases, including China and North Korea. Still, it seems to do well with the rest of the world, including confident identification of one-party regimes in Syria, Vietnam, Laos, Turkmenistan, and Uzbekistan and midrange values for Iran, Kazakhstan, Libya, Eritrea, and Myanmar.
-
-overall performance
-
-
-
-separation plots
+\FloatBarrier
 
 \begin{figure}[ht]
 	\centering
 	\begin{tabular}{ll}
     \hspace{-7mm}	
-    \subfloat[][Polity$=$7]{
-		\resizebox{0.5\textwidth}{!}{\input{graphics/polGe7_sep.tex}}	
-        \label{fig:sep7}} &
-    \subfloat[][Polity$=$8]{
-		\resizebox{0.5\textwidth}{!}{\input{graphics/polGe8_sep.tex}}	
-        \label{fig:sep8}} \\
+    \subfloat[][Polity$=$ -10 -- -6]{
+		\resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat1_All_sep.tex}}	
+        \label{fig:sepp1}} &
+	\subfloat[][-5 -- 0]{
+		\resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat2_All_sep.tex}}	
+        \label{fig:sepp2}} \\
 	\hspace{-7mm}	
-    \subfloat[][Polity$=$9]{
-		\resizebox{0.5\textwidth}{!}{\input{graphics/polGe9_sep.tex}}	
-        \label{fig:sep9}} &
-    \subfloat[][Polity$=$10]{
-		\resizebox{0.5\textwidth}{!}{\input{graphics/polGe10_sep.tex}}	
-        \label{fig:sep10}}
+    \subfloat[][1 -- 5]{
+		\resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat3_All_sep.tex}}	
+        \label{fig:sepp3}} &
+    \subfloat[][6 -- 10]{
+		\resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat4_All_sep.tex}}	
+        \label{fig:sepp4}}
     \end{tabular}
     \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
 \end{figure}
 \FloatBarrier
 
-maps
+\begin{figure}[ht]
+	\centering
+	\begin{tabular}{l}
+    \hspace{-7mm}	
+    \subfloat[][Military]{
+		\resizebox{0.33\textwidth}{!}{\input{graphics/military_All_sep.tex}}	
+        \label{fig:sepmil}} &
+    \subfloat[][Monarchy]{
+		\resizebox{0.33\textwidth}{!}{\input{graphics/monarchy_All_sep.tex}}	
+        \label{fig:sepmon}} &
+    \subfloat[][Party]{
+		\resizebox{0.33\textwidth}{!}{\input{graphics/party_All_sep.tex}}	
+        \label{fig:sepparty}}
+    \end{tabular}
+    \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
+\end{figure}
+\FloatBarrier
+
+** Then go into features that predict classes again using word clouds
 
 \begin{figure}[ht]
 	\centering
-	\vspace{-7mm}
-	\begin{tabular}{ll}
-    \hspace{-7mm}	
-    \subfloat[][Polity$=$7]{
-		\includegraphics[width=0.5\textwidth]{polGe7_2012_map}
-        \label{fig:map7}} &
-    \subfloat[][Polity$=$8]{
-		\includegraphics[width=0.5\textwidth]{polGe8_2012_map}
-        \label{fig:map8}} \\
-	\hspace{-7mm}	
-    \subfloat[][Polity$=$9]{
-		\includegraphics[width=0.5\textwidth]{polGe9_2012_map}
-        \label{fig:map9}} &
-    \subfloat[][Polity$=$10]{
-		\includegraphics[width=0.5\textwidth]{polGe10_2012_map}
-        \label{fig:map10}}
-    \end{tabular}
-    \caption{Heat Maps of Out-of-Sample Predicted Probabilities from Support Vector Machines (SVM) of Four Regime Types.}
+	\includegraphics[width=.7\textwidth]{polCat_wrdCloud}
 \end{figure}
 \FloatBarrier
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.7\textwidth]{bin_wrdCloud}
+\end{figure}
+\FloatBarrier
+
+** Discussion of what we are actually capturing here....
+
+** Provide maps to give some context of how we are classifying countries and keep Jay's comments about it in there
+
+The histograms in Figures 1A and 1B, on the following two pages, summarize the distribution of the out-of-sample predicted probabilities from SVM and logistic regression, respectively, for each of the four regime types we have explored so far.  The plots for the SVM estimates show sharp differentiation among cases, especially for the three authoritarian dimensions. Nearly all cases score very close to 0 or 1, producing bimodal distributions with steep peaks and few observations in between them. By contrast, the plots for the predicted probabilities from logistic regression are all unimodal, with a peak close to 0, maximum values much lower than 1, and thicker tails than the SVM output. 
+
+If we compare these predicted probabilities to the observed values in the test set, we see that these classifiers are doing a very good job discriminating between 1s and 0s on the observed values for all four of the regime types. The column chart in Figure 2 summarizes the out-of-sample accuracy of SVM and logistic regression for each of the four types. SVM consistently outperforms logistic regression and produces extremely good results overall, albeit with some variation across the four types. For the three authoritarian types, precision (the proportion of cases classified as positive that actually belong there) was better than recall (the proportion of positive cases that were correctly classified), but that pattern is reversed for democracy. Logistic regression does noticeably poorer for all four types than SVM, but still not terribly.
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{0.7\textwidth}{!}{\input{graphics/polCat_probDist.tex}}	
+	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{0.7\textwidth}{!}{\input{graphics/bin_probDist.tex}}	
+	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+\end{figure}
+
+Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in Figure 3 reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
+
+Figure 4, on the following two pages, uses heat maps to show variance in the SVM confidence scores from the most recent year available for all four regime dimensions: 2012 for democracy and 2010 for the three authoritarian forms. These confidence scores indicate the distance and direction of each case from the hyperplane used to classify the set of observations into 0s and 1s. The probabilities used in the earlier summaries are derived from them, but we choose to map the raw confidence scores because they exhibit more variance than the probabilities and are therefore easier to visualize in this form.
+
+\begin{figure}[!t]
+	\begin{tabular}{ll}
+		\subfloat[][Polity$=$ -10 -- -6]{
+			\includegraphics[width=.5\textwidth]{polCat_cat1_2012_map}
+			\label{fig:mapp1}} &
+		\subfloat[][-5 -- 0]{
+			\includegraphics[width=.5\textwidth]{polCat_cat2_2012_map}
+			\label{fig:mapp2}} \\
+		\subfloat[][1 -- 5]{
+			\includegraphics[width=.5\textwidth]{polCat_cat3_2012_map}
+			\label{fig:mapp3}} &
+		\subfloat[][6 -- 10]{
+			\includegraphics[width=.5\textwidth]{polCat_cat4_2012_map}
+			\label{fig:mapp4}}
+	\end{tabular}
+\caption{Heat Maps of Out-of-Sample Confidence Scores from Support Vector Machines (SVM) of Four Regime Types.}
+\end{figure}
+\FloatBarrier
+
+\begin{figure}[!t]
+	\begin{tabular}{ll}
+		\subfloat[][Military]{
+			\includegraphics[width=.5\textwidth]{military_2010_map}
+			\label{fig:mapmil}} &
+		\subfloat[][Monarchy]{
+			\includegraphics[width=.5\textwidth]{monarchy_2010_map}
+			\label{fig:mapmon}} \\
+		\subfloat[][Party]{
+			\includegraphics[width=.5\textwidth]{party_2010_map}
+			\label{fig:mapparty}}
+	\end{tabular}
+\caption{Heat Maps of Out-of-Sample Confidence Scores from Support Vector Machines (SVM) of Four Regime Types.}
+\end{figure}
+\FloatBarrier
+
+On the whole, cases fall out as we would expect them to. The results seem valid on their face. For example, the democracy classifier confidently identifies Western Europe, Canada, Australia, and New Zealand as democracies; shows interesting variations in Eastern Europe and Latin America; and confidently identifies nearly all of the rest of the world as non-democracies (defined for this task as a Polity score of 10). Meanwhile, the monarchy model correctly identifies most of the countries of the Arabian Peninsula, Jordan, and Morocco as monarchies and the rest of the world as not. The military rule classifier sees Myanmar, Pakistan, and (more surprisingly) Algeria as likely cases in 2010, and is less certain about the absence of military rule in several West African and Middle Eastern countries than in the rest of the world. The map of results from the one-party rule classifier is probably the least informative because it is missing data for a few critical cases, including China and North Korea. Still, it seems to do well with the rest of the world, including confident identification of one-party regimes in Syria, Vietnam, Laos, Turkmenistan, and Uzbekistan and midrange values for Iran, Kazakhstan, Libya, Eritrea, and Myanmar.
+
+Also track changes over time
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{0.7\textwidth}{!}{\input{graphics/polCat_perfChange.tex}}	
+	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{0.7\textwidth}{!}{\input{graphics/monarchy_perfChange.tex}}	
+	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+\end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\resizebox{0.7\textwidth}{!}{\input{graphics/military_perfChange.tex}}	
+	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+\end{figure}
 
 \section{Conclusion}
 

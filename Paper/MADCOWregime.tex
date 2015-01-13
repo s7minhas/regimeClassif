@@ -91,9 +91,11 @@ Once those documents had been ingested, we cleaned the texts and did some simple
 	\item Lemmatized the tokens to group together inflected forms.
 \end{itemize}
 
-Next, we calculated the tf-idf weight for each token and used these values as inputs to a series of binary classification models designed to identify features associated with each of a few regime types suggested by prior theory. Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. We focus on four regime types: (1) Democracy, (2) Military rule, (3) One-party rule, and (4) Monarchy.
+Next, we calculated the tf-idf weight for each token and used these values as inputs to a series of binary classification models designed to identify features associated with each of a few regime types suggested by prior theory. Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. 
 
-In principle, these categories are mutually exclusive. In practice, however, regime type is inherently uncertain, and any given regime may exhibit features of more than one of these ideal types at any time. Consistent with that idea, we decided to treat each of these archetypes not as different sections of a single plane but rather as distinct dimensions in a multi-dimensional regime space, and therefore train separate models for each category.
+\section{Research Design}
+
+We focus on four regime types: (1) Democracy, (2) Military rule, (3) One-party rule, and (4) Monarchy. In principle, these categories are mutually exclusive. In practice, however, regime type is inherently uncertain, and any given regime may exhibit features of more than one of these ideal types at any time. Consistent with that idea, we decided to treat each of these archetypes not as different sections of a single plane but rather as distinct dimensions in a multi-dimensional regime space, and therefore train separate models for each category.
 
 To train our regime classification models, we used pre-existing, human-coded data on national political regimes from a few widely-used sources: Polity; Geddes, Wright, and Franz (2014); and Hadenius and Teorell (2007; see also Wahman Teorell and Hadenius 2013). \nocite* For our democracy model, we created a four level ordinal variable that equals one if a country's Polity rating is between 10 to 6, 5 to 1, 0 to -5, and -6 to -10. For our models of military rule, one-party rule, and monarchy, we coded our binary indicators as one if both GWF and HT identified a country-year as belonging to that category and only that category and zero otherwise. In other words, we only considered a regime to be sufficiently representative of each of those authoritarian archetypes if both sources agreed that it belonged in that category and only that category. Conceptually, we want to learn from the cases of whose status we are confident and then leave it to the models to tell us how closely the more ambiguous cases approximate those archetypes.
 
@@ -118,11 +120,14 @@ In this example, the optimal separating hyperplane is designated by the solid li
 
 \section{Results}
 
-** Review probabilistic measures created
+The heatmap in figure \ref{fig:aggPerf} summarizes the accuracy of the SVM classifier across our variables of interest in the out of sample test periods. Accuracy provides a measure for the overall correctness of the model and is calculated as the sum of correct classifications divided by the total number of classifications. The accuracy statistic for polity is approximately 90\%, while the SVMS on monarchy, party, and military classify over 99\% of the cases correctly. 
 
-** Start this section with overview of out-of-sample performance
-
-** Separation plots, bar plots of aggregate statistics
+% > perfData
+%   gram                   cat Precision    Recall F-1 Score  Accuracy
+% 1  2_3 Polity (4 Categories) 0.8970771 0.8967468 0.8855067 0.8967468
+% 2  1_3              Monarchy 1.0000000 0.9230769 0.9600000 0.9965695
+% 3    1                 Party 1.0000000 0.9285714 0.9629630 0.9965695
+% 4    1              Military 1.0000000 0.6666667 0.8000000 0.9948542
 
 \begin{figure}[ht]
 	\centering
@@ -133,16 +138,7 @@ In this example, the optimal separating hyperplane is designated by the solid li
 \end{figure}
 \FloatBarrier
 
-\begin{figure}[ht]
-	\centering
-	% \resizebox{0.7\textwidth}{!}{\input{graphics/allClassPerf.tex}}
-	\includegraphics[width=.7\textwidth]{allClassPerf}		
-	\caption{Class-Level Performance}
-	\label{fig:classPerf}
-\end{figure}
-\FloatBarrier
-
-Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in Figure 3 reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
+Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in figures \ref{fig:polCatSep} and \ref{fig:binSep} reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
 
 \begin{figure}[ht]
 	\centering
@@ -152,21 +148,22 @@ Separation plots are also useful for visualizing the discriminatory power of the
     	\includegraphics[width=.4\textwidth]{polCat_cat1_All_sep}		
 		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat1_All_sep.tex}}	
         \label{fig:sepp1}} &
-	\subfloat[][-5 -- 0]{
-		\includegraphics[width=.4\textwidth]{polCat_cat2_All_sep}		
-		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat2_All_sep.tex}}	
-        \label{fig:sepp2}} \\
-	\hspace{-7mm}	
-    \subfloat[][1 -- 5]{
-    	\includegraphics[width=.4\textwidth]{polCat_cat3_All_sep}
-		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat3_All_sep.tex}}	
-        \label{fig:sepp3}} &
+	% \subfloat[][-5 -- 0]{
+	% 	\includegraphics[width=.4\textwidth]{polCat_cat2_All_sep}		
+	% 	% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat2_All_sep.tex}}	
+ %        \label{fig:sepp2}} \\
+	% \hspace{-7mm}	
+ %    \subfloat[][1 -- 5]{
+ %    	\includegraphics[width=.4\textwidth]{polCat_cat3_All_sep}
+	% 	% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat3_All_sep.tex}}	
+ %        \label{fig:sepp3}} &
     \subfloat[][6 -- 10]{
 	    \includegraphics[width=.4\textwidth]{polCat_cat4_All_sep}
 		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat4_All_sep.tex}}	
         \label{fig:sepp4}}
     \end{tabular}
     \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
+    \label{fig:polCatSep}
 \end{figure}
 \FloatBarrier
 
@@ -188,14 +185,38 @@ Separation plots are also useful for visualizing the discriminatory power of the
         \label{fig:sepparty}}
     \end{tabular}
     \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
+    \label{fig:binSep}
 \end{figure}
 \FloatBarrier
+
+Also track changes over time
+
+\begin{figure}[ht]
+	\centering
+	% \resizebox{0.7\textwidth}{!}{\input{graphics/polCat_perfChange.tex}}	
+	\includegraphics[width=.6\textwidth]{polCat_perfChange}
+	\caption{Change in polity ratings}
+\end{figure}
+
+% \begin{figure}[ht]
+% 	\centering
+% 	\includegraphics[width=.5\textwidth]{monarchy_perfChange}
+% 	% \resizebox{0.7\textwidth}{!}{\input{graphics/monarchy_perfChange.tex}}	
+% 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+% \end{figure}
+
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.6\textwidth]{military_perfChange}
+	% \resizebox{0.7\textwidth}{!}{\input{graphics/military_perfChange.tex}}	
+	\caption{Change in military ratings}
+\end{figure}
 
 ** Then go into features that predict classes again using word clouds
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=1\textwidth]{polCat_wrdCloud}
+	\includegraphics[width=.7\textwidth]{pol_bin_wrdCloud}
 \end{figure}
 \FloatBarrier
 
@@ -232,12 +253,12 @@ Figure 4, on the following two pages, uses heat maps to show variance in the SVM
 		\subfloat[][Polity$=$ -10 -- -6]{
 			\includegraphics[width=.5\textwidth]{polCat_cat1_2012_map}
 			\label{fig:mapp1}} &
-		\subfloat[][-5 -- 0]{
-			\includegraphics[width=.5\textwidth]{polCat_cat2_2012_map}
-			\label{fig:mapp2}} \\
-		\subfloat[][1 -- 5]{
-			\includegraphics[width=.5\textwidth]{polCat_cat3_2012_map}
-			\label{fig:mapp3}} &
+		% \subfloat[][-5 -- 0]{
+		% 	\includegraphics[width=.5\textwidth]{polCat_cat2_2012_map}
+		% 	\label{fig:mapp2}} \\
+		% \subfloat[][1 -- 5]{
+		% 	\includegraphics[width=.5\textwidth]{polCat_cat3_2012_map}
+		% 	\label{fig:mapp3}} &
 		\subfloat[][6 -- 10]{
 			\includegraphics[width=.5\textwidth]{polCat_cat4_2012_map}
 			\label{fig:mapp4}}
@@ -263,29 +284,6 @@ Figure 4, on the following two pages, uses heat maps to show variance in the SVM
 \FloatBarrier
 
 On the whole, cases fall out as we would expect them to. The results seem valid on their face. For example, the democracy classifier confidently identifies Western Europe, Canada, Australia, and New Zealand as democracies; shows interesting variations in Eastern Europe and Latin America; and confidently identifies nearly all of the rest of the world as non-democracies (defined for this task as a Polity score of 10). Meanwhile, the monarchy model correctly identifies most of the countries of the Arabian Peninsula, Jordan, and Morocco as monarchies and the rest of the world as not. The military rule classifier sees Myanmar, Pakistan, and (more surprisingly) Algeria as likely cases in 2010, and is less certain about the absence of military rule in several West African and Middle Eastern countries than in the rest of the world. The map of results from the one-party rule classifier is probably the least informative because it is missing data for a few critical cases, including China and North Korea. Still, it seems to do well with the rest of the world, including confident identification of one-party regimes in Syria, Vietnam, Laos, Turkmenistan, and Uzbekistan and midrange values for Iran, Kazakhstan, Libya, Eritrea, and Myanmar.
-
-Also track changes over time
-
-\begin{figure}[ht]
-	\centering
-	% \resizebox{0.7\textwidth}{!}{\input{graphics/polCat_perfChange.tex}}	
-	\includegraphics[width=.6\textwidth]{polCat_perfChange}
-	\caption{Change in polity ratings}
-\end{figure}
-
-% \begin{figure}[ht]
-% 	\centering
-% 	\includegraphics[width=.5\textwidth]{monarchy_perfChange}
-% 	% \resizebox{0.7\textwidth}{!}{\input{graphics/monarchy_perfChange.tex}}	
-% 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
-% \end{figure}
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=.6\textwidth]{military_perfChange}
-	% \resizebox{0.7\textwidth}{!}{\input{graphics/military_perfChange.tex}}	
-	\caption{Change in military ratings}
-\end{figure}
 
 \section{Conclusion}
 

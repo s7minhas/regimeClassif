@@ -112,38 +112,33 @@ polData=lapply(predData[1:3], function(catData){
 		})	
 	})
 
+# Combining relevant results
+polBinData=list(polData[[3]][[2]], binData[[1]], binData[[2]], binData[[3]])
+lapply(polBinData, head) # Check to make sure right files combined
+
 # Distribution of predictions
-polDist=buildDist(listData=polData[[3]],catOld=polCatName,catNew=polCatClean,binsize=.05)
-makePlot(polDist, 'polCat_probDist', tex=FALSE)
-binDist=buildDist(listData=binData, binsize=.05)
-makePlot(binDist, 'bin_probDist', tex=FALSE)
+polBinDist=buildDist(listData=polBinData, binsize=.05, 
+	catOld=c('military', 'monarchy', 'party', 'polCat_cat4'),
+	catNew=c('Military', 'Monarchy', 'Party', 'Polity (6-10)'))
+makePlot(polBinDist, 'pol_bin_probDist', tex=FALSE, hgt=4, wdh=8)
 
 # Separation plots
 yearPerf='All'
-lapply(polData[[3]], function(x){
-	polSep=sepPlots(x)
+lapply(polBinData, function(x){
+	polBinSep=sepPlots(x) 
 	filename=paste(names(x)[4],yearPerf,'sep',sep='_')
-	makePlot(polSep, filename, hgt=1, wdh=4, tex=FALSE) })
-lapply(binData, function(x){
-	binSep=sepPlots(x) 
-	filename=paste(names(x)[4],yearPerf,'sep',sep='_')
-	makePlot(binSep, filename, hgt=1.15, wdh=4, tex=FALSE) })
+	makePlot(polBinSep, filename, hgt=1.5, wdh=4, tex=FALSE) })	
 
 # Map
-lapply(polData[[3]], function(x){
-	polMap=buildMap(x, year=2012)
-	filename=paste(names(x)[4],2012,'map',sep='_')
-	makePlot(polMap, filename, hgt=4, wdh=7, tex=FALSE) })
-lapply(binData, function(x){
+lapply(polBinData, function(x){
 	binMap=buildMap(x, year=2010) 
 	filename=paste(names(x)[4],2010,'map',sep='_')
 	makePlot(binMap, filename, hgt=4, wdh=7, tex=FALSE) })
 
 # Find all countries where ratings change in test period
 colors=brewer.pal(9,'Blues')[c(5,9)]
-polChng=changeTrack(data=predData[[3]], colors, 
-	c("KYRGYZSTAN","THAILAND","PAKISTAN"),
-	yLimits=c(.8,4.2), yBreaks=1:4, yLabels=1:4)
+polChng=changeTrack(polBinData[[1]], colors, c("KYRGYZSTAN","THAILAND","PAKISTAN"),
+	adj=.25, yLimits=c(0,1), yLabels=c(0,1))
 makePlot(polChng, 'polCat_perfChange', hgt=4, wdh=7, tex=FALSE)
 
 lapply(binData, function(x){
@@ -153,8 +148,10 @@ lapply(binData, function(x){
 		makePlot(binChng, filename, hgt=4, wdh=7, tex=FALSE) } })
 
 # Showing variation ratings over tiem
+tmp=polBinData[[1]]
+tmp=tmp[which(tmp$cname %in% c("KYRGYZSTAN","THAILAND","PAKISTAN")),]
+ggplot(tmp, aes(x=year, y=probSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
+
 tmp=binData[[3]]
 tmp=tmp[which(tmp$CNTRY_NAME %in% c('Algeria', 'Pakistan', 'Thailand')),]
 ggplot(tmp, aes(x=year, y=probSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
-
-# Aggregate polity prob measures

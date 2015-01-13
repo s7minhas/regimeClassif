@@ -131,7 +131,6 @@ The heatmap in figure \ref{fig:aggPerf} summarizes the accuracy of the SVM class
 
 \begin{figure}[ht]
 	\centering
-	% \resizebox{0.7\textwidth}{!}{\input{graphics/allAggPerf.tex}}
 	\includegraphics[width=.7\textwidth]{allAggPerf}	
 	\caption{Aggregate Performance}
 	\label{fig:aggPerf}
@@ -143,49 +142,23 @@ Separation plots are also useful for visualizing the discriminatory power of the
 \begin{figure}[ht]
 	\centering
 	\begin{tabular}{ll}
-    \hspace{-7mm}	
-    \subfloat[][Polity$=$ -10 -- -6]{
-    	\includegraphics[width=.4\textwidth]{polCat_cat1_All_sep}		
-		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat1_All_sep.tex}}	
-        \label{fig:sepp1}} &
-	% \subfloat[][-5 -- 0]{
-	% 	\includegraphics[width=.4\textwidth]{polCat_cat2_All_sep}		
-	% 	% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat2_All_sep.tex}}	
- %        \label{fig:sepp2}} \\
-	% \hspace{-7mm}	
- %    \subfloat[][1 -- 5]{
- %    	\includegraphics[width=.4\textwidth]{polCat_cat3_All_sep}
-	% 	% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat3_All_sep.tex}}	
- %        \label{fig:sepp3}} &
-    \subfloat[][6 -- 10]{
+    \hspace{-7mm}
+    \subfloat[][Polity (6--10)]{
 	    \includegraphics[width=.4\textwidth]{polCat_cat4_All_sep}
-		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat4_All_sep.tex}}	
-        \label{fig:sepp4}}
-    \end{tabular}
-    \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
-    \label{fig:polCatSep}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[ht]
-	\centering
-	\begin{tabular}{lll}
-    \hspace{-7mm}	
+        \label{fig:sepp4}} &
     \subfloat[][Military]{
-    	\includegraphics[width=.33\textwidth]{military_All_sep}		
-		% \resizebox{0.33\textwidth}{!}{\input{graphics/military_All_sep.tex}}
-        \label{fig:sepmil}} &
+    	\includegraphics[width=.4\textwidth]{military_All_sep}
+        \label{fig:sepmil}} \\
+    \hspace{-7mm}
     \subfloat[][Monarchy]{
-    	\includegraphics[width=.33\textwidth]{monarchy_All_sep}		
-		% \resizebox{0.33\textwidth}{!}{\input{graphics/monarchy_All_sep.tex}}	
+    	\includegraphics[width=.4\textwidth]{monarchy_All_sep}		
         \label{fig:sepmon}} &
     \subfloat[][Party]{
-    	\includegraphics[width=.33\textwidth]{party_All_sep}		
-		% \resizebox{0.33\textwidth}{!}{\input{graphics/party_All_sep.tex}}	
+    	\includegraphics[width=.4\textwidth]{party_All_sep}		
         \label{fig:sepparty}}
     \end{tabular}
-    \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
-    \label{fig:binSep}
+    \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM)}
+    \label{fig:polBinSep}
 \end{figure}
 \FloatBarrier
 
@@ -193,7 +166,6 @@ Also track changes over time
 
 \begin{figure}[ht]
 	\centering
-	% \resizebox{0.7\textwidth}{!}{\input{graphics/polCat_perfChange.tex}}	
 	\includegraphics[width=.6\textwidth]{polCat_perfChange}
 	\caption{Change in polity ratings}
 \end{figure}
@@ -201,14 +173,12 @@ Also track changes over time
 % \begin{figure}[ht]
 % 	\centering
 % 	\includegraphics[width=.5\textwidth]{monarchy_perfChange}
-% 	% \resizebox{0.7\textwidth}{!}{\input{graphics/monarchy_perfChange.tex}}	
 % 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
 % \end{figure}
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=.6\textwidth]{military_perfChange}
-	% \resizebox{0.7\textwidth}{!}{\input{graphics/military_perfChange.tex}}	
 	\caption{Change in military ratings}
 \end{figure}
 
@@ -217,12 +187,6 @@ Also track changes over time
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=.7\textwidth]{pol_bin_wrdCloud}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[ht]
-	\centering
-	\includegraphics[width=1\textwidth]{bin_wrdCloud}
 \end{figure}
 \FloatBarrier
 
@@ -236,13 +200,7 @@ The histograms in Figures 1A and 1B, on the following two pages, summarize the d
 
 % \begin{figure}[ht]
 % 	\centering
-% 	\resizebox{0.7\textwidth}{!}{\input{graphics/polCat_probDist.tex}}	
-% 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
-% \end{figure}
-
-% \begin{figure}[ht]
-% 	\centering
-% 	\resizebox{0.7\textwidth}{!}{\input{graphics/bin_probDist.tex}}	
+% 	\resizebox{0.7\textwidth}{!}{\input{graphics/pol_bin_probDist.tex}}	
 % 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
 % \end{figure}
 
@@ -250,31 +208,17 @@ Figure 4, on the following two pages, uses heat maps to show variance in the SVM
 
 \begin{figure}[!t]
 	\begin{tabular}{ll}
-		\subfloat[][Polity$=$ -10 -- -6]{
-			\includegraphics[width=.5\textwidth]{polCat_cat1_2012_map}
-			\label{fig:mapp1}} &
-		% \subfloat[][-5 -- 0]{
-		% 	\includegraphics[width=.5\textwidth]{polCat_cat2_2012_map}
-		% 	\label{fig:mapp2}} \\
-		% \subfloat[][1 -- 5]{
-		% 	\includegraphics[width=.5\textwidth]{polCat_cat3_2012_map}
-		% 	\label{fig:mapp3}} &
-		\subfloat[][6 -- 10]{
-			\includegraphics[width=.5\textwidth]{polCat_cat4_2012_map}
-			\label{fig:mapp4}}
-	\end{tabular}
-\caption{Heat Maps of Out-of-Sample Confidence Scores from Support Vector Machines (SVM) of Four Regime Types.}
-\end{figure}
-\FloatBarrier
-
-\begin{figure}[!t]
-	\begin{tabular}{ll}
+	    \hspace{-7mm}
+		\subfloat[][Polity (6--10)]{
+			\includegraphics[width=.5\textwidth]{polCat_cat4_2010_map}
+			\label{fig:mapp4}} &
 		\subfloat[][Military]{
 			\includegraphics[width=.5\textwidth]{military_2010_map}
-			\label{fig:mapmil}} &
+			\label{fig:mapmil}} \\
+	    \hspace{-7mm}
 		\subfloat[][Monarchy]{
 			\includegraphics[width=.5\textwidth]{monarchy_2010_map}
-			\label{fig:mapmon}} \\
+			\label{fig:mapmon}} &
 		\subfloat[][Party]{
 			\includegraphics[width=.5\textwidth]{party_2010_map}
 			\label{fig:mapparty}}

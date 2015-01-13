@@ -35,33 +35,38 @@ cloudDat[[2]]=clean(cloudDat[[2]], polCat4_cat2Wrds)
 cloudDat[[3]]=clean(cloudDat[[3]], polCat4_cat3Wrds)
 cloudDat[[4]]=clean(cloudDat[[4]], polCat4_cat4Wrds)
 
-pdf(file=paste0(pathTex, '/polCat_wrdCloud.pdf'), height=5, width=7)
+maxWrds=Inf
+pdf(file=paste0(pathTex, '/polCat_wrdCloud.pdf'), height=4, width=7)
 par(mfrow=c(2,2))
 lapply(cloudDat, function(x){
 	set.seed(6886)
-	comparison.cloud(x,max.words=100,random.order=FALSE,title.size=1) })
+	comparison.cloud(x,max.words=maxWrds,random.order=FALSE,title.size=1) })
 par(mfrow=c(1,1))
 dev.off()
 
+maxWrds=100
 # Military
-pdf(file=paste0(pathTex, '/bin_wrdCloud.pdf'), height=5, width=7)
+pdf(file=paste0(pathTex, '/bin_wrdCloud.pdf'), height=4, width=7)
 par(mfrow=c(1,3))
 cloudDat=svmMats$'1military'[[1]]
 cloudDat=clean(cloudDat, remWords, remove=TRUE)
+colnames(cloudDat)=paste0('Military ', c('+', '-'))
 set.seed(6886)
-comparison.cloud(cloudDat, max.words=100, random.order=TRUE,title.size=1)
+comparison.cloud(cloudDat, max.words=maxWrds, random.order=TRUE,title.size=1)
 
 # Monarchy
 cloudDat=svmMats$'1_3monarchy'[[1]]
 cloudDat=clean(cloudDat, remWords, remove=TRUE)
+colnames(cloudDat)=paste0('Monarchy ', c('+', '-'))
 set.seed(6886)
-comparison.cloud(cloudDat, max.words=100, random.order=TRUE,title.size=1)
+comparison.cloud(cloudDat, max.words=maxWrds, random.order=TRUE,title.size=1)
 
 # Party
 cloudDat=svmMats$'1party'[[1]]
 cloudDat=clean(cloudDat, remWords, remove=TRUE)
+colnames(cloudDat)=paste0('Party ', c('+', '-'))
 set.seed(6886)
-comparison.cloud(cloudDat, max.words=100, random.order=TRUE,title.size=1)
+comparison.cloud(cloudDat, max.words=maxWrds, random.order=TRUE,title.size=1)
 
 dev.off()
 par(mfrow=c(1,1))

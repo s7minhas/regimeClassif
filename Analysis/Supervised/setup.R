@@ -40,10 +40,10 @@ getFilename=function(gram, cat, ext, path=pathData){
 		paste0('_train99-06_test07-10',ext))		
 	paste0(path, '/grams', gram, '/', cat, fileExt)	}
 
-makePlot = function(plt, fname, path=pathTex, hgt=5, wdh=7, tex=TRUE, stnds=FALSE, pdf=FALSE){
+makePlot = function(plt, fname, path=pathTex, hgt=5, wdh=7, tex=TRUE, stnds=FALSE){
 	wd=getwd(); setwd(path)
 	if(tex){tikz(file=paste0(fname,'.tex'), height=hgt, width=wdh, standAlone=stnds)}
-	if(pdf){pdf(file=paste0(fname,'.pdf'), height=hgt, width=wdh)}
+	if(!tex){pdf(file=paste0(fname,'.pdf'), height=hgt, width=wdh)}
 	print(plt); dev.off(); setwd(wd)
 }
 
@@ -101,7 +101,7 @@ polCat4_cat2Wrds=c('ruling party', 'security force', 'civil war', 'rebel force',
 	'constitutional democracy', 'constitutional monarchy', 'press generally respected',
 	'trial independent judiciary', 'legal system')
 
-polCat4_cat3Wrds=c('coup attempt', 'military backed civilian', 'child soldier',
+polCat4_cat3Wrds=c('coup attempt', 'military backed civilian',
 	'attempted coup', 'military backed', 'shortage judge', 
 	'outside government control', 'marginal government control', 'ruling coalition',
 	'emergency decree', 'following coup attempt', 'presidential candidate', 

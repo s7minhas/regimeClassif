@@ -52,6 +52,8 @@
 We describe the design and results of an experiment in using text-mining and machine-learning techniques to generate annual measures of national political regime types for all countries worldwide. Valid and reliable measures of country's forms of national government are essential to cross-national and dynamic analysis of many phenomena of great interest to political scientists, including civil war, interstate war, democratization, and coups d'\'{e}tat. Unfortunately, traditional measures of regime type are very expensive to produce, and observations for ambiguous cases are often sharply contested. Our project explores the ability of text-mining and machine-learning tools to generate useful measures of regime type. These measures would explicitly represent uncertainty about cases' membership in various categories and that could be produced and routinely updated at much lower cost than human-coded data. The initial results of our experiment are promising.
 \end{abstract} 
 
+\newpage
+\newpage\setcounter{page}{1} 
 \doublespacing
 
 \section{Introduction}
@@ -64,11 +66,9 @@ The ambiguity of these foundational concepts and the difficulty of observing the
 
 Of practical importance, the measures of regime type that are widely used today are expensive to produce. Polity IV is coded by hand, so the data set's producers must spend many hours locating and reviewing relevant documents for upwards of 160 countries \citep{marshall:jaggers:2002}. Freedom House's Freedom in the World depends on repeated surveys of a large number of subject-matter experts. The newly launched Varieties of Democracy project, or V-Dem, does the same \citep{coppedge:etal:2013}. Other widely cited data sets on national political regimes--including the Democracy and Dictatorship Dataset \citep{cheibub:etal:2010} and the Autocratic Regimes Dataset \citep{geddes:etal:2014} -- are not routinely updated, and the high cost of doing so appears to be one reason why. The Unified Democracy Scores (UDS) data set thoughtfully addresses the problem of uncertainty about one crucial regime concept \citep{pemstein:etal:2010}, but it is derived from, and therefore wholly dependent on, the human-coded data sets that are so labor intensive to produce.
 
-The project described in this paper explores ways to use text mining and other natural language processing techniques to generate measures of regime type, which have the added benefit of explicitly representing uncertainty about membership in categories of interest. By relying on texts that are routinely produced and publicly available, we expect to be able to generate probabilistic measures of regime type at much lower cost and, eventually, at much greater frequency. Tremendous growth in global reportage on democracy and human rights in the past 20 years has produced a massive corpus of texts on these topics that is ripe for content analysis. Concurrent improvements in computer software and hardware have made the process of analyzing large bodies of text much more efficient, and the field has matured with the development of a common set of methodologies with well-tested characteristics. Automated coding is completely transparent, so it avoids the unreproducible subjective elements of human coding. Once the source texts have been prepared, recoding to account for new theoretical or technological components can be done relatively quickly and efficiently. Last but not least, innovations in methods for content analysis are helping researchers use those tools to produce more interesting and more useful results, including a number of applications to political texts. These approaches are increasingly being used to generate political event data \cite{dorazio:etal:2014,king:lowe:2003,oconnor:etal:2013} and to measure things like political tensions \cite{chadefaux:2014}, partisan affiliation \citep{slapin:proksch:2010,yu:etal:2008}, and legislative agendas \citep{grimmer:2010}. To our knowledge, though, these techniques have not previously been applied to the task of measuring political regime types over time across many countries.
+This paper explores ways to use text mining and other natural language processing techniques to generate measures of regime type, which have the added benefit of explicitly representing uncertainty about membership in categories of interest. By relying on texts that are routinely produced and publicly available, we expect to be able to generate probabilistic measures of regime type at much lower cost and, eventually, at much greater frequency. Tremendous growth in global reportage on democracy and human rights in the past 20 years has produced a massive corpus of texts on these topics that is ripe for content analysis. Concurrent improvements in computer software and hardware have made the process of analyzing large bodies of text much more efficient, and the field has matured with the development of a common set of methodologies with well-tested characteristics. Automated coding is completely transparent, so it avoids the unreproducible subjective elements of human coding. Once the source texts have been prepared, recoding to account for new theoretical or technological components can be done relatively quickly and efficiently. Last but not least, innovations in methods for content analysis are helping researchers use those tools to produce more interesting and more useful results, including a number of applications to political texts. These approaches are increasingly being used to generate political event data \cite{dorazio:etal:2014,king:lowe:2003,oconnor:etal:2013} and to measure things like political tensions \cite{chadefaux:2014}, partisan affiliation \citep{slapin:proksch:2010,yu:etal:2008}, and legislative agendas \citep{grimmer:2010}. To our knowledge, though, these techniques have not previously been applied to the task of measuring political regime types over time across many countries.
 
-We start by selecting a corpus of familiar and well-structured texts describing politics and human-rights practices each year in all countries worldwide: the Country Reports on Human Rights Practices published by the U.S. Department of State, and Freedom House's Freedom in the World reports. After pre-processing those texts in a few conventional ways, we dumped the two reports for each country-year into a single bag of words and used text mining to extract features from those bags in the form of vectorized tokens that may be grossly described as word counts. Next, we used those vectorized tokens as inputs to a series of binary classification models representing a few different ideal-typical regime types --democracy, military rule, one-party rule, and monarchy--as observed in few widely used, human-coded data sets. Finally, we applied those classification models to a test set of country-years held out at the start to assess the models' ability to classify regime types in cases they had not previously ``seen.''
-
-Our initial results demonstrate that this strategy works. Our classifiers perform well out of sample, achieving high or very high precision and recall scores in cross-validation on all four of the regime types we have tried to measure so far. 
+We start by selecting a corpus of familiar and well-structured texts describing politics and human-rights practices each year in all countries worldwide: the Country Reports on Human Rights Practices published by the U.S. Department of State, and Freedom House's Freedom in the World reports. After pre-processing those texts, we merged the reports for each country-year into bags of n-grams and used text mining to extract features from those bags in the form of vectorized tokens. Next, we used those vectorized tokens as inputs to a series of binary classification models representing a few different ideal-typical regime types -- democracy, military rule, one-party rule, and monarchy -- as observed in few widely used, human-coded data sets. Finally, we applied those classification models to a test set of country-years held out at the start to assess the models' ability to classify regime types in cases they had not previously ``seen.'' Our results demonstrate that this strategy works. Our classifiers perform well out of sample, achieving high or very high precision and recall scores in cross-validation on all four of the regime types we have tried to measure so far. 
 
 \section{Raw Data}
 
@@ -91,29 +91,28 @@ Once those documents had been ingested, we cleaned the texts and did some simple
 	\item Lemmatized the tokens to group together inflected forms.
 \end{itemize}
 
-Next, we calculated the tf-idf weight for each token and used these values as inputs to binary classification models designed to identify features associated with each of a few regime types suggested by prior theory.\footnote{We also tried using unsupervised LDA (topic modeling) to extract features from the text at this stage, but regime classification models trained on the posterior topic predictions from LDA did not perform as well as the ones trained on just the vectorized tokens, so we are focusing for now on the latter.}  Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. We focus on four regime types: (1) Democracy, (2) Military rule, (3) One-party rule, and (4) Monarchy.
+Next, we calculated the tf-idf weight for each token and used these values as inputs to a series of binary classification models designed to identify features associated with each of a few regime types suggested by prior theory. Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. We focus on four regime types: (1) Democracy, (2) Military rule, (3) One-party rule, and (4) Monarchy.
 
 In principle, these categories are mutually exclusive. In practice, however, regime type is inherently uncertain, and any given regime may exhibit features of more than one of these ideal types at any time. Consistent with that idea, we decided to treat each of these archetypes not as different sections of a single plane but rather as distinct dimensions in a multi-dimensional regime space, and therefore train separate models for each category.
 
-To train our regime classification models, we used pre-existing, human-coded data on national political regimes from a few widely-used sources: Polity; Freedom House; Geddes, Wright, and Franz (2014); and Hadenius and Teorell (2007; see also Wahman Teorell and Hadenius 2013). \nocite* For our democracy model, we created a binary indicator that equals one if that country-year's Polity score is ten and zero otherwise. For our models of military rule, one-party rule, and monarchy, we coded our binary indicators as one if both GWF and HT identified a country-year as belonging to that category and only that category and zero otherwise. In other words, we only considered a regime to be sufficiently representative of each of those authoritarian archetypes if both sources agreed that it belonged in that category and only that category. The same logic drove our decision to set the standard for our democracy model so high. Conceptually, we want to learn from the cases of whose status we are confident and then leave it to the models to tell us how closely the more ambiguous cases approximate those archetypes.
+To train our regime classification models, we used pre-existing, human-coded data on national political regimes from a few widely-used sources: Polity; Geddes, Wright, and Franz (2014); and Hadenius and Teorell (2007; see also Wahman Teorell and Hadenius 2013). \nocite* For our democracy model, we created a four level ordinal variable that equals one if a country's Polity rating is between 10 to 6, 5 to 1, 0 to -5, and -6 to -10. For our models of military rule, one-party rule, and monarchy, we coded our binary indicators as one if both GWF and HT identified a country-year as belonging to that category and only that category and zero otherwise. In other words, we only considered a regime to be sufficiently representative of each of those authoritarian archetypes if both sources agreed that it belonged in that category and only that category. Conceptually, we want to learn from the cases of whose status we are confident and then leave it to the models to tell us how closely the more ambiguous cases approximate those archetypes.
 
-** Need to add description of polity-categorical variable
-
-** Show some descriptive statistics here comparing label distributions in the train and test samples. 
-
-To objectively estimate the performance of these classification models, we need to cross-validate them -- in other words, to apply them to a test set they haven't seen before and compare the resulting estimates to observed values. To do this, we split our data into training and test sets by year. For the democracy model, we have ``ground truth'' data from Polity through 2013, so we made 1999-2008 (n = 1,557) the training set and 2009-2013 (n = 707) the test set. For the three authoritarian archetypes, we only have ``ground truth'' data from GWF and HT through 2010, so we made 1999-2006 (n = 1,138) the training set and 2007-2010 (n = 583) the test set. 
-
-We tried three binary classifiers, two that are widely used in the machine learning community--Bernoulli na\:{a}ve Bayes and support vector machines (SVM)--and one parametric statistical model, logistic regression (logit). Between the two machine learning approaches, SVM consistently outperformed na\:{a}ve  Bayes, so we only discuss SVM and logit here. 
-
-** Recenter our discussion around SVM and move references to other models into footnotes. 
+To objectively estimate the performance of these classification models, we split our sample into a training and test set. For the democracy model, we have ``ground truth'' data from Polity through 2013, so we made 1999-2008 (n = 1,557) the training set and 2009-2013 (n = 707) the test set. For the three authoritarian archetypes, we only have ``ground truth'' data from GWF and HT through 2010, so we made 1999-2006 (n = 1,138) the training set and 2007-2010 (n = 583) the test set. 
 
 \section{Methods}
 
-Support Vector Machine is a supervised learning technique from the field of machine learning applicable to both classification and regression. The standard SVM takes a set of input data and predicts for each given input which of two possible classes. Support vector machines are learning systems that use hypothesis space of linear function in a high dimensional feature space, trained with a learning algorithm from optimization theory that implements a learning bias determine from statistical learning theory. 
+We use support vector machines (SVMs) to classify our text-based data sources. SVMs work by using a hyperplane that separates the classes of labeled input data with the maximum margin of separation \citep{vapnik2000nature,chang2011libsvm}. Documents on either side of the hyperplane correspond to the classes of the binary dependent variable, new documents are then classified according to which side of the hyperplane they are on.
+
+Figure \ref{fig:svmIntro} illustrates how a separating hyperplane may be drawn in the case of two features and perfect separability.\footnote{In real-world applications, however, training data are rarely perfectly separable. To deal with this we utilize soft-margin SVMs, which weight down the influence of data points that fall on the ``wrong'' side of the separating hyperplane.} The two classes of points are designated by the blue triangles and red circles. The goal of an SVM is to find the optimal separating hyperplane between the two classes of points that maximizes the margin between the classes' closest points. 
+
+In this example, the optimal separating hyperplane is designated by the solid line and the margins the dashed line. The points which fall on the boundaries are called support vectors, these are designated by a darker shade of red and blue. Having found this hyperplane for a given set of features enables us to then easily classify new observations based on their features. 
 
 \begin{figure}[ht]
 	\centering
-	\resizebox{0.7\textwidth}{!}{\input{graphics/svmIntro.tex}}	
+	\includegraphics[width=.5\textwidth]{svmIntro}
+	% \resizebox{0.5\textwidth}{!}{\input{graphics/svmIntro.tex}}	
+	\caption{SVM Illustration}
+	\label{fig:svmIntro}
 \end{figure}
 \FloatBarrier
 
@@ -129,6 +128,8 @@ Support Vector Machine is a supervised learning technique from the field of mach
 	\centering
 	% \resizebox{0.7\textwidth}{!}{\input{graphics/allAggPerf.tex}}
 	\includegraphics[width=.7\textwidth]{allAggPerf}	
+	\caption{Aggregate Performance}
+	\label{fig:aggPerf}
 \end{figure}
 \FloatBarrier
 
@@ -136,25 +137,33 @@ Support Vector Machine is a supervised learning technique from the field of mach
 	\centering
 	% \resizebox{0.7\textwidth}{!}{\input{graphics/allClassPerf.tex}}
 	\includegraphics[width=.7\textwidth]{allClassPerf}		
+	\caption{Class-Level Performance}
+	\label{fig:classPerf}
 \end{figure}
 \FloatBarrier
+
+Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in Figure 3 reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
 
 \begin{figure}[ht]
 	\centering
 	\begin{tabular}{ll}
     \hspace{-7mm}	
     \subfloat[][Polity$=$ -10 -- -6]{
-		\resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat1_All_sep.tex}}	
+    	\includegraphics[width=.4\textwidth]{polCat_cat1_All_sep}		
+		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat1_All_sep.tex}}	
         \label{fig:sepp1}} &
 	\subfloat[][-5 -- 0]{
-		\resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat2_All_sep.tex}}	
+		\includegraphics[width=.4\textwidth]{polCat_cat2_All_sep}		
+		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat2_All_sep.tex}}	
         \label{fig:sepp2}} \\
 	\hspace{-7mm}	
     \subfloat[][1 -- 5]{
-		\resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat3_All_sep.tex}}	
+    	\includegraphics[width=.4\textwidth]{polCat_cat3_All_sep}
+		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat3_All_sep.tex}}	
         \label{fig:sepp3}} &
     \subfloat[][6 -- 10]{
-		\resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat4_All_sep.tex}}	
+	    \includegraphics[width=.4\textwidth]{polCat_cat4_All_sep}
+		% \resizebox{0.5\textwidth}{!}{\input{graphics/polCat_cat4_All_sep.tex}}	
         \label{fig:sepp4}}
     \end{tabular}
     \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
@@ -163,16 +172,19 @@ Support Vector Machine is a supervised learning technique from the field of mach
 
 \begin{figure}[ht]
 	\centering
-	\begin{tabular}{l}
+	\begin{tabular}{lll}
     \hspace{-7mm}	
     \subfloat[][Military]{
-		\resizebox{0.33\textwidth}{!}{\input{graphics/military_All_sep.tex}}	
+    	\includegraphics[width=.33\textwidth]{military_All_sep}		
+		% \resizebox{0.33\textwidth}{!}{\input{graphics/military_All_sep.tex}}
         \label{fig:sepmil}} &
     \subfloat[][Monarchy]{
-		\resizebox{0.33\textwidth}{!}{\input{graphics/monarchy_All_sep.tex}}	
+    	\includegraphics[width=.33\textwidth]{monarchy_All_sep}		
+		% \resizebox{0.33\textwidth}{!}{\input{graphics/monarchy_All_sep.tex}}	
         \label{fig:sepmon}} &
     \subfloat[][Party]{
-		\resizebox{0.33\textwidth}{!}{\input{graphics/party_All_sep.tex}}	
+    	\includegraphics[width=.33\textwidth]{party_All_sep}		
+		% \resizebox{0.33\textwidth}{!}{\input{graphics/party_All_sep.tex}}	
         \label{fig:sepparty}}
     \end{tabular}
     \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM) of Polity}
@@ -183,13 +195,13 @@ Support Vector Machine is a supervised learning technique from the field of mach
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=.7\textwidth]{polCat_wrdCloud}
+	\includegraphics[width=1\textwidth]{polCat_wrdCloud}
 \end{figure}
 \FloatBarrier
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=.7\textwidth]{bin_wrdCloud}
+	\includegraphics[width=1\textwidth]{bin_wrdCloud}
 \end{figure}
 \FloatBarrier
 
@@ -197,23 +209,21 @@ Support Vector Machine is a supervised learning technique from the field of mach
 
 ** Provide maps to give some context of how we are classifying countries and keep Jay's comments about it in there
 
-The histograms in Figures 1A and 1B, on the following two pages, summarize the distribution of the out-of-sample predicted probabilities from SVM and logistic regression, respectively, for each of the four regime types we have explored so far.  The plots for the SVM estimates show sharp differentiation among cases, especially for the three authoritarian dimensions. Nearly all cases score very close to 0 or 1, producing bimodal distributions with steep peaks and few observations in between them. By contrast, the plots for the predicted probabilities from logistic regression are all unimodal, with a peak close to 0, maximum values much lower than 1, and thicker tails than the SVM output. 
-
 If we compare these predicted probabilities to the observed values in the test set, we see that these classifiers are doing a very good job discriminating between 1s and 0s on the observed values for all four of the regime types. The column chart in Figure 2 summarizes the out-of-sample accuracy of SVM and logistic regression for each of the four types. SVM consistently outperforms logistic regression and produces extremely good results overall, albeit with some variation across the four types. For the three authoritarian types, precision (the proportion of cases classified as positive that actually belong there) was better than recall (the proportion of positive cases that were correctly classified), but that pattern is reversed for democracy. Logistic regression does noticeably poorer for all four types than SVM, but still not terribly.
 
-\begin{figure}[ht]
-	\centering
-	\resizebox{0.7\textwidth}{!}{\input{graphics/polCat_probDist.tex}}	
-	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
-\end{figure}
+The histograms in Figures 1A and 1B, on the following two pages, summarize the distribution of the out-of-sample predicted probabilities from SVM and logistic regression, respectively, for each of the four regime types we have explored so far.  The plots for the SVM estimates show sharp differentiation among cases, especially for the three authoritarian dimensions. Nearly all cases score very close to 0 or 1, producing bimodal distributions with steep peaks and few observations in between them. By contrast, the plots for the predicted probabilities from logistic regression are all unimodal, with a peak close to 0, maximum values much lower than 1, and thicker tails than the SVM output. 
 
-\begin{figure}[ht]
-	\centering
-	\resizebox{0.7\textwidth}{!}{\input{graphics/bin_probDist.tex}}	
-	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
-\end{figure}
+% \begin{figure}[ht]
+% 	\centering
+% 	\resizebox{0.7\textwidth}{!}{\input{graphics/polCat_probDist.tex}}	
+% 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+% \end{figure}
 
-Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in Figure 3 reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
+% \begin{figure}[ht]
+% 	\centering
+% 	\resizebox{0.7\textwidth}{!}{\input{graphics/bin_probDist.tex}}	
+% 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+% \end{figure}
 
 Figure 4, on the following two pages, uses heat maps to show variance in the SVM confidence scores from the most recent year available for all four regime dimensions: 2012 for democracy and 2010 for the three authoritarian forms. These confidence scores indicate the distance and direction of each case from the hyperplane used to classify the set of observations into 0s and 1s. The probabilities used in the earlier summaries are derived from them, but we choose to map the raw confidence scores because they exhibit more variance than the probabilities and are therefore easier to visualize in this form.
 
@@ -258,20 +268,23 @@ Also track changes over time
 
 \begin{figure}[ht]
 	\centering
-	\resizebox{0.7\textwidth}{!}{\input{graphics/polCat_perfChange.tex}}	
-	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+	% \resizebox{0.7\textwidth}{!}{\input{graphics/polCat_perfChange.tex}}	
+	\includegraphics[width=.6\textwidth]{polCat_perfChange}
+	\caption{Change in polity ratings}
 \end{figure}
+
+% \begin{figure}[ht]
+% 	\centering
+% 	\includegraphics[width=.5\textwidth]{monarchy_perfChange}
+% 	% \resizebox{0.7\textwidth}{!}{\input{graphics/monarchy_perfChange.tex}}	
+% 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+% \end{figure}
 
 \begin{figure}[ht]
 	\centering
-	\resizebox{0.7\textwidth}{!}{\input{graphics/monarchy_perfChange.tex}}	
-	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
-\end{figure}
-
-\begin{figure}[ht]
-	\centering
-	\resizebox{0.7\textwidth}{!}{\input{graphics/military_perfChange.tex}}	
-	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+	\includegraphics[width=.6\textwidth]{military_perfChange}
+	% \resizebox{0.7\textwidth}{!}{\input{graphics/military_perfChange.tex}}	
+	\caption{Change in military ratings}
 \end{figure}
 
 \section{Conclusion}

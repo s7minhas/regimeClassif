@@ -32,4 +32,4 @@ tmp=tmp+theme(
 	axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),
 	panel.grid.major=element_blank(), panel.grid.minor=element_blank()
 	)
-makePlot(tmp, 'svmIntro', hgt=2, wdh=4, pdf=TRUE, tex=FALSE)
+makePlot(tmp, 'svmIntro', hgt=2, wdh=4, tex=FALSE)

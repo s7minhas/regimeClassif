@@ -40,6 +40,14 @@ getFilename=function(gram, cat, ext, path=pathData){
 		paste0('_train99-06_test07-10',ext))		
 	paste0(path, '/grams', gram, '/', cat, fileExt)	}
 
+cleanData = function(file){
+	data=read.csv(file)
+	data=data[which(data$data=='test'),]
+	data$cname = toupper(countrycode(data$country, 'country.name', 'country.name'))
+	data$CNTRY_NAME = panel$CNTRY_NAME[match(data$cname, panel$cname)]
+	return( data )	
+}
+
 makePlot = function(plt, fname, path=pathTex, hgt=5, wdh=7, tex=TRUE, stnds=FALSE){
 	wd=getwd(); setwd(path)
 	if(tex){tikz(file=paste0(fname,'.tex'), height=hgt, width=wdh, standAlone=stnds)}
@@ -50,7 +58,10 @@ makePlot = function(plt, fname, path=pathTex, hgt=5, wdh=7, tex=TRUE, stnds=FALS
 # Global vars
 grams=c('2_4', '1_3', '2_3', '3_5', '1_3', '1', '1')
 vars=c('polCat3', 'polCat7', 'polCat', 'democ', 'monarchy', 'party', 'military')
-varsClean=c('Polity (3 Categories)', 'Polity (7 Categories)', 'Polity (4 Categories)', 
+# varsClean=c('Polity (3 Categories)', 'Polity (7 Categories)', 'Polity (4 Categories)', 
+# 	'Democracy', 'Monarchy', 'Party', 'Military')
+# Hack
+varsClean=c('Polity (3 Categories)', 'Polity (7 Categories)', 'Polity (6-10)', 
 	'Democracy', 'Monarchy', 'Party', 'Military')
 sels=c(3,5:7)
 

@@ -1,14 +1,6 @@
 # Helpful libaries and functions
 source('~/Research/WardProjects/regimeClassif/Analysis/Supervised/setup.R')
 
-cleanData = function(file){
-	data=read.csv(file)
-	data=data[which(data$data=='test'),]
-	data$cname = toupper(countrycode(data$country, 'country.name', 'country.name'))
-	data$CNTRY_NAME = panel$CNTRY_NAME[match(data$cname, panel$cname)]
-	return( data )	
-}
-
 buildDist = function(listData, year='All', var='probSVM', catOld=NULL, catNew=NULL, binsize=.1){
 	data=lapply(listData, function(x){ y=x[,c('year', var)]; y$var=names(x)[4]; y } )
 	data=do.call('rbind', data)
@@ -29,7 +21,7 @@ sepPlots=function(data, year='All', ggalpha=.7){
 	sepData=data[,c(2,4,6)]; names(sepData)[2]=c('val')
 	if(year!='All'){sepData=sepData[sepData$year==year,]}
 	sepData=sepData[order(sepData$probSVM),c(2:3)]
-	col=brewer.pal(9, 'Blues')[c(1,6)]
+	col=brewer.pal(9, 'Blues')[c(1,5)]
 	tmp=ggplot(data=sepData,aes(ymin=0,ymax=1,xmin=0,xmax=length(probSVM),x=1:length(probSVM),y=probSVM))
 	tmp=tmp + geom_rect(fill=col[1]) + geom_linerange(aes(color=factor(val))) + geom_line(lwd=0.8)
 	tmp=tmp + scale_color_manual(values=col)
@@ -120,11 +112,11 @@ polData=lapply(predData[1:3], function(catData){
 		})	
 	})
 
-# # Distribution of predictions
-# polDist=buildDist(listData=polData[[3]],catOld=polCatName,catNew=polCatClean,binsize=.05)
-# makePlot(polDist, 'polCat_probDist', tex=FALSE)
-# binDist=buildDist(listData=binData, binsize=.05)
-# makePlot(binDist, 'bin_probDist', tex=FALSE)
+# Distribution of predictions
+polDist=buildDist(listData=polData[[3]],catOld=polCatName,catNew=polCatClean,binsize=.05)
+makePlot(polDist, 'polCat_probDist', tex=FALSE)
+binDist=buildDist(listData=binData, binsize=.05)
+makePlot(binDist, 'bin_probDist', tex=FALSE)
 
 # Separation plots
 yearPerf='All'
@@ -135,32 +127,34 @@ lapply(polData[[3]], function(x){
 lapply(binData, function(x){
 	binSep=sepPlots(x) 
 	filename=paste(names(x)[4],yearPerf,'sep',sep='_')
-	makePlot(binSep, filename, hgt=1.1, wdh=4, tex=FALSE) })
+	makePlot(binSep, filename, hgt=1.15, wdh=4, tex=FALSE) })
 
 # Map
-# lapply(polData[[3]], function(x){
-# 	polMap=buildMap(x, year=2012)
-# 	filename=paste(names(x)[4],2012,'map',sep='_')
-# 	makePlot(polMap, filename, hgt=4, wdh=7, tex=FALSE) })
-# lapply(binData, function(x){
-# 	binMap=buildMap(x, year=2010) 
-# 	filename=paste(names(x)[4],2010,'map',sep='_')
-# 	makePlot(binMap, filename, hgt=4, wdh=7, tex=FALSE) })
+lapply(polData[[3]], function(x){
+	polMap=buildMap(x, year=2012)
+	filename=paste(names(x)[4],2012,'map',sep='_')
+	makePlot(polMap, filename, hgt=4, wdh=7, tex=FALSE) })
+lapply(binData, function(x){
+	binMap=buildMap(x, year=2010) 
+	filename=paste(names(x)[4],2010,'map',sep='_')
+	makePlot(binMap, filename, hgt=4, wdh=7, tex=FALSE) })
 
-# # Find all countries where ratings change in test period
-# colors=brewer.pal(9,'Blues')[c(5,9)]
-# polChng=changeTrack(data=predData[[3]], colors, 
-# 	c("KYRGYZSTAN","THAILAND","PAKISTAN"),
-# 	yLimits=c(.8,4.2), yBreaks=1:4, yLabels=1:4)
-# makePlot(polChng, 'polCat_perfChange', hgt=4, wdh=7, tex=FALSE)
+# Find all countries where ratings change in test period
+colors=brewer.pal(9,'Blues')[c(5,9)]
+polChng=changeTrack(data=predData[[3]], colors, 
+	c("KYRGYZSTAN","THAILAND","PAKISTAN"),
+	yLimits=c(.8,4.2), yBreaks=1:4, yLabels=1:4)
+makePlot(polChng, 'polCat_perfChange', hgt=4, wdh=7, tex=FALSE)
 
-# lapply(binData, function(x){
-# 	binChng=changeTrack(x, colors, adj=.25, yLimits=c(0,1), yLabels=c(0,1))
-# 	if(!is.character(binChng)){
-# 		filename=paste(names(x)[4],'perfChange',sep='_')
-# 		makePlot(binChng, filename, hgt=4, wdh=7, tex=FALSE) } })
+lapply(binData, function(x){
+	binChng=changeTrack(x, colors, adj=.25, yLimits=c(0,1), yLabels=c(0,1))
+	if(!is.character(binChng)){
+		filename=paste(names(x)[4],'perfChange',sep='_')
+		makePlot(binChng, filename, hgt=4, wdh=7, tex=FALSE) } })
 
-# # Showing variation ratings over tiem
-# tmp=binData[[3]]
-# tmp=tmp[which(tmp$CNTRY_NAME %in% c('Algeria', 'Pakistan', 'Thailand')),]
-# ggplot(tmp, aes(x=year, y=probSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
+# Showing variation ratings over tiem
+tmp=binData[[3]]
+tmp=tmp[which(tmp$CNTRY_NAME %in% c('Algeria', 'Pakistan', 'Thailand')),]
+ggplot(tmp, aes(x=year, y=probSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
+
+# Aggregate polity prob measures

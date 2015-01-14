@@ -37,10 +37,11 @@ colnames(cloudDat[[3]])=paste0('Monarchy ', c('+', '-'))
 colnames(cloudDat[[4]])=paste0('Party ', c('+', '-'))
 
 maxWrds=100
-pdf(file=paste0(pathTex, '/pol_bin_wrdCloud.pdf'), height=4, width=7)
+plotColors=rev(brewer.pal(9, 'RdBu')[c(2,8)])
+# pdf(file=paste0(pathTex, '/pol_bin_wrdCloud.pdf'), height=4, width=7)
 par(mfrow=c(2,2))
 lapply(cloudDat, function(x){
 	set.seed(6886)
-	comparison.cloud(x,max.words=maxWrds,random.order=FALSE,title.size=1) })
+	comparison.cloud(x,max.words=maxWrds,random.order=FALSE,title.size=1,colors=plotColors) })
 par(mfrow=c(1,1))
-dev.off()
+# dev.off()

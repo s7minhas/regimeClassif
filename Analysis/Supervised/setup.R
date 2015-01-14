@@ -67,7 +67,6 @@ sels=c(3,5:7)
 
 polCatName=c("polCat_cat1","polCat_cat2","polCat_cat3","polCat_cat4")
 polCatClean=c('-10 to -6', '-5 to 0', '1 to 5', '6 to 10')
-
 # Words for word clouds
 clean=function(data, words, mult=5, remove=FALSE){
 	if(!remove){data=data[which(rownames(data) %in% words),]}

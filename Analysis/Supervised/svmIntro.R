@@ -24,9 +24,12 @@ suppData=data.frame(rbind(
 suppData=convNumDcol(suppData, c('xS', 'yS'))
 
 # Plot
-tmp=ggplot()+geom_point(data=ggData, aes(x=xA, y=yA, pch=class, color=class), size=4, alpha=.6)
+plotColors=brewer.pal(9, 'RdBu')[c(2,8)]
+
+tmp=ggplot()+geom_point(data=ggData, aes(x=xA, y=yA, pch=class, color=class), size=4, alpha=.5)
 tmp=tmp+geom_abline(data=lineData, aes(intercept=ints, slope=slope), linetype=c(1,2,2))
 tmp=tmp+geom_point(data=suppData, aes(x=xS, y=yS, pch=cS, color=cS), size=4)
+tmp=tmp+scale_color_manual(values=plotColors)
 tmp=tmp+theme(
 	legend.position='none',
 	axis.text=element_blank(), axis.ticks=element_blank(), axis.title=element_blank(),

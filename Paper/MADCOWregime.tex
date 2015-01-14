@@ -122,12 +122,11 @@ In this example, the optimal separating hyperplane is designated by the solid li
 
 The heatmap in figure \ref{fig:aggPerf} summarizes the accuracy of the SVM classifier across our variables of interest in the out of sample test periods. Accuracy provides a measure for the overall correctness of the model and is calculated as the sum of correct classifications divided by the total number of classifications. The accuracy statistic for polity is approximately 90\%, while the SVMS on monarchy, party, and military classify over 99\% of the cases correctly. 
 
-% > perfData
-%   gram                   cat Precision    Recall F-1 Score  Accuracy
-% 1  2_3 Polity (4 Categories) 0.8970771 0.8967468 0.8855067 0.8967468
-% 2  1_3              Monarchy 1.0000000 0.9230769 0.9600000 0.9965695
-% 3    1                 Party 1.0000000 0.9285714 0.9629630 0.9965695
-% 4    1              Military 1.0000000 0.6666667 0.8000000 0.9948542
+%   gram           cat Precision    Recall F-1 Score  Accuracy
+% 1  2_3 Polity (6-10)       0.9 1.0000000  0.950000 0.9349364
+% 2  1_3      Monarchy       1.0 0.9230769  0.960000 0.9965695
+% 3    1         Party       1.0 0.9285714  0.962963 0.9965695
+% 4    1      Military       1.0 0.6666667  0.800000 0.9948542
 
 \begin{figure}[ht]
 	\centering
@@ -166,7 +165,7 @@ Also track changes over time
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=.6\textwidth]{polCat_perfChange}
+	\includegraphics[width=.8\textwidth]{polCat_perfChange}
 	\caption{Change in polity ratings}
 \end{figure}
 
@@ -178,7 +177,7 @@ Also track changes over time
 
 \begin{figure}[ht]
 	\centering
-	\includegraphics[width=.6\textwidth]{military_perfChange}
+	\includegraphics[width=.8\textwidth]{military_perfChange}
 	\caption{Change in military ratings}
 \end{figure}
 
@@ -231,7 +230,7 @@ On the whole, cases fall out as we would expect them to. The results seem valid 
 
 \section{Conclusion}
 
-The results described here demonstrate that it is possible to generate useful fuzzy-set measures of political regime type from publicly available texts at relatively low cost. An initial application using features derived from a small and corpus produced out-of-sample estimates that closely match observed data on several very different regime types.
+The results described here demonstrate that it is possible to generate measures of political regime type from publicly available texts at relatively low cost. An initial application using features derived from a small and corpus produced out-of-sample estimates that closely match observed data on several very different regime types.
 
 The out-of-sample classification accuracy of our models is very good, but that doesn't mean we are satisfied with the output and ready to move to data production. We have two main concerns about the results of this initial implementation. First, the texts included in the relatively small corpus we have assembled so far only cover a narrow set of human-rights practices and political procedures. These practices and procedures are all fundamental to how we conceive and observe political regime type, but they aren't the only things that are.
 

@@ -114,7 +114,6 @@ polData=lapply(predData[1:3], function(catData){
 
 # Combining relevant results
 polBinData=list(polData[[3]][[2]], binData[[1]], binData[[2]], binData[[3]])
-lapply(polBinData, head) # Check to make sure right files combined
 
 # Distribution of predictions
 polBinDist=buildDist(listData=polBinData, binsize=.05, 
@@ -127,7 +126,7 @@ yearPerf='All'
 lapply(polBinData, function(x){
 	polBinSep=sepPlots(x) 
 	filename=paste(names(x)[4],yearPerf,'sep',sep='_')
-	makePlot(polBinSep, filename, hgt=1.5, wdh=4, tex=FALSE) })	
+	makePlot(polBinSep, filename, hgt=1.3, wdh=4, tex=FALSE) })	
 
 # Map
 lapply(polBinData, function(x){
@@ -136,16 +135,16 @@ lapply(polBinData, function(x){
 	makePlot(binMap, filename, hgt=4, wdh=7, tex=FALSE) })
 
 # Find all countries where ratings change in test period
-colors=brewer.pal(9,'Blues')[c(5,9)]
+colors=brewer.pal(9,'RdBu')[c(2,8)]
 polChng=changeTrack(polBinData[[1]], colors, c("KYRGYZSTAN","THAILAND","PAKISTAN"),
 	adj=.25, yLimits=c(0,1), yLabels=c(0,1))
-makePlot(polChng, 'polCat_perfChange', hgt=4, wdh=7, tex=FALSE)
+makePlot(polChng, 'polCat_perfChange', hgt=3.5, wdh=8, tex=FALSE)
 
 lapply(binData, function(x){
 	binChng=changeTrack(x, colors, adj=.25, yLimits=c(0,1), yLabels=c(0,1))
 	if(!is.character(binChng)){
 		filename=paste(names(x)[4],'perfChange',sep='_')
-		makePlot(binChng, filename, hgt=4, wdh=7, tex=FALSE) } })
+		makePlot(binChng, filename, hgt=3.5, wdh=8, tex=FALSE) } })
 
 # Showing variation ratings over tiem
 tmp=polBinData[[1]]

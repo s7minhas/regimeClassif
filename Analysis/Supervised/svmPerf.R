@@ -52,17 +52,17 @@ perfData[1,'Accuracy']=sum(pol4$polCat_cat4==pol4$predSVM)/nrow(pol4)
 
 # Reshape data for plotting
 ggData=melt(perfData[,2:ncol(perfData)], id='cat')
-col=brewer.pal(9, 'Blues')[c(3,7)]
-ggData=ggData[which(ggData$variable=='Accuracy'),]
+col=brewer.pal(9, 'RdBu')[c(3,7)]
+# ggData=ggData[which(ggData$variable=='Accuracy'),]
 tmp=ggplot(ggData, aes(y=variable, x=cat)) 
 tmp=tmp + scale_y_discrete('',expand=c(0,0)) + scale_x_discrete('',expand=c(0,0))
 tmp=tmp + geom_tile(aes(fill=value), colour='white')
 tmp=tmp + scale_fill_gradient(low=col[1], high=col[2], limits=c(min(ggData$value),1))
 tmp=tmp + theme(axis.ticks=element_blank(), 
-  legend.position='top', legend.key.width=unit(1,'cm'), legend.title=element_blank(),
+  legend.position='top', legend.key.width=unit(1.7,'cm'), legend.title=element_blank(),
   panel.border = element_blank(),
   panel.grid.major = element_blank(), panel.grid.minor = element_blank() )
-makePlot(tmp, 'allAggPerf', tex=FALSE, hgt=2, wdh=7)
+makePlot(tmp, 'allAggPerf', tex=FALSE)
 
 # Plotting
 ggData=melt(classData, id=c('class', 'cat'))

@@ -188,10 +188,7 @@ demTrainFile='train_99-08_Shr-FH_wdow0.json'
 demTestFile='test_09-13_Shr-FH_wdow0.json'
 demLabelFile='demData_99-13.csv'
 demTestYear=2009
-demLabelCol1=4; demLabelName1='democ'
-demLabelCol2=10; demLabelName2='polCat'
-demLabelCol3=11; demLabelName3='polCat3'
-demLabelCol4=12; demLabelName4='polCat7'
+demLabelCol=7; demLabelName='polGe7'
 
 mmpTrainFile='train_99-06_Shr-FH_wdow0.json'
 mmpTestFile='test_07-10_Shr-FH_wdow0.json'
@@ -202,20 +199,8 @@ mmpLabelCol2=4; mmpLabelName2='military'
 mmpLabelCol3=5; mmpLabelName3='party'
 
 params=[
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol1, demLabelName1),
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol2, demLabelName2),
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol3, demLabelName3),
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol4, demLabelName4),	
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol, demLabelName),
 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol1, mmpLabelName1),
 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol2, mmpLabelName2),
 	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol3, mmpLabelName3)
 	]
-
-# Run analysis
-numCores=multiprocessing.cpu_count()
-results = Parallel(n_jobs=numCores, verbose=100)(
-	delayed(runAnalysis)(
-		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
-		testYr=x[3], labelCol=x[4], labelName=x[5] ) 
-	for x in params
-	)

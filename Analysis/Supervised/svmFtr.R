@@ -24,13 +24,12 @@ svmTermSignMatrix=function(gram, var){
 
 # Run function
 svmMats=lapply(1:length(grams), function(ii){ svmTermSignMatrix(grams[ii], vars[ii]) })
-names(svmMats)=paste0(grams, vars)
 
-# polity (6-10) and mil, mon, party
-cloudDat=list( clean(svmMats$'2_3polCat'[[4]], polCat4_cat4Wrds),
-	clean(svmMats$'1military'[[1]], remWords, remove=TRUE),
-	clean(svmMats$'1_3monarchy'[[1]], remWords, remove=TRUE),
-	clean(svmMats$'1party'[[1]], remWords, remove=TRUE) )
+# polity (>=7) and mil, mon, party
+cloudDat=list( clean(svmMats[[1]][[1]], remWords, remove=TRUE),
+	clean(svmMats[[2]][[1]], remWords, remove=TRUE),
+	clean(svmMats[[3]][[1]], remWords, remove=TRUE),
+	clean(svmMats[[4]][[1]], remWords, remove=TRUE) )
 colnames(cloudDat[[1]])=paste0('Polity ', c('+', '-'))
 colnames(cloudDat[[2]])=paste0('Military ', c('+', '-'))
 colnames(cloudDat[[3]])=paste0('Monarchy ', c('+', '-'))

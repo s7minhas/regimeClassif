@@ -90,35 +90,15 @@ changeTrack=function(data,col,plotCntries=NULL,adj=NULL,
 
 ##### Analyzing predictions #####
 # Pulling data from CSVs
-predData=lapply(1:length(grams), function(ii){
+polBinData=lapply(1:length(grams), function(ii){
 	# Load data
 	texName=getFilename(grams[ii], vars[ii], ext='.csv')
 	cleanData(texName) })
 names(predData)=paste0(grams, vars)
 
-# binary vars
-binData=predData[5:length(predData)]
-
-# polCat vars
-polData=lapply(predData[1:3], function(catData){
-	cats=unique(catData[,4])
-	lapply(cats, function(cat){
-		catData[,4]=ifelse(catData[,4]==cat, 1, 0)
-		names(catData)[4]=paste0(names(catData)[4], '_cat', cat)
-		catData$predSVM=ifelse(catData$predSVM==cat, 1, 0)
-		catData$probSVM=apply(catData, 1, function(x){ num(strsplit(x['probSVM'], ';')[[1]][cat]) })
-		catData$confSVM=apply(catData, 1, function(x){ num(strsplit(x['confSVM'], ';')[[1]][cat]) })
-		catData
-		})	
-	})
-
-# Combining relevant results
-polBinData=list(polData[[3]][[2]], binData[[1]], binData[[2]], binData[[3]])
-
 # Distribution of predictions
 polBinDist=buildDist(listData=polBinData, binsize=.05, 
-	catOld=c('military', 'monarchy', 'party', 'polCat_cat4'),
-	catNew=c('Military', 'Monarchy', 'Party', 'Polity (6-10)'))
+	catOld=vars, catNew=varsClean)
 makePlot(polBinDist, 'pol_bin_probDist', tex=FALSE, hgt=4, wdh=8)
 
 # Separation plots
@@ -149,8 +129,8 @@ lapply(binData, function(x){
 # Showing variation ratings over tiem
 tmp=polBinData[[1]]
 tmp=tmp[which(tmp$cname %in% c("KYRGYZSTAN","THAILAND","PAKISTAN")),]
-ggplot(tmp, aes(x=year, y=probSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
+ggplot(tmp, aes(x=year, y=confSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
 
 tmp=binData[[3]]
 tmp=tmp[which(tmp$CNTRY_NAME %in% c('Algeria', 'Pakistan', 'Thailand')),]
-ggplot(tmp, aes(x=year, y=probSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
+ggplot(tmp, aes(x=year, y=confSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)

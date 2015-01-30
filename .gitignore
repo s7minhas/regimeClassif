@@ -22,3 +22,4 @@
 *.fdb_latexmk
 *.bib.bak
 *.synctex.gz
+*.lb

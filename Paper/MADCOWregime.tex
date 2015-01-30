@@ -138,27 +138,6 @@ The heatmap in figure \ref{fig:aggPerf} summarizes the accuracy of the SVM class
 
 Separation plots are also useful for visualizing the discriminatory power of these models. The series of separation plots shown below in figures \ref{fig:polCatSep} and \ref{fig:binSep} reinforce the point evident in the accuracy statistics: the SVMs do an excellent job discriminating among cases in the test set.
 
-\begin{figure}[ht]
-	\centering
-	\begin{tabular}{ll}
-    \hspace{-7mm}
-    \subfloat[][Polity (7--10)]{
-	    \includegraphics[width=.4\textwidth]{polGe7_All_sep}
-        \label{fig:sepp4}} &
-    \subfloat[][Military]{
-    	\includegraphics[width=.4\textwidth]{military_All_sep}
-        \label{fig:sepmil}} \\
-    \hspace{-7mm}
-    \subfloat[][Monarchy]{
-    	\includegraphics[width=.4\textwidth]{monarchy_All_sep}		
-        \label{fig:sepmon}} &
-    \subfloat[][Party]{
-    	\includegraphics[width=.4\textwidth]{party_All_sep}		
-        \label{fig:sepparty}}
-    \end{tabular}
-    \caption{Separation Plots of Out-of-Sample Predictions from Support Vector Machines (SVM)}
-    \label{fig:polBinSep}
-\end{figure}
 \FloatBarrier
 
 Also track changes over time

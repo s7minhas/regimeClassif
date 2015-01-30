@@ -31,19 +31,21 @@ sepPlots=function(data, year='All', ggalpha=.7){
 	  	panel.background=element_blank(), panel.grid=element_blank())
 }
 
-buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues'){
+buildMap = function(data, year=2012, colorVar='confSVM', brewCol='BrBG'){
 	data=data[which(data$year==year),]
 	wmap=cshp(date=as.Date(paste0(year,'-6-30')))
 	gpclibPermit()
 	ggmap=fortify(wmap, region = "CNTRY_NAME")
 	ggmapData=data.frame('id'=unique(ggmap$id))
 	ggmapData$prob = data[,colorVar][match(ggmapData$id, data$CNTRY_NAME)]
-	col=brewer.pal(9, brewCol)[c(3,9)]
+	col=brewer.pal(11, brewCol)[c(3,9)]
+	if(colorVar=='probSVM'){gglim=c(0,1)} else { gglim=NULL}
 
 	tmp = ggplot(ggmapData, aes(map_id=id, fill=prob))
 	tmp = tmp + geom_map(map=ggmap, linetype=1, lwd=.1, color='black')
 	tmp = tmp + expand_limits(x=ggmap$long, y=ggmap$lat)
-	tmp = tmp + scale_fill_continuous('', limits=c(0,1), low=col[1], high=col[2])
+	# tmp = tmp + scale_fill_continuous('', limits=gglim, low=col[1], high=col[2])
+	tmp = tmp + scale_fill_gradientn(colours=col)
 	tmp + theme(
 		line=element_blank(),title=element_blank(),
 		axis.text.x=element_blank(),axis.text.y=element_blank(),
@@ -51,7 +53,7 @@ buildMap = function(data, year=2012, colorVar='probSVM', brewCol='Blues'){
 		panel.grid.major=element_blank(), panel.grid.minor=element_blank(), 
 		panel.border=element_blank())
 }
-
+buildMap(polBinData[[1]], year=2010)
 changeTrack=function(data,col,plotCntries=NULL,adj=NULL,
 	yLimits=NULL, yBreaks=NULL, yLabels=NULL){
 	

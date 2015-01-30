@@ -1,5 +1,0 @@
-\beamer@endinputifotherversion {3.33pt}
-\beamer@sectionintoc {1}{Overview}{2}{0}{1}
-\beamer@sectionintoc {2}{Data}{4}{0}{2}
-\beamer@sectionintoc {3}{Empirics}{7}{0}{3}
-\beamer@sectionintoc {4}{Results}{10}{0}{4}

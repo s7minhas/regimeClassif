@@ -176,11 +176,11 @@ If we compare these predicted probabilities to the observed values in the test s
 
 The histograms in Figures 1A and 1B, on the following two pages, summarize the distribution of the out-of-sample predicted probabilities from SVM and logistic regression, respectively, for each of the four regime types we have explored so far.  The plots for the SVM estimates show sharp differentiation among cases, especially for the three authoritarian dimensions. Nearly all cases score very close to 0 or 1, producing bimodal distributions with steep peaks and few observations in between them. By contrast, the plots for the predicted probabilities from logistic regression are all unimodal, with a peak close to 0, maximum values much lower than 1, and thicker tails than the SVM output. 
 
-% \begin{figure}[ht]
-% 	\centering
-% 	\resizebox{0.7\textwidth}{!}{\input{graphics/pol_bin_probDist.tex}}	
-% 	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
-% \end{figure}
+\begin{figure}[ht]
+	\centering
+	\includegraphics[width=.7\textwidth]{pol_bin_probDist}
+	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+\end{figure}
 
 Figure 4, on the following two pages, uses heat maps to show variance in the SVM confidence scores from the most recent year available for all four regime dimensions: 2012 for democracy and 2010 for the three authoritarian forms. These confidence scores indicate the distance and direction of each case from the hyperplane used to classify the set of observations into 0s and 1s. The probabilities used in the earlier summaries are derived from them, but we choose to map the raw confidence scores because they exhibit more variance than the probabilities and are therefore easier to visualize in this form.
 
@@ -188,17 +188,17 @@ Figure 4, on the following two pages, uses heat maps to show variance in the SVM
 	\begin{tabular}{ll}
 	    \hspace{-7mm}
 		\subfloat[][Polity (7--10)]{
-			\includegraphics[width=.5\textwidth]{polCat_cat4_2010_map}
+			\includegraphics[width=.5\textwidth]{polGe7_2009_map}
 			\label{fig:mapp4}} &
 		\subfloat[][Military]{
-			\includegraphics[width=.5\textwidth]{military_2010_map}
+			\includegraphics[width=.5\textwidth]{military_2009_map}
 			\label{fig:mapmil}} \\
 	    \hspace{-7mm}
 		\subfloat[][Monarchy]{
-			\includegraphics[width=.5\textwidth]{monarchy_2010_map}
+			\includegraphics[width=.5\textwidth]{monarchy_2009_map}
 			\label{fig:mapmon}} &
 		\subfloat[][Party]{
-			\includegraphics[width=.5\textwidth]{party_2010_map}
+			\includegraphics[width=.5\textwidth]{party_2009_map}
 			\label{fig:mapparty}}
 	\end{tabular}
 \caption{Heat Maps of Out-of-Sample Confidence Scores from Support Vector Machines (SVM) of Four Regime Types.}

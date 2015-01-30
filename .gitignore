@@ -13,7 +13,6 @@
 *.xls
 *.xlsx
 *.csv
-*.pdf
 *.rda
 *.Rdata
 *.pyc
@@ -21,4 +20,5 @@
 *.Rapp.history
 *.lb
 *.fdb_latexmk
-*.
+*.bib.bak
+*.synctex.gz

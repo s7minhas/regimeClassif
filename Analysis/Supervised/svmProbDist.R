@@ -1,7 +1,7 @@
 # Helpful libaries and functions
 source('~/Research/WardProjects/regimeClassif/Analysis/Supervised/setup.R')
 
-buildDist = function(listData, year='All', var='probSVM', catOld=NULL, catNew=NULL, binsize=.1){
+buildDist = function(listData, year='All', var='confSVM', catOld=NULL, catNew=NULL, binsize=.1){
 	data=lapply(listData, function(x){ y=x[,c('year', var)]; y$var=names(x)[4]; y } )
 	data=do.call('rbind', data)
 	if(!is.null(catOld)){ data$var=mapVar(data$var, catOld, catNew) }
@@ -9,9 +9,10 @@ buildDist = function(listData, year='All', var='probSVM', catOld=NULL, catNew=NU
 	if(year!='All'){ data=data[which(data$year==year),] }
 	tmp = ggplot(data, aes_string(x=var))
 	tmp = tmp + geom_histogram(color='grey',binwidth=binsize,aes(y=..count../sum(..count..)))
-	tmp = tmp + facet_wrap(~var) 
-	tmp = tmp + xlab('Estimated Probability') + ylab('Proportion')
-	tmp = tmp + scale_x_continuous(breaks=seq(0,1,.25),limits=c(0,1))
+	tmp = tmp + geom_vline(xintercept=0, lty=2)
+	tmp = tmp + facet_wrap(~var, scales='free_y') 
+	tmp = tmp + xlab('SVM Confidence Score') + ylab('Proportion')
+	# tmp = tmp + scale_x_continuous(breaks=seq(0,1,.25),limits=c(0,1))
 	tmp+theme(
 		legend.position='top', axis.ticks=element_blank(), 
 		panel.grid.major=element_blank(), panel.grid.minor=element_blank() )
@@ -31,21 +32,18 @@ sepPlots=function(data, year='All', ggalpha=.7){
 	  	panel.background=element_blank(), panel.grid=element_blank())
 }
 
-buildMap = function(data, year=2012, colorVar='confSVM', brewCol='BrBG'){
+buildMap = function(data, year=2012, colorVar='confSVM'){
 	data=data[which(data$year==year),]
 	wmap=cshp(date=as.Date(paste0(year,'-6-30')))
 	gpclibPermit()
 	ggmap=fortify(wmap, region = "CNTRY_NAME")
 	ggmapData=data.frame('id'=unique(ggmap$id))
 	ggmapData$prob = data[,colorVar][match(ggmapData$id, data$CNTRY_NAME)]
-	col=brewer.pal(11, brewCol)[c(3,9)]
-	if(colorVar=='probSVM'){gglim=c(0,1)} else { gglim=NULL}
 
 	tmp = ggplot(ggmapData, aes(map_id=id, fill=prob))
 	tmp = tmp + geom_map(map=ggmap, linetype=1, lwd=.1, color='black')
 	tmp = tmp + expand_limits(x=ggmap$long, y=ggmap$lat)
-	# tmp = tmp + scale_fill_continuous('', limits=gglim, low=col[1], high=col[2])
-	tmp = tmp + scale_fill_gradientn(colours=col)
+	tmp = tmp + scale_fill_gradient(low = "#132B43", high = "#56B1F7")
 	tmp + theme(
 		line=element_blank(),title=element_blank(),
 		axis.text.x=element_blank(),axis.text.y=element_blank(),
@@ -53,7 +51,7 @@ buildMap = function(data, year=2012, colorVar='confSVM', brewCol='BrBG'){
 		panel.grid.major=element_blank(), panel.grid.minor=element_blank(), 
 		panel.border=element_blank())
 }
-buildMap(polBinData[[1]], year=2010)
+
 changeTrack=function(data,col,plotCntries=NULL,adj=NULL,
 	yLimits=NULL, yBreaks=NULL, yLabels=NULL){
 	
@@ -103,19 +101,12 @@ polBinDist=buildDist(listData=polBinData, binsize=.05,
 	catOld=vars, catNew=varsClean)
 makePlot(polBinDist, 'pol_bin_probDist', tex=FALSE, hgt=4, wdh=8)
 
-# Separation plots
-yearPerf='All'
-lapply(polBinData, function(x){
-	polBinSep=sepPlots(x) 
-	filename=paste(names(x)[4],yearPerf,'sep',sep='_')
-	makePlot(polBinSep, filename, hgt=1.3, wdh=4, tex=FALSE) })	
-
 # Map
 lapply(polBinData, function(x){
-	binMap=buildMap(x, year=2010) 
-	filename=paste(names(x)[4],2010,'map',sep='_')
-	makePlot(binMap, filename, hgt=4, wdh=7, tex=FALSE) })
-
+	binMap=buildMap(x, year=2009) 
+	filename=paste(names(x)[4],2009,'map',sep='_')
+	makePlot(binMap, filename, hgt=4, wdh=7, tex=FALSE) 
+	})
 # Find all countries where ratings change in test period
 colors=brewer.pal(9,'RdBu')[c(2,8)]
 polChng=changeTrack(polBinData[[1]], colors,

@@ -94,7 +94,7 @@ polBinData=lapply(1:length(grams), function(ii){
 	# Load data
 	texName=getFilename(grams[ii], vars[ii], ext='.csv')
 	cleanData(texName) })
-names(predData)=paste0(grams, vars)
+names(polBinData)=paste0(grams, vars)
 
 # Distribution of predictions
 polBinDist=buildDist(listData=polBinData, binsize=.05, 
@@ -116,11 +116,11 @@ lapply(polBinData, function(x){
 
 # Find all countries where ratings change in test period
 colors=brewer.pal(9,'RdBu')[c(2,8)]
-polChng=changeTrack(polBinData[[1]], colors, c("KYRGYZSTAN","THAILAND","PAKISTAN"),
+polChng=changeTrack(polBinData[[1]], colors,
 	adj=.25, yLimits=c(0,1), yLabels=c(0,1))
 makePlot(polChng, 'polCat_perfChange', hgt=3.5, wdh=8, tex=FALSE)
 
-lapply(binData, function(x){
+lapply(polBinData[2:4], function(x){
 	binChng=changeTrack(x, colors, adj=.25, yLimits=c(0,1), yLabels=c(0,1))
 	if(!is.character(binChng)){
 		filename=paste(names(x)[4],'perfChange',sep='_')
@@ -128,7 +128,7 @@ lapply(binData, function(x){
 
 # Showing variation ratings over tiem
 tmp=polBinData[[1]]
-tmp=tmp[which(tmp$cname %in% c("KYRGYZSTAN","THAILAND","PAKISTAN")),]
+tmp=tmp[which(tmp$cname %in% c("KENYA","TURKEY")),]
 ggplot(tmp, aes(x=year, y=confSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
 
 tmp=binData[[3]]

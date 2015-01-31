@@ -1,5 +1,5 @@
 #!/bin/bash
 
 for FILE in ./*.pdf; do
-  pdfcrop "${FILE}"
+  pdfcrop "${FILE}" "${FILE}"
 done

@@ -86,101 +86,105 @@ def runAnalysis(trainFilename, testFilename, labelFilename,
 	xTest=vectorizer.transform(testData[:,1])
 	yTest=np.array([int(x) for x in list(testData[:,labelCol])])
 
-	# Add other features
-	if(addWrdCnt):
-		wTrain=csr_matrix( np.array( list(trainData[:,2]) ) ).transpose()
-		wTest=csr_matrix( np.array( list(testData[:,2]) ) ).transpose()
+	print labelName
+	print grams
+	print xTrain.shape
+
+	# # Add other features
+	# if(addWrdCnt):
+	# 	wTrain=csr_matrix( np.array( list(trainData[:,2]) ) ).transpose()
+	# 	wTest=csr_matrix( np.array( list(testData[:,2]) ) ).transpose()
 		
-		xTrain=hstack((xTrain, wTrain))		
-		xTest=hstack((xTest, wTest))
+	# 	xTrain=hstack((xTrain, wTrain))		
+	# 	xTest=hstack((xTest, wTest))
 
-	if(addCntry):
-		cntryYr=[x.split('_')[0] for x in trainData[:,0]]
-		from pandas import factorize
-		cntryYr = factorize(cntryYr)[0]
-		cTrain=csr_matrix( np.array( list(cntryYr) ) ).transpose()
+	# if(addCntry):
+	# 	cntryYr=[x.split('_')[0] for x in trainData[:,0]]
+	# 	from pandas import factorize
+	# 	cntryYr = factorize(cntryYr)[0]
+	# 	cTrain=csr_matrix( np.array( list(cntryYr) ) ).transpose()
 		
-		cntryYr=[x.split('_')[0] for x in testData[:,0]]
-		cntryYr = factorize(cntryYr)[0]
-		cTest=csr_matrix( np.array( list(cntryYr) ) ).transpose()
+	# 	cntryYr=[x.split('_')[0] for x in testData[:,0]]
+	# 	cntryYr = factorize(cntryYr)[0]
+	# 	cTest=csr_matrix( np.array( list(cntryYr) ) ).transpose()
 
-		xTrain=hstack((xTrain, cTrain))
-		xTest=hstack((xTest, cTest))
-	##### 
+	# 	xTrain=hstack((xTrain, cTrain))
+	# 	xTest=hstack((xTest, cTest))
+	# ##### 
 
-	#### Run SVM with linear kernel
-	svmClass = LinearSVC().fit(xTrain, yTrain)
-	yConfSVM = list(svmClass.decision_function(xTest))
-	yPredSVM = svmClass.predict(xTest)
+	# #### Run SVM with linear kernel
+	# svmClass = LinearSVC().fit(xTrain, yTrain)
+	# yConfSVM = list(svmClass.decision_function(xTest))
+	# yPredSVM = svmClass.predict(xTest)
 
-	svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
-	yProbSVM = svmClass_2.predict_proba(xTest)
-	##### 
+	# svmClass_2 = SVC(kernel='linear',probability=True).fit(xTrain, yTrain)
+	# yProbSVM = svmClass_2.predict_proba(xTest)
+	# ##### 
 
-	##### Performance stats
-	os.chdir(baseDrop+'/Results/Supervised/'+gramDir)
-	if addWrdCnt:
-		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'_xtraFt'+'.txt'
-	else:
-		outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
-	orig_stdout = sys.stdout
-	out=open(outName, 'w')
-	sys.stdout=out
-	print '\nTrain Data from: ' + trainFilename
-	print '\t\tTrain Data Cases: ' + str(xTrain.shape[0])
-	print '\t\tMean of y in train: ' + str(round(describe(yTrain)[2],3)) + '\n'
-	print 'Test Data from: ' + testFilename
-	print '\t\tTest Data Cases: ' + str(xTest.shape[0])	
-	print '\t\tMean of y in test: ' + str(round(describe(yTest)[2],3)) + '\n'
-	prStats('SVM', grams, yTest, yPredSVM)
-	out.close()
-	sys.stdout = orig_stdout
-	#####
+	# ##### Performance stats
+	# os.chdir(baseDrop+'/Results/Supervised/'+gramDir)
+	# if addWrdCnt:
+	# 	outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'_xtraFt'+'.txt'
+	# else:
+	# 	outName=labelName+'_train'+trainFilename.split('_')[1]+'_test'+testFilename.split('_')[1]+'.txt'
+	# orig_stdout = sys.stdout
+	# out=open(outName, 'w')
+	# sys.stdout=out
+	# print '\nTrain Data from: ' + trainFilename
+	# print '\t\tTrain Data Cases: ' + str(xTrain.shape[0])
+	# print '\t\tMean of y in train: ' + str(round(describe(yTrain)[2],3)) + '\n'
+	# print 'Test Data from: ' + testFilename
+	# print '\t\tTest Data Cases: ' + str(xTest.shape[0])	
+	# print '\t\tMean of y in test: ' + str(round(describe(yTest)[2],3)) + '\n'
+	# prStats('SVM', grams, yTest, yPredSVM)
+	# out.close()
+	# sys.stdout = orig_stdout
+	# #####
 
-	##### Print data with prediction
-	trainCntry=np.array( [[x.split('_')[0].replace(',','')] 
-		for x in list(trainData[:,0])] )
-	trainYr=np.array( [[x.split('_')[1]] for x in list(trainData[ :,0 ]) ] )
-	testCntry=np.array( [[x.split('_')[0].replace(',','')] 
-		for x in list(testData[:,0])] )
-	testYr=np.array( [[x.split('_')[1]] for x in list(testData[ :,0 ]) ] )
+	# ##### Print data with prediction
+	# trainCntry=np.array( [[x.split('_')[0].replace(',','')] 
+	# 	for x in list(trainData[:,0])] )
+	# trainYr=np.array( [[x.split('_')[1]] for x in list(trainData[ :,0 ]) ] )
+	# testCntry=np.array( [[x.split('_')[0].replace(',','')] 
+	# 	for x in list(testData[:,0])] )
+	# testYr=np.array( [[x.split('_')[1]] for x in list(testData[ :,0 ]) ] )
 
-	vDat=np.array( [ [x] for x in flatten([
-			['train']*trainData.shape[0], 
-			['test']*testData.shape[0] ]) ] )
+	# vDat=np.array( [ [x] for x in flatten([
+	# 		['train']*trainData.shape[0], 
+	# 		['test']*testData.shape[0] ]) ] )
 
-	trainLab=np.array( [[x] for x in list(trainData[ :,labelCol ])] )
-	testLab=np.array( [[x] for x in list(testData[ :,labelCol ])] )
+	# trainLab=np.array( [[x] for x in list(trainData[ :,labelCol ])] )
+	# testLab=np.array( [[x] for x in list(testData[ :,labelCol ])] )
 
-	if labelName[0:6] == 'polCat':
-		probSVM=[';'.join(['%s' % x for x in row]) for row in yProbSVM]
-		confSVM=[';'.join(['%s' % x for x in sublist]) for sublist in yConfSVM]
-	if labelName[0:6] != 'polCat':
-		probSVM = [x[1] for x in yProbSVM]
-		confSVM = yConfSVM
+	# if labelName[0:6] == 'polCat':
+	# 	probSVM=[';'.join(['%s' % x for x in row]) for row in yProbSVM]
+	# 	confSVM=[';'.join(['%s' % x for x in sublist]) for sublist in yConfSVM]
+	# if labelName[0:6] != 'polCat':
+	# 	probSVM = [x[1] for x in yProbSVM]
+	# 	confSVM = yConfSVM
 
-	filler=[-9999]*trainData.shape[0]
-	predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )	
-	probSVM=np.array( [[x] for x in flatten([filler, probSVM]) ] )
-	confSVM=np.array( [[x] for x in flatten([filler, confSVM]) ] )	
+	# filler=[-9999]*trainData.shape[0]
+	# predSVM=np.array( [[x] for x in flatten([filler, list(yPredSVM)]) ] )	
+	# probSVM=np.array( [[x] for x in flatten([filler, probSVM]) ] )
+	# confSVM=np.array( [[x] for x in flatten([filler, confSVM]) ] )	
 
-	output=np.hstack((
-		np.vstack((trainCntry,testCntry)),
-		np.vstack((trainYr,testYr)),
-		vDat, 
-		np.vstack((trainLab, testLab)),
-		np.hstack((confSVM,probSVM,predSVM))
-		))
+	# output=np.hstack((
+	# 	np.vstack((trainCntry,testCntry)),
+	# 	np.vstack((trainYr,testYr)),
+	# 	vDat, 
+	# 	np.vstack((trainLab, testLab)),
+	# 	np.hstack((confSVM,probSVM,predSVM))
+	# 	))
 
-	os.chdir(baseDrop+'/Results/Supervised/'+gramDir)
-	outCSV=outName.replace('.txt','.csv')
-	with open(outCSV,'wb') as f:
-		f.write(b'country,year,data,'+labelName+',confSVM,probSVM,predSVM\n')
-		np.savetxt(f,output, delimiter=',',fmt="%s")
+	# os.chdir(baseDrop+'/Results/Supervised/'+gramDir)
+	# outCSV=outName.replace('.txt','.csv')
+	# with open(outCSV,'wb') as f:
+	# 	f.write(b'country,year,data,'+labelName+',confSVM,probSVM,predSVM\n')
+	# 	np.savetxt(f,output, delimiter=',',fmt="%s")
 
-	##### Print top features for classes from SVM
-	infFeatures(baseDrop+'/Results/Supervised/'+gramDir,
-		outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 500)
+	# ##### Print top features for classes from SVM
+	# infFeatures(baseDrop+'/Results/Supervised/'+gramDir,
+	# 	outName.replace('.txt', '._wrdFtr.csv'), vectorizer, svmClass, 500)
 #####
 
 # Set up function inputs for parallized run
@@ -188,19 +192,29 @@ demTrainFile='train_99-08_Shr-FH_wdow0.json'
 demTestFile='test_09-13_Shr-FH_wdow0.json'
 demLabelFile='demData_99-13.csv'
 demTestYear=2009
-demLabelCol=7; demLabelName='polGe7'
+demLabelCol=7; demLabelName='polGe7'; demGram=(2,4)
 
 mmpTrainFile='train_99-06_Shr-FH_wdow0.json'
 mmpTestFile='test_07-10_Shr-FH_wdow0.json'
 mmpLabelFile='mmpData_99-10.csv'
 mmpTestYear=2007
-mmpLabelCol1=3; mmpLabelName1='monarchy'
-mmpLabelCol2=4; mmpLabelName2='military'
-mmpLabelCol3=5; mmpLabelName3='party'
+mmpLabelCol1=3; mmpLabelName1='monarchy'; monGram=(1,3)
+mmpLabelCol2=4; mmpLabelName2='military'; milGram=(1,1)
+mmpLabelCol3=5; mmpLabelName3='party'; parGram=(1,1)
 
 params=[
-	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol, demLabelName),
-	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol1, mmpLabelName1),
-	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol2, mmpLabelName2),
-	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol3, mmpLabelName3)
+	(demTrainFile, demTestFile, demLabelFile, demTestYear, demLabelCol, demLabelName, demGram),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol1, mmpLabelName1, monGram),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol2, mmpLabelName2, milGram),
+	(mmpTrainFile, mmpTestFile, mmpLabelFile, mmpTestYear, mmpLabelCol3, mmpLabelName3, parGram)
 	]
+
+
+# Run analysis
+numCores=multiprocessing.cpu_count()
+results = Parallel(n_jobs=numCores, verbose=100)(
+	delayed(runAnalysis)(
+		trainFilename=x[0], testFilename=x[1], labelFilename=x[2], 
+		testYr=x[3], labelCol=x[4], labelName=x[5], grams=x[6] ) 
+	for x in params
+	)

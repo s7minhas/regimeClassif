@@ -64,9 +64,11 @@ Of practical importance, the measures of regime type that are widely used today 
 
 This paper provide a method to use machine learning in combination with natural language processing techniques to generate measures of regime type. By relying on texts that are routinely produced and publicly available, we show that it is possible to generate measures of regime type at much lower cost and at much greater frequency. Tremendous growth in global reportage on democracy and human rights in the past 20 years has produced a massive corpus of texts on these topics that is ripe for content analysis. Concurrent improvements in computer software and hardware have made the process of analyzing large bodies of text much more efficient, and the field has matured with the development of a common set of methodologies with well-tested characteristics. Automated coding is completely transparent, so it avoids the unreproducible subjective elements of human coding. Once the source texts have been prepared, recoding to account for new theoretical or technological components can be done relatively quickly and efficiently. 
 
-Last but not least, innovations in methods for content analysis are helping researchers use those tools to produce more interesting and more useful results, including a number of applications to political texts. These approaches are increasingly being used to generate political event data \cite{dorazio:etal:2014,king:lowe:2003,oconnor:etal:2013} and to measure things like political tensions \cite{chadefaux:2014}, partisan affiliation \citep{slapin:proksch:2010,yu:etal:2008}, and legislative agendas \citep{grimmer:2010}. To our knowledge, though, these techniques have not previously been applied to the task of measuring political regime types over time across many countries.
+Last but not least, innovations in methods for content analysis are helping researchers use those tools to produce more interesting and more useful results, including a number of applications to political texts. These approaches are increasingly being used to generate political event data \cite{dorazio:etal:2014,king:lowe:2003,oconnor:etal:2013} and to measure things like political tensions \cite{chadefaux:2014}, partisan affiliation \citep{slapin:proksch:2010,yu:etal:2008}, and legislative agendas \citep{grimmer:2010}. To our knowledge, though, these techniques have not previously been applied to the task of measuring political regime types over time across many countries. 
 
 We start by selecting a corpus of familiar and well-structured texts describing politics and human-rights practices each year in all countries worldwide: the Country Reports on Human Rights Practices published by the U.S. Department of State, and Freedom House's Freedom in the World reports. After pre-processing those texts, we merged the reports for each country-year into bags of n-grams and used text mining to extract features from those bags in the form of vectorized tokens. Next, we used those vectorized tokens as inputs to a series of binary classification models representing a few different ideal-typical regime types -- democracy, military rule, one-party rule, and monarchy -- as observed in few widely used, human-coded data sets. Finally, we applied those classification models to a test set of country-years held out at the start to assess the models' ability to classify regime types in cases they had not previously ``seen''. Our results demonstrate that this strategy works. Our classifiers perform well out of sample, achieving high or very high precision and recall scores in cross-validation on all four of the regime types we have tried to measure so far. 
+
+Given the high performance of the classifiers, the key contribution this project makes is in the construction of datasets that can now be used for analysis. Further these methods have not been combined in a way to produce a pipeline through which textual data can be selected, processed, converted to a high dimensional structured data format, and then used to generate regime type scores.
 
 % Need to add something about how this was just a test case to show that these methods are feasible tools to generate measures of regime types. The real goal has been to produce the datasets which we have also done. 
 
@@ -78,19 +80,21 @@ To train our regime classification models, we use pre-existing, human-coded data
 
 To highlight the performance of these classification models, we split our sample into a training and test set. For the democracy model, we have ``ground truth'' data from Polity through 2013, so we made 1999-2008 (n = 1,557) the training set and 2009-2013 (n = 707) the test set. For the three authoritarian archetypes, we only have ``ground truth'' data from GWF and HT through 2010, so we made 1999-2006 (n = 1,138) the training set and 2007-2010 (n = 583) the test set. 
 
+% Pipeline we set up here .
+
 \section{Textual Data}
 
-To train our classifiers we use annual reports on human rights from the U.S. Department of State and Freedom House. Both of these series of reports have structures that are explicitly similar and use equivalent concepts and language to describe political practices in the referent countries. Further these reports are available for almost 200 countries for both these organizations, thus enabling us to produce classifciations for a wide variety of countries. 
+To train our classifiers, we use annual reports on human rights from the U.S. Department of State and Freedom House. Both of these series of reports have structures that are explicitly similar and use equivalent concepts and language to describe political practices in the referent countries. Further these reports are available for almost 200 countries for both these organizations, thus enabling us to produce classifciations for a wide variety of countries. 
 
 As the State Department notes on its website, its human rights reports ``cover internationally recognized individual, civil, political, and worker rights, as set forth in the Universal Declaration of Human Rights and other international agreements.'' The annual production of State's human rights reports is mandated by law under the Foreign Assistance Act of 1961 and the Trade Act of 1974. All U.N. member states and other countries receiving U.S. assistance must be covered.
 
 In its Freedom in the World reports, the U.S.-based non-governmental organization Freedom House provides summary descriptions of all countries of the world and some disputed territories. Per its website, these descriptions are intended to capture the advance or decline of ``freedom'' in each polity, where the idea of freedom ``is grounded in basic standards of political rights and civil liberties, derived in large measure from relevant portions of the Universal Declaration of Human Rights.'' Freedom House is a non-governmental advocacy group that receives a substantial share of its funding from the U.S. government.
 
-We scraped the State Department's annual reports on countries' human rights practices from 1999 to 2013 and Freedom House's Freedom in the World reports from 1999 to 2014, which cover the period 1998-2013. These are all of the reports in the two series that are currently archived online on the source organizations' web sites.
+We use State Department annual reports on countries' human rights practices from 1999 to 2013 and Freedom House's Freedom in the World reports from 1999 to 2014, which cover the period 1998-2013. These are all of the reports in the two series that are currently archived online on the source organizations' web sites.\footnote{Freedom House recently released 2015 its 2015 Freedom in the World report, however, only a few country-level reports are currently available. Once reports for all countries has been released then these reports can be ingested into our text processing pipeline.}
 
 \section{Preparing Texts}
 
-Using these textual reports, we next proceed towards constructing a structured dataset from these reports. The goal of this preprocessing step is to select meaningful textual features . 
+With this textual data in hand, we construct a structured dataset for topic modeling by . The goal of this preprocessing step is to select meaningful textual features . 
 
 To do this we first employ some basic steps such as removing all common stopwords, document  and removing all proper nouns. Removing stopwords 
 
@@ -111,6 +115,14 @@ Once those documents had been ingested, we cleaned the texts and did some simple
 
 Next, we calculated the tf-idf weight for each token and used these values as inputs to a series of binary classification models designed to identify features associated with each of a few regime types suggested by prior theory. Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. 
 
+TF-IDF stands for ``Term Frequency, Inverse Document Frequency''. It is a way to score the importance of words (or ``terms'') in a document based on how frequently they appear across multiple documents.
+
+If a word appears frequently in a document, it's important. Give the word a high score.
+
+But if a word appears in many documents, it's not a unique identifier. Give the word a low score.
+
+Therefore, common words like ``the'' and ``for'', which appear in many documents, will be scaled down. Words that appear frequently in a single document will be scaled up.
+
 This leads to the construction of our document term matrices. The two definingn attributes of these matrices are their sparsity and high dimensionality. The number of rows in our matrices is 1557 while the umber of features includes over 16 million features.
 
 party; (1, 1); (1138, 24566)
@@ -120,11 +132,27 @@ polGe7; (2, 4); (1557, 11191419)
 
 \section{Methods}
 
+
+Efficiency of many learning devices, such as neural networks, tend to degrade rapidly with the size of vectors.
+
+
 SVMs are capable of handling the two primary attributes of textual data: high dimensionality and extreme sparseness \citep{dorazio:etal:2014}.
+
+The linear kernel is good when there is a lot of features. That's because mapping the data to a higher dimensional space does not really improve the performance. [3]  In text classification, both the numbers of instances (document) and features (words) are large.
+
+As we can see in the image above, the decision boundary produced by a RBF kernel when the data is linearly separable is almost the same as the decision boundary produced by a linear kernel. Mapping data to a higher dimensional space using an RBF kernel was not useful.
+
+\citep{hsu2003practical}
+
+Training a SVM with a linear kernel is faster than with another kernel. Particularly when using a dedicated library such as LibLinear [3]
+
+When you train a SVM with a linear kernel, you need to optimize fewer parameters.  When training with other kernels, you also need to optimize the parameter which means that performing a grid search will usually take more time.
 
 We use support vector machines (SVMs) to classify our text-based data sources. SVMs work by using a hyperplane that separates the classes of labeled input data with the maximum margin of separation \citep{vapnik2000nature,chang2011libsvm}. Documents on either side of the hyperplane correspond to the classes of the binary dependent variable, new documents are then classified according to which side of the hyperplane they are on.
 
 Figure \ref{fig:svmIntro} illustrates how a separating hyperplane may be drawn in the case of two features and perfect separability.\footnote{In real-world applications, however, training data are rarely perfectly separable. To deal with this we utilize soft-margin SVMs, which weight down the influence of data points that fall on the ``wrong'' side of the separating hyperplane.} The two classes of points are designated by the blue triangles and red circles. The goal of an SVM is to find the optimal separating hyperplane between the two classes of points that maximizes the margin between the classes' closest points. 
+
+Different functions for measuring this distance (kernels) can be plugged in and out; when nonlinear kernels are used, this corresponds to mapping the original vector space into a higher dimensional vector space in which the separation between teh examples belonging to different categories may be accounted fo rmore easily. Hoewver, linear kernels have been shown to be best for textual classification and SVM and that is what we use. 
 
 In this example, the optimal separating hyperplane is designated by the solid line and the margins the dashed line. The points which fall on the boundaries are called support vectors, these are designated by a darker shade of red and blue. Having found this hyperplane for a given set of features enables us to then easily classify new observations based on their features. 
 
@@ -195,7 +223,7 @@ The histograms in Figures 1A and 1B, on the following two pages, summarize the d
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=.7\textwidth]{pol_bin_probDist}
-	\caption{Histograms of Out-of-Sample Estimated Probabilities of Four Regime Types from Support Vector Machines (SVM)}
+	\caption{Histograms of Out-of-Sample Estimated Confidence Scores of Four Regime Types from Support Vector Machines (SVM)}
 \end{figure}
 
 Figure 4, on the following two pages, uses heat maps to show variance in the SVM confidence scores from the most recent year available for all four regime dimensions: 2012 for democracy and 2010 for the three authoritarian forms. These confidence scores indicate the distance and direction of each case from the hyperplane used to classify the set of observations into 0s and 1s. The probabilities used in the earlier summaries are derived from them, but we choose to map the raw confidence scores because they exhibit more variance than the probabilities and are therefore easier to visualize in this form.
@@ -234,8 +262,6 @@ To address this issue in future iterations, we plan to expand the corpus to incl
 Second, the stringent criteria we used to observe each regime type in constructing the binary indicators on which the classifiers are trained also appear to be shaping the results in undesirable ways. We started this project with a belief that membership in these regime categories is inherently fuzzy, and we are trying to build a process that uses text mining to estimate degrees of membership in those fuzzy sets. If set membership is inherently ambiguous in a fair number of cases, then our approximation of a membership function should be bimodal, but not too neatly so. Most cases most of the time can be placed confidently at one end of the range of degrees of membership or the other, but there is considerable uncertainty at any moment in time about a non-trivial number of cases, and our estimates should reflect that fact.
 
 If that's right, then our initial estimates are probably too tidy, and we suspect that the stringent operationalization of each regime type in the training data is partly to blame.  To address this problem in future iterations, we hope to experiment with two alternatives. First, we may lower the bar for observed membership in each category in the training data. For example, we could lower the Polity threshold for observing democracy from 10 to 8 or 6. For the authoritarian regime types, we could include hybrid cases instead of restricting the training data to instances where both source data sets concur on pure types. For example, instead of only coding regimes as 1 for military rule when both GWF and HT agree that a case belongs in that set and only that set, we could code regimes as 1 on military rule when either source identifies them as having that feature, whether pure or hybrid.
-
-Second and more ambitious, we could use Bayesian measurement error models to derive continuous measures of cases' degree of membership in each regime category from multiple data sets and then use those continuous measures as the targets in our supervised learning stage. This is the technique that \citet{pemstein:etal:2010} use to derive the Unified Democracy Scores from scalar measures of regime type, but it can be generalized to situations in which the observations are categorical or binary as well. In the special case that we have no prior belief about regime type independent of the observed data and we believe the sources are equally reliable, we could simply use the unweighted average of the observed ``votes.'' By making uncertainty about category membership more explicit in the training data, we should be able to develop models that are (properly) less confident in their readings of the relevant texts as well.
 
 Those are the main ways we plan to try to improve the work described here, but they aren't the only ones. In addition to the machine learning and logistic regression models that we have already used, we plan to try supervised topic modeling via LDA as another classification strategy for all of the regime types. Last but not least, we also plan soon to add two other regime types to the mix--personal rule and collapsed states--and then to replicate the process described here on them.
 

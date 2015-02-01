@@ -6,7 +6,7 @@ from compiler.ast import flatten
 import json
 
 # My helper functions
-os.chdir('/Users/janus829/Desktop/Research/WardProjects/regimeClassif/Scrapers')
+os.chdir('/Users/janus829/Research/WardProjects/regimeClassif/Scrapers')
 from scrapeCrew import *
 
 # Data storage

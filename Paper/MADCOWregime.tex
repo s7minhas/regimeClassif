@@ -74,42 +74,23 @@ The first step in our pipeline is choosing textual data to train our classifiers
 
 As the State Department notes on its website, its human rights reports ``cover internationally recognized individual, civil, political, and worker rights, as set forth in the Universal Declaration of Human Rights and other international agreements.'' The annual production of State's human rights reports is mandated by law under the Foreign Assistance Act of 1961 and the Trade Act of 1974. All U.N. member states and other countries receiving U.S. assistance must be covered. 
 
-In its Freedom in the World reports, the U.S.-based non-governmental organization Freedom House provides summary descriptions of all countries of the world and some disputed territories. Per its website, these descriptions are intended to capture the advance or decline of ``freedom'' in each polity, where the idea of freedom ``is grounded in basic standards of political rights and civil liberties, derived in large measure from relevant portions of the Universal Declaration of Human Rights.'' Freedom House is a non-governmental advocacy group that receives a substantial share of its funding from the U.S. government.
+In its Freedom in the World reports, the U.S.-based non-governmental organization Freedom House (FH) provides summary descriptions of all countries of the world and some disputed territories. Per its website, these descriptions are intended to capture the advance or decline of ``freedom'' in each polity, where the idea of freedom ``is grounded in basic standards of political rights and civil liberties, derived in large measure from relevant portions of the Universal Declaration of Human Rights.'' Freedom House is a non-governmental advocacy group that receives a substantial share of its funding from the U.S. government.
 
-We use State Department annual reports on countries' human rights practices from 1999 to 2013 and Freedom House's Freedom in the World reports from 1999 to 2014, which cover the period 1998-2013. These are all of the reports in the two series that are currently archived online on the source organizations' web sites.\footnote{Freedom House recently released its 2015 Freedom in the World report, however, only a few country-level reports are currently available. Once reports for all countries have been released, we can then easily ingest those texts into our processing pipeline.} These reports are automatically collected from the State Department and Freedom House websites, and, in the future, we can apply the same collection methodology to add relevant texts from other sources into our system of generating measures of regime type.
+We use State Department annual reports on countries' human rights practices from 1999 to 2013 and Freedom House's Freedom in the World reports from 1999 to 2014, which cover the period 1998-2013. These are all of the reports in the two series that are currently archived online on the source organizations' web sites.\footnote{FH recently released its 2015 Freedom in the World report, however, only a few country-level reports are currently available. Once reports for all countries have been released, we can then easily ingest those texts into our processing pipeline.} These reports are automatically collected from the State Department and Freedom House websites, and, in the future, we can apply the same collection methodology to add relevant texts from other sources into our system of generating measures of regime type.
 
 \section{Preparing Texts}
 
-With the textual data collected, the next step is to extract the relevant features from these documents, so that we can construct a structured dataset to use in classification. The rows of this dataset consist of all documents associated with a particular country-year (i.e., in this case a collated version of the relevant State Department and Freedom House report). 
+With the textual data collected, we move towards generating a structured representation of these documents. We first collate all documents associated with a particular country-year (i.e., in our current implementation this simply consists of combining the State and FH textual reports). From these collated documents we move towards extracting a set of features, in this cases words or phrases, that we can use for classification. 
 
-With this textual data in hand, we construct a structured dataset for topic modeling by . The goal of this preprocessing step is to select meaningful textual features . 
+To have a relevant set of features on which to do classification, we first remove items that are likely to not provide any meaningful information on the regime type of countries. This first involves some mainsteam text processing techniques such as removing punctuation, removing stop words (e.g., ``and'', ``just'', ``it''), and removing numbers. We also remove all proper nouns and acronyms from the documents. Leaving proper nouns, such as the names of countries, in the document could be problematic in that the classification algorithm may assign regime type ratings based on country names rather than meaningful content related to political rights and civil liberties. This may bias predictions for cases in which countries are moving away or towards a certain regime archetype, as the classifier may miss out on predicting a change because the country name is a persistent feature.
 
-To do this we first employ some basic steps such as removing all common stopwords, document  and removing all proper nouns. Removing stopwords 
+After removing unnecessary items like those described above, we are still left with an extremely high number of features; in our case, given the length of the State and FH reports the number of features for any given document number in the hundred of thousands. Additionally, for the purposes of classification, we need to stack each of these documents into a matrix structure, in which the rows are the country-year documents and the columns are populated with the features found in every document. 
 
-We remove proper nouns to avoid biasing the classification algorithm. Our goal here is that the country level reports are classified based on their content and not simply by references to countries or their leaders.
+Stacking all the documents in this way leads to the creation of an extremely sparse and high dimensional matrix, which would, without further processing, contain tens of millions of columns. Not only would the number of columns in the matrix be prodigious but the feautures themselves would be repetitive. To deal with this we lemmatize each of the reamining features, this is a process through which inflectional endings are removed and the canonical form of a word is returned. Lemmatizing each of the features not only reduce the dimensionality of the feature set, but better enables us to track similarities between documents. 
 
-Lemmatization usually refers to doing things properly with the use of a vocabulary and morphological analysis of words, normally aiming to remove inflectional endings only and to return the base or dictionary form of a word, which is known as the lemma . If confronted with the token saw, stemming might return just s, whereas lemmatization would attempt to return either see or saw depending on whether the use of the token was as a verb or a noun. The two may also differ in that stemming most commonly collapses derivationally related words, whereas lemmatization commonly only collapses the different inflectional forms of a lemma.
+The last preprocessing step involves filling in the cross-section of our matrices. To do so we calculate the ``term frequency, inverse document frequency'' (tf-idf) score for each feature in every document. This score generates a measure of the importance of features in a document based on how frequently they appear across multiple documents. For example, if a word appears frequently in a single single document, then it is important to that document, so it receives a high score. However, if a word appears in many documents, then though it maybe important it is not a unique identifier, thus it receives a low score. Following this scoring system, common words appearing in many documents will be scaled down, and words that in appear frequently in a single document willbe scaled up.
 
-We cross validate to decide on the number of grams to be used. 
-
-Once those documents had been ingested, we cleaned the texts and did some simple feature extraction. Specifically, we:
-
-\begin{itemize}
-	\item Removed numbers, punctuation, and stop words;
-	\item Removed proper names and acronyms;
-	\item Tokenized the results; and
-	\item Lemmatized the tokens to group together inflected forms.
-\end{itemize}
-
-Next, we calculated the tf-idf weight for each token and used these values as inputs to a series of binary classification models designed to identify features associated with each of a few regime types suggested by prior theory. Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. 
-
-TF-IDF stands for ``Term Frequency, Inverse Document Frequency''. It is a way to score the importance of words (or ``terms'') in a document based on how frequently they appear across multiple documents.
-
-If a word appears frequently in a document, it's important. Give the word a high score.
-
-But if a word appears in many documents, it's not a unique identifier. Give the word a low score.
-
-Therefore, common words like ``the'' and ``for'', which appear in many documents, will be scaled down. Words that appear frequently in a single document will be scaled up.
+With these pieces in place, the matrices on which we can apply our classification algorithm are complete. 
 
 This leads to the construction of our document term matrices. The two definingn attributes of these matrices are their sparsity and high dimensionality. The number of rows in our matrices is 1557 while the umber of features includes over 16 million features.
 
@@ -118,7 +99,11 @@ military; (1, 1); (1138, 24566)
 monarchy; (1, 3); (1138, 4837638)
 polGe7; (2, 4); (1557, 11191419)
 
-\section{Methods}
+Next, we calculated the tf-idf weight for each token and used these values as inputs to a series of binary classification models designed to identify features associated with each of a few regime types suggested by prior theory. Employing tf-idf weights is common practice in information retrieval from textual data and has been successful in document classification. 
+
+We cross validate to decide on the number of grams to be used. 
+
+\section{Classification}
 
 
 Efficiency of many learning devices, such as neural networks, tend to degrade rapidly with the size of vectors.

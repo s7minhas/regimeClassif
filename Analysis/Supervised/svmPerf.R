@@ -21,7 +21,7 @@ perfData$cat=mapVar(perfData$cat, vars, varsClean)
 # Reshape data for plotting
 ggData=melt(perfData[,2:ncol(perfData)], id='cat')
 col=brewer.pal(9, 'RdBu')[c(3,7)]
-# ggData=ggData[which(ggData$variable=='Accuracy'),]
+ggData=ggData[which(ggData$variable!='F-1 Score'),]
 tmp=ggplot(ggData, aes(y=variable, x=cat)) 
 tmp=tmp + scale_y_discrete('',expand=c(0,0)) + scale_x_discrete('',expand=c(0,0))
 tmp=tmp + geom_tile(aes(fill=value), colour='white')

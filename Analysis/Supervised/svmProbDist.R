@@ -40,10 +40,11 @@ buildMap = function(data, year=2012, colorVar='confSVM'){
 	ggmapData=data.frame('id'=unique(ggmap$id))
 	ggmapData$prob = data[,colorVar][match(ggmapData$id, data$CNTRY_NAME)]
 
+	col=brewer.pal(9, 'RdBu')[c(3,7)]
 	tmp = ggplot(ggmapData, aes(map_id=id, fill=prob))
 	tmp = tmp + geom_map(map=ggmap, linetype=1, lwd=.1, color='black')
 	tmp = tmp + expand_limits(x=ggmap$long, y=ggmap$lat)
-	tmp = tmp + scale_fill_gradient(low = "#132B43", high = "#56B1F7")
+	tmp = tmp + scale_fill_gradient(low = col[1], high = col[2])
 	tmp + theme(
 		line=element_blank(),title=element_blank(),
 		axis.text.x=element_blank(),axis.text.y=element_blank(),
@@ -53,7 +54,7 @@ buildMap = function(data, year=2012, colorVar='confSVM'){
 }
 
 changeTrack=function(data,col,plotCntries=NULL,adj=NULL,
-	yLimits=NULL, yBreaks=NULL, yLabels=NULL){
+	yLimits=NULL, yBreaks=NULL, yLabels=NULL, legLabel='Actual'){
 	
 	if(is.null(plotCntries)){
 		byForm=formula(paste0(names(data)[4], '~cname'))
@@ -74,7 +75,8 @@ changeTrack=function(data,col,plotCntries=NULL,adj=NULL,
 			ggData$value[ggData$value==0]=ggData$value[ggData$value==0]+adj
 			yBreaks=c(0+adj,1-adj) }
 		
-		ggData$variable = mapVar(ggData$variable, c('act', 'predSVM'), c('Actual', 'Predicted'))
+		ggData$variable = mapVar(ggData$variable, c('act', 'predSVM'), 
+			c(legLabel, 'Predicted'))
 	
 		tmp=ggplot(ggData, aes(x=year)) + xlab('') + ylab('')
 		tmp=tmp + scale_y_continuous('', limits=yLimits, breaks=yBreaks, labels=yLabels)
@@ -107,23 +109,18 @@ lapply(polBinData, function(x){
 	filename=paste(names(x)[4],2009,'map',sep='_')
 	makePlot(binMap, filename, hgt=4, wdh=7, tex=FALSE) 
 	})
+
 # Find all countries where ratings change in test period
+lapply(polBinData, function(x){
+	changeTrack(x, colors, adj=.25, yLimits=c(0,1), yLabels=c(0,1)) })
+
 colors=brewer.pal(9,'RdBu')[c(2,8)]
-polChng=changeTrack(polBinData[[1]], colors,
-	adj=.25, yLimits=c(0,1), yLabels=c(0,1))
-makePlot(polChng, 'polCat_perfChange', hgt=3.5, wdh=8, tex=FALSE)
+milChng=changeTrack(polBinData$'1military', colors, adj=.25, yLimits=c(0,1),
+	yLabels=c('Not Military', 'Military'), legLabel='GWF/HT')
+filename=paste(names(polBinData$'1military')[4],'perfChange',sep='_')
+makePlot(milChng, filename, hgt=3.5, wdh=8, tex=FALSE)
 
-lapply(polBinData[2:4], function(x){
-	binChng=changeTrack(x, colors, adj=.25, yLimits=c(0,1), yLabels=c(0,1))
-	if(!is.character(binChng)){
-		filename=paste(names(x)[4],'perfChange',sep='_')
-		makePlot(binChng, filename, hgt=3.5, wdh=8, tex=FALSE) } })
-
-# Showing variation ratings over tiem
-tmp=polBinData[[1]]
-tmp=tmp[which(tmp$cname %in% c("KENYA","TURKEY")),]
-ggplot(tmp, aes(x=year, y=confSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
-
-tmp=binData[[3]]
+# Showing variation ratings over time
+tmp=polBinData$'1military'
 tmp=tmp[which(tmp$CNTRY_NAME %in% c('Algeria', 'Pakistan', 'Thailand')),]
-ggplot(tmp, aes(x=year, y=confSVM)) + geom_point() + facet_wrap(~CNTRY_NAME, nrow=1)
+ggplot(tmp, aes(x=year, y=confSVM)) + geom_line() + facet_wrap(~CNTRY_NAME, nrow=1, scales='free')

@@ -10,4 +10,4 @@ We describe the design and results of an experiment in using text-mining and mac
 
 Replication Instructions
 ---
-Data is stored at [Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/8MC1LO). Detailed instructions are on their way.
+Data is stored at [Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/8MC1LO). 

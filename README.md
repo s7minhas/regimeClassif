@@ -2,7 +2,7 @@
 
 Authors
 ---
-[Shahryar Minhas](s7minhas.com), [Jay Ulfelder](https://dartthrowingchimp.wordpress.com/), & [Michael D. Ward](https://web.duke.edu/methods/)
+[Shahryar Minhas](http://s7minhas.com/), [Jay Ulfelder](https://dartthrowingchimp.wordpress.com/), & [Michael D. Ward](https://web.duke.edu/methods/)
 
 Abstract
 ---

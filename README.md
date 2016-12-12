@@ -10,7 +10,7 @@ We describe the design and results of an experiment in using text-mining and mac
 
 Replication Instructions
 ---
-All necessary data to replicate study is stored in a [Dropbox folder](https://www.dropbox.com/sh/581kq2p3zofprjg/AADAcnLT9LAI9vYQV06T85vJa?dl=0). Output data used to generate plots shown in paper is stored in this [Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/8MC1LO). 
+All necessary data to replicate study is stored in a [Dropbox folder](https://www.dropbox.com/sh/rvabxrvsbi7yn1p/AACtOOvesXkTUQZebhvsnghxa?dl=0). Output data used to generate plots shown in paper is stored in this [Dataverse](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/8MC1LO). 
 
 Publication Outlet
 ---
